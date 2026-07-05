@@ -1,0 +1,41 @@
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f8f8f8;
+}
+
+header{
+    background:#8B6B2E;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+section{
+    padding:40px;
+    text-align:center;
+}
+
+.product{
+    display:inline-block;
+    background:white;
+    padding:20px;
+    margin:15px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.button{
+    background:#25D366;
+    color:white;
+    padding:15px 25px;
+    text-decoration:none;
+    border-radius:8px;
+}
+
+footer{
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
