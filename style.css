@@ -103,6 +103,9 @@ nav a:hover{
 
 .hero-image img{
     width:90%;
+    max-width:400px;
+    height:auto;
+    border-radius:15px;
     transition:.5s;
 }
 
@@ -143,6 +146,9 @@ nav a:hover{
 
 .card img{
     width:200px;
+    height:200px;
+    object-fit:cover;
+    border-radius:10px;
     margin-bottom:20px;
 }
 
@@ -155,13 +161,11 @@ nav a:hover{
     margin-bottom:20px;
 }
 
-.card button{
-    border:none;
-    padding:12px 30px;
-    background:#b8860b;
-    color:#fff;
-    border-radius:40px;
-    cursor:pointer;
+/* Fixed: Button style now matches link tags perfectly */
+.card .btn {
+    padding: 12px 30px;
+    font-size: 14px;
+    font-weight: 500;
 }
 
 /* WHY */
@@ -230,6 +234,11 @@ nav a:hover{
     text-decoration:none;
     padding:15px 35px;
     border-radius:40px;
+    transition: .3s;
+}
+
+.whatsapp:hover {
+    background:#1ebe57;
 }
 
 /* FOOTER */
@@ -246,31 +255,31 @@ footer{
 @media(max-width:900px){
 
 header{
-flex-direction:column;
+    flex-direction:column;
 }
 
 nav{
-margin-top:15px;
-flex-wrap:wrap;
-justify-content:center;
+    margin-top:15px;
+    flex-wrap:wrap;
+    justify-content:center;
 }
 
 .hero{
-flex-direction:column;
-text-align:center;
+    flex-direction:column;
+    text-align:center;
 }
 
 .hero-text{
-width:100%;
+    width:100%;
 }
 
 .hero-image{
-width:100%;
-margin-top:40px;
+    width:100%;
+    margin-top:40px;
 }
 
 .hero-text h1{
-font-size:38px;
+    font-size:38px;
 }
 
 }
