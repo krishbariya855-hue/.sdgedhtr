@@ -1,111 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products | Mahiverse Globle</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Products | MAHIVERSE GLOBLE</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 </head>
+
 <body>
 
 <header>
-    <div class="logo">
-        <h2>Mahiverse Globle</h2>
-    </div>
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="products.html">Products</a>
-        <a href="about.html">About</a>
-        <a href="contact.html">Contact</a>
-        <a href="#" id="cart-icon-nav"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
-    </nav>
+
+<div class="logo">
+<h2>MAHIVERSE GLOBLE</h2>
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="products.html">Products</a>
+
+<a href="about.html">About</a>
+
+<a href="contact.html">Contact</a>
+
+<a href="#" id="cart-icon-nav">
+<i class="fas fa-shopping-cart"></i>
+Cart (<span id="cart-count">0</span>)
+</a>
+
+</nav>
+
 </header>
 
 <section class="products">
-    <h2>Our Products</h2>
-    
-    <div class="product-grid">
-        <!-- PRODUCT 1: GARLIC POWDER -->
-        <div class="card" data-id="garlic-powder" data-name="Garlic Powder">
-            <img src="garlic.png.jpg" alt="Garlic Powder">
-            <h3>Garlic Powder</h3>
-            <p>Premium Quality Natural Powder</p>
-            
-            <div class="weight-selector-wrapper">
-                <label for="weight-garlic">Select Weight & Price:</label>
-                <select id="weight-garlic" class="weight-select">
-                    <option value="50g" data-price="50">50 gm - ₹50</option>
-                    <option value="200g" data-price="180">200 gm - ₹180</option>
-                    <option value="500g" data-price="400">500 gm - ₹400</option>
-                    <option value="1kg" data-price="750">1 kg - ₹750</option>
-                    <option value="Bulk" data-price="0">Above 1 kg (Bulk Inquiry)</option>
-                </select>
-            </div>
 
-            <button class="btn add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-            
-            <div class="marketplace-links">
-                <a class="btn-sm flipkart" href="#" target="_blank">Flipkart</a>
-                <a class="btn-sm meesho" href="#" target="_blank">Meesho</a>
-            </div>
-        </div>
+<h2>Our Premium Products</h2>
 
-        <!-- PRODUCT 2: RED ONION POWDER -->
-        <div class="card" data-id="onion-powder" data-name="Red Onion Powder">
-            <img src="onion.png.png" alt="Red Onion Powder">
-            <h3>Red Onion Powder</h3>
-            <p>Premium Quality Natural Powder</p>
-            
-            <div class="weight-selector-wrapper">
-                <label for="weight-onion">Select Weight & Price:</label>
-                <select id="weight-onion" class="weight-select">
-                    <option value="50g" data-price="60">50 gm - ₹60</option>
-                    <option value="200g" data-price="200">200 gm - ₹200</option>
-                    <option value="500g" data-price="450">500 gm - ₹450</option>
-                    <option value="1kg" data-price="800">1 kg - ₹800</option>
-                    <option value="Bulk" data-price="0">Above 1 kg (Bulk Inquiry)</option>
-                </select>
-            </div>
+<div class="product-grid">
 
-            <button class="btn add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
-            
-            <div class="marketplace-links">
-                <a class="btn-sm flipkart" href="#" target="_blank">Flipkart</a>
-                <a class="btn-sm meesho" href="#" target="_blank">Meesho</a>
-            </div>
-        </div>
-    </div>
+<!-- PRODUCT 1 -->
+
+<div class="card"
+
+data-id="garlic-powder"
+
+data-name="Garlic Powder">
+
+<img src="garlic.png.jpg"
+
+alt="Garlic Powder">
+
+<h3>Garlic Powder</h3>
+
+<p>
+
+100% Natural Premium Garlic Powder
+
+Rich Aroma • No Artificial Colour
+
+</p>
+
+<div class="weight-selector-wrapper">
+
+<label>Select Weight</label>
+
+<select class="weight-select">
+
+<option value="50g"
+
+data-price="50">
+
+50 gm – ₹50
+
+</option>
+
+<option value="100g"
+
+data-price="90">
+
+100 gm – ₹90
+
+</option>
+
+<option value="200g"
+
+data-price="180">
+
+200 gm – ₹180
+
+</option>
+
+<option value="500g"
+
+data-price="400">
+
+500 gm – ₹400
+
+</option>
+
+<option value="1kg"
+
+data-price="750">
+
+1 Kg – ₹750
+
+</option>
+
+<option value="Bulk"
+
+data-price="0">
+
+Bulk Order (Above 1 Kg)
+
+</option>
+
+</select>
+
+</div>
+
+<button class="btn add-to-cart-btn">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+<div class="marketplace-links">
+
+<a href="#"
+
+class="btn-sm flipkart">
+
+Flipkart
+
+</a>
+
+<a href="#"
+
+class="btn-sm meesho">
+
+Meesho
+
+</a>
+
+</div>
+
+</div><!-- PRODUCT 2 -->
+
+<div class="card"
+
+data-id="red-onion-powder"
+
+data-name="Red Onion Powder">
+
+<img src="onion.png.png"
+
+alt="Red Onion Powder">
+
+<h3>Red Onion Powder</h3>
+
+<p>
+
+100% Natural Premium Red Onion Powder
+
+Rich Taste • No Artificial Colour
+
+</p>
+
+<div class="weight-selector-wrapper">
+
+<label>Select Weight</label>
+
+<select class="weight-select">
+
+<option value="50g"
+
+data-price="60">
+
+50 gm – ₹60
+
+</option>
+
+<option value="100g"
+
+data-price="110">
+
+100 gm – ₹110
+
+</option>
+
+<option value="200g"
+
+data-price="200">
+
+200 gm – ₹200
+
+</option>
+
+<option value="500g"
+
+data-price="450">
+
+500 gm – ₹450
+
+</option>
+
+<option value="1kg"
+
+data-price="800">
+
+1 Kg – ₹800
+
+</option>
+
+<option value="Bulk"
+
+data-price="0">
+
+Bulk Order (Above 1 Kg)
+
+</option>
+
+</select>
+
+</div>
+
+<button class="btn add-to-cart-btn">
+
+<i class="fas fa-cart-plus"></i>
+
+Add To Cart
+
+</button>
+
+<div class="marketplace-links">
+
+<a href="#"
+
+class="btn-sm flipkart">
+
+Flipkart
+
+</a>
+
+<a href="#"
+
+class="btn-sm meesho">
+
+Meesho
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<!-- SLIDING CART SIDEBAR -->
+<!-- SHOPPING CART SIDEBAR -->
+
 <div id="cart-sidebar" class="cart-sidebar">
-    <div class="cart-header">
-        <h3>Your Shopping Cart</h3>
-        <span id="close-cart" class="close-cart">&times;</span>
-    </div>
-    <div id="cart-items-container" class="cart-items-container">
-        <p class="empty-msg">Your cart is empty.</p>
-    </div>
-    <div class="cart-footer">
-        <div class="cart-total-row">
-            <span>Estimated Total:</span>
-            <span id="cart-total-amount">₹0</span>
-        </div>
-        <button id="whatsapp-checkout-btn" class="btn checkout-btn">
-            <i class="fab fa-whatsapp"></i> Order & Pay via WhatsApp
-        </button>
-    </div>
+
+<div class="cart-header">
+
+<h3>Your Shopping Cart</h3>
+
+<span id="close-cart" class="close-cart">&times;</span>
+
 </div>
+
+<div id="cart-items-container"
+
+class="cart-items-container">
+
+<p class="empty-msg">
+
+Your cart is empty.
+
+</p>
+
+</div><div class="cart-footer">
+
+    <div class="cart-total-row">
+        <span>Total</span>
+        <span id="cart-total-amount">₹0</span>
+    </div>
+
+    <button id="whatsapp-checkout-btn" class="btn checkout-btn">
+        <i class="fab fa-whatsapp"></i>
+        Order on WhatsApp
+    </button>
+
+</div>
+
+</div>
+
 <div id="cart-overlay" class="cart-overlay"></div>
 
+<section class="why">
+
+    <h2>Why Choose MAHIVERSE GLOBLE?</h2>
+
+    <div class="why-grid">
+
+        <div>
+            <h3>🌿 100% Natural</h3>
+            <p>No Artificial Colours or Preservatives</p>
+        </div>
+
+        <div>
+            <h3>⭐ Premium Quality</h3>
+            <p>Made from Carefully Selected Ingredients</p>
+        </div>
+
+        <div>
+            <h3>🚚 Fast Delivery</h3>
+            <p>Safe Packaging Across India</p>
+        </div>
+
+        <div>
+            <h3>❤️ Trusted Brand</h3>
+            <p>Committed to Customer Satisfaction</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="contact">
+
+    <h2>Need Help?</h2>
+
+    <p>📱 WhatsApp : +91 6354179230</p>
+
+    <p>📧 Email : mahiversegloble@gmail.com</p>
+
+    <a href="https://wa.me/916354179230" target="_blank" class="whatsapp">
+        Chat on WhatsApp
+    </a>
+
+</section>
+
 <footer>
-    <p>© 2026 Mahiverse Globle. All Rights Reserved.</p>
+
+    <p>
+        © 2026 MAHIVERSE GLOBLE. All Rights Reserved.
+    </p>
+
 </footer>
 
 <script src="script.js"></script>
+
 </body>
 </html>
