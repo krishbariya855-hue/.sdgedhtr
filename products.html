@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome for Cart Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -37,13 +36,13 @@
             <p>Premium Quality Natural Powder</p>
             
             <div class="weight-selector-wrapper">
-                <label for="weight-garlic">Select Weight:</label>
+                <label for="weight-garlic">Select Weight & Price:</label>
                 <select id="weight-garlic" class="weight-select">
-                    <option value="50g" data-price="0">50 gm</option>
-                    <option value="200g" data-price="0">200 gm</option>
-                    <option value="500g" data-price="0">500 gm</option>
-                    <option value="1kg" data-price="0">1 kg</option>
-                    <option value="Bulk" data-price="0">Above 1 kg (Bulk)</option>
+                    <option value="50g" data-price="50">50 gm - ₹50</option>
+                    <option value="200g" data-price="180">200 gm - ₹180</option>
+                    <option value="500g" data-price="400">500 gm - ₹400</option>
+                    <option value="1kg" data-price="750">1 kg - ₹750</option>
+                    <option value="Bulk" data-price="0">Above 1 kg (Bulk Inquiry)</option>
                 </select>
             </div>
 
@@ -62,13 +61,13 @@
             <p>Premium Quality Natural Powder</p>
             
             <div class="weight-selector-wrapper">
-                <label for="weight-onion">Select Weight:</label>
+                <label for="weight-onion">Select Weight & Price:</label>
                 <select id="weight-onion" class="weight-select">
-                    <option value="50g" data-price="0">50 gm</option>
-                    <option value="200g" data-price="0">200 gm</option>
-                    <option value="500g" data-price="0">500 gm</option>
-                    <option value="1kg" data-price="0">1 kg</option>
-                    <option value="Bulk" data-price="0">Above 1 kg (Bulk)</option>
+                    <option value="50g" data-price="60">50 gm - ₹60</option>
+                    <option value="200g" data-price="200">200 gm - ₹200</option>
+                    <option value="500g" data-price="450">500 gm - ₹450</option>
+                    <option value="1kg" data-price="800">1 kg - ₹800</option>
+                    <option value="Bulk" data-price="0">Above 1 kg (Bulk Inquiry)</option>
                 </select>
             </div>
 
@@ -89,10 +88,13 @@
         <span id="close-cart" class="close-cart">&times;</span>
     </div>
     <div id="cart-items-container" class="cart-items-container">
-        <!-- Items added dynamically by JavaScript -->
         <p class="empty-msg">Your cart is empty.</p>
     </div>
     <div class="cart-footer">
+        <div class="cart-total-row">
+            <span>Estimated Total:</span>
+            <span id="cart-total-amount">₹0</span>
+        </div>
         <button id="whatsapp-checkout-btn" class="btn checkout-btn">
             <i class="fab fa-whatsapp"></i> Order & Pay via WhatsApp
         </button>
