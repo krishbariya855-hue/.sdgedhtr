@@ -1,136 +1,153 @@
-// ==========================================
-// Mahiverse Globle - Cart & Weights Logic
-// ==========================================
+console.log("Mahiverse Globle core engine running!");
 
+// Initialize Shopping Cart array
 let cart = [];
 
-// DOM Elements
-const cartIconNav = document.getElementById("cart-icon-nav");
-const cartSidebar = document.getElementById("cart-sidebar");
-const cartOverlay = document.getElementById("cart-overlay");
-const closeCartBtn = document.getElementById("close-cart");
-const cartItemsContainer = document.getElementById("cart-items-container");
-const cartCount = document.getElementById("cart-count");
-const whatsappCheckoutBtn = document.getElementById("whatsapp-checkout-btn");
+document.addEventListener("DOMContentLoaded", () => {
+    // DOM Selectors
+    const cartIconNav = document.getElementById("cart-icon-nav");
+    const cartSidebar = document.getElementById("cart-sidebar");
+    const cartOverlay = document.getElementById("cart-overlay");
+    const closeCartBtn = document.getElementById("close-cart");
+    const cartItemsContainer = document.getElementById("cart-items-container");
+    const cartCount = document.getElementById("cart-count");
+    const cartTotalAmount = document.getElementById("cart-total-amount");
+    const whatsappCheckoutBtn = document.getElementById("whatsapp-checkout-btn");
 
-// Open & Close Cart Panel
-if(cartIconNav) {
-    cartIconNav.addEventListener("click", (e) => {
-        e.preventDefault();
-        cartSidebar.classList.add("open");
-        cartOverlay.classList.add("show");
-    });
-}
-
-function closeCart() {
-    if(cartSidebar) cartSidebar.classList.remove("open");
-    if(cartOverlay) cartOverlay.classList.remove("show");
-}
-
-if(closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
-if(cartOverlay) cartOverlay.addEventListener("click", closeCart);
-
-// Add Items to Cart Logic
-const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-addToCartButtons.forEach(button => {
-    button.addEventListener("click", (e) => {
-        const card = e.target.closest(".card");
-        const id = card.getAttribute("data-id");
-        const name = card.getAttribute("data-name");
-        const weightSelect = card.querySelector(".weight-select");
-        const selectedWeight = weightSelect.value;
-        
-        const itemKey = `${id}-${selectedWeight}`;
-        
-        // Check if exact item/weight combo exists
-        const existingItem = cart.find(item => item.key === itemKey);
-        if(existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({
-                key: itemKey,
-                name: name,
-                weight: selectedWeight,
-                quantity: 1
-            });
-        }
-        
-        updateCartUI();
-        // Automatically slide open cart to show confirmation
-        cartSidebar.classList.add("open");
-        cartOverlay.classList.add("show");
-    });
-});
-
-// Update Cart View interface
-function updateCartUI() {
-    if(!cartItemsContainer || !cartCount) return;
-    
-    cartItemsContainer.innerHTML = "";
-    let totalItems = 0;
-    
-    if(cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
-        cartCount.textContent = "0";
-        return;
+    // Open Cart Panel
+    if (cartIconNav) {
+        cartIconNav.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (cartSidebar) cartSidebar.classList.add("open");
+            if (cartOverlay) cartOverlay.classList.add("show");
+        });
     }
-    
-    cart.forEach((item, index) => {
-        totalItems += item.quantity;
-        
-        const itemRow = document.createElement("div");
-        itemRow.classList.add("cart-item");
-        itemRow.innerHTML = `
-            <div class="cart-item-details">
-                <h4>${item.name}</h4>
-                <p>Weight: ${item.weight} | Qty: ${item.quantity}</p>
-            </div>
-            <button class="remove-item-btn" onclick="removeFromCart(${index})"><i class="fas fa-trash"></i></button>
-        `;
-        cartItemsContainer.appendChild(itemRow);
+
+    // Close Cart Panel Function
+    function closeCart() {
+        if (cartSidebar) cartSidebar.classList.remove("open");
+        if (cartOverlay) cartOverlay.classList.remove("show");
+    }
+
+    if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
+    if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
+
+    // Add to Cart Click Engine
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            e.preventDefault();
+            const card = e.target.closest(".card");
+            if (!card) return;
+
+            const id = card.getAttribute("data-id");
+            const name = card.getAttribute("data-name");
+            
+            const weightSelect = card.querySelector(".weight-select");
+            const selectedWeight = weightSelect ? weightSelect.value : "Standard";
+            
+            // Extract prices dynamically from data-price attributes
+            const selectedOption = weightSelect ? weightSelect.options[weightSelect.selectedIndex] : null;
+            const price = selectedOption ? parseFloat(selectedOption.getAttribute("data-price")) : 0;
+
+            const itemKey = `${id}-${selectedWeight}`;
+
+            // Add or increment quantities inside array
+            const existingItem = cart.find(item => item.key === itemKey);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    key: itemKey,
+                    name: name,
+                    weight: selectedWeight,
+                    price: price,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            
+            // Display cart sidebar feedback animation
+            if (cartSidebar) cartSidebar.classList.add("open");
+            if (cartOverlay) cartOverlay.classList.add("show");
+        });
     });
-    
-    cartCount.textContent = totalItems;
-}
 
-// Global removal function
-window.removeFromCart = function(index) {
-    cart.splice(index, 1);
-    updateCartUI();
-};
+    // Update UI Elements and Calculate running total
+    function updateCartUI() {
+        if (!cartItemsContainer || !cartCount || !cartTotalAmount) return;
 
-// WhatsApp Order compilation & dynamic link redirection
-if(whatsappCheckoutBtn) {
-    whatsappCheckoutBtn.addEventListener("click", () => {
-        if(cart.length === 0) {
-            alert("Your cart is empty!");
+        cartItemsContainer.innerHTML = "";
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+            cartCount.textContent = "0";
+            cartTotalAmount.textContent = "₹0";
             return;
         }
-        
-        let message = "Hello Mahiverse Globle! 🌿%0AI want to place an order:%0A%0A";
-        cart.forEach((item, i) => {
-            message += `${i+1}. *${item.name}* (${item.weight}) — Qty: ${item.quantity}%0A`;
+
+        cart.forEach((item, index) => {
+            totalItems += item.quantity;
+            const itemTotal = item.price * item.quantity;
+            totalPrice += itemTotal;
+
+            const priceLabel = item.price === 0 ? "Bulk Request" : `₹${item.price} (₹${itemTotal})`;
+
+            const itemRow = document.createElement("div");
+            itemRow.classList.add("cart-item");
+            itemRow.innerHTML = `
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>Weight: ${item.weight} | Qty: ${item.quantity}</p>
+                    <p style="color: #25D366; font-weight:500;">${priceLabel}</p>
+                </div>
+                <button class="remove-item-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
+            `;
+            cartItemsContainer.appendChild(itemRow);
         });
-        message += "%0APlease provide total pricing and payment UPI details to confirm my order! 🙏";
-        
-        window.open(`https://wa.me/916354179230?text=${message}`, "_blank");
-    });
-}
 
-// Cards Intersection Observer Animation
-const cards = document.querySelectorAll(".card");
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            entry.target.style.opacity = "1";
-            entry.target.style.transform = "translateY(0px)";
-        }
-    });
-}, { threshold: 0.05 });
+        cartCount.textContent = totalItems;
+        cartTotalAmount.textContent = `₹${totalPrice}`;
 
-cards.forEach(card => {
-    card.style.opacity = "0";
-    card.style.transform = "translateY(30px)";
-    card.style.transition = "all 0.6s ease-out";
-    observer.observe(card);
+        // Re-attach removal listener triggers inside UI scope
+        document.querySelectorAll(".remove-item-btn").forEach(btn => {
+            btn.addEventListener("click", (el) => {
+                const targetIdx = parseInt(el.target.closest(".remove-item-btn").getAttribute("data-index"));
+                cart.splice(targetIdx, 1);
+                updateCartUI();
+            });
+        });
+    }
+
+    // Order Compilation Hook for WhatsApp Checkout API
+    if (whatsappCheckoutBtn) {
+        whatsappCheckoutBtn.addEventListener("click", () => {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            let message = "Hello Mahiverse Globle! 🌿%0AI want to place an order:%0A%0A";
+            let grandTotal = 0;
+            
+            cart.forEach((item, i) => {
+                const lineTotal = item.price * item.quantity;
+                grandTotal += lineTotal;
+                
+                if(item.price === 0) {
+                    message += `${i+1}. *${item.name}* (${item.weight}) — Qty: ${item.quantity} [Bulk Quote Needed]%0A`;
+                } else {
+                    message += `${i+1}. *${item.name}* (${item.weight}) — Qty: ${item.quantity} (₹${lineTotal})%0A`;
+                }
+            });
+            
+            message += `%0A*Total Estimated Value:* ₹${grandTotal}`;
+            message += "%0APlease verify availability and send payment details! 🙏";
+
+            window.open(`https://wa.me/916354179230?text=${message}`, "_blank");
+        });
+    }
 });
