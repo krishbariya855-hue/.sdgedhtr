@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Close Cart Panel Function
     function closeCart() {
         if (cartSidebar) cartSidebar.classList.remove("open");
-        if (cartOverlay) cartOverlay.classList.remove("show");
+        if (cartOverlay) cartOverlay.classList.show ? cartOverlay.classList.remove("show") : cartOverlay.style.display = "none";
     }
 
     if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
@@ -70,7 +70,10 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Display cart sidebar feedback animation
             if (cartSidebar) cartSidebar.classList.add("open");
-            if (cartOverlay) cartOverlay.classList.add("show");
+            if (cartOverlay) {
+                cartOverlay.style.display = "block";
+                cartOverlay.classList.add("show");
+            }
         });
     });
 
@@ -102,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
                     <p>Weight: ${item.weight} | Qty: ${item.quantity}</p>
-                    <p style="color: #25D366; font-weight:500;">${priceLabel}</p>
+                    <p style="color: #25D366; font-weight:500; margin: 2px 0 0 0;">${priceLabel}</p>
                 </div>
                 <button class="remove-item-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
             `;
@@ -112,10 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
         cartCount.textContent = totalItems;
         cartTotalAmount.textContent = `₹${totalPrice}`;
 
-        // Re-attach removal listener triggers inside UI scope
-        document.querySelectorAll(".remove-item-btn").forEach(btn => {
+        // Simple, clean listener to handle item removals safely
+        cartItemsContainer.querySelectorAll(".remove-item-btn").forEach(btn => {
             btn.addEventListener("click", (el) => {
-                const targetIdx = parseInt(el.target.closest(".remove-item-btn").getAttribute("data-index"));
+                const targetIdx = parseInt(el.currentTarget.getAttribute("data-index"));
                 cart.splice(targetIdx, 1);
                 updateCartUI();
             });
