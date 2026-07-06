@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Cart Icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
@@ -20,6 +22,7 @@
         <a href="products.html">Products</a>
         <a href="about.html">About</a>
         <a href="contact.html">Contact</a>
+        <a href="#" id="cart-icon-nav"><i class="fas fa-shopping-cart"></i> Cart (<span id="cart-count">0</span>)</a>
     </nav>
 </header>
 
@@ -28,46 +31,74 @@
     
     <div class="product-grid">
         <!-- PRODUCT 1: GARLIC POWDER -->
-        <div class="card">
+        <div class="card" data-id="garlic-powder" data-name="Garlic Powder">
             <img src="garlic.png.jpg" alt="Garlic Powder">
             <h3>Garlic Powder</h3>
-            <p>100g Premium Quality</p>
+            <p>Premium Quality Natural Powder</p>
             
-            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                <a class="btn" href="https://wa.me/916354179230?text=I%20want%20to%20buy%20Garlic%20Powder" target="_blank">
-                    Buy via WhatsApp
-                </a>
-                <!-- You can replace # with your real seller store link later -->
-                <a class="btn" href="#" target="_blank" style="background: #2874f0; font-size: 13px; padding: 8px 20px;">
-                    Buy on Flipkart
-                </a>
-                <a class="btn" href="#" target="_blank" style="background: #ff3f6c; font-size: 13px; padding: 8px 20px;">
-                    Buy on Meesho
-                </a>
+            <div class="weight-selector-wrapper">
+                <label for="weight-garlic">Select Weight:</label>
+                <select id="weight-garlic" class="weight-select">
+                    <option value="50g" data-price="0">50 gm</option>
+                    <option value="200g" data-price="0">200 gm</option>
+                    <option value="500g" data-price="0">500 gm</option>
+                    <option value="1kg" data-price="0">1 kg</option>
+                    <option value="Bulk" data-price="0">Above 1 kg (Bulk)</option>
+                </select>
+            </div>
+
+            <button class="btn add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+            
+            <div class="marketplace-links">
+                <a class="btn-sm flipkart" href="#" target="_blank">Flipkart</a>
+                <a class="btn-sm meesho" href="#" target="_blank">Meesho</a>
             </div>
         </div>
 
         <!-- PRODUCT 2: RED ONION POWDER -->
-        <div class="card">
+        <div class="card" data-id="onion-powder" data-name="Red Onion Powder">
             <img src="onion.png.png" alt="Red Onion Powder">
             <h3>Red Onion Powder</h3>
-            <p>100g Premium Quality</p>
+            <p>Premium Quality Natural Powder</p>
             
-            <div style="display: flex; flex-direction: column; gap: 10px; align-items: center;">
-                <a class="btn" href="https://wa.me/916354179230?text=I%20want%20to%20buy%20Red%20Onion%20Powder" target="_blank">
-                    Buy via WhatsApp
-                </a>
-                <!-- You can replace # with your real seller store link later -->
-                <a class="btn" href="#" target="_blank" style="background: #2874f0; font-size: 13px; padding: 8px 20px;">
-                    Buy on Flipkart
-                </a>
-                <a class="btn" href="#" target="_blank" style="background: #ff3f6c; font-size: 13px; padding: 8px 20px;">
-                    Buy on Meesho
-                </a>
+            <div class="weight-selector-wrapper">
+                <label for="weight-onion">Select Weight:</label>
+                <select id="weight-onion" class="weight-select">
+                    <option value="50g" data-price="0">50 gm</option>
+                    <option value="200g" data-price="0">200 gm</option>
+                    <option value="500g" data-price="0">500 gm</option>
+                    <option value="1kg" data-price="0">1 kg</option>
+                    <option value="Bulk" data-price="0">Above 1 kg (Bulk)</option>
+                </select>
+            </div>
+
+            <button class="btn add-to-cart-btn"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+            
+            <div class="marketplace-links">
+                <a class="btn-sm flipkart" href="#" target="_blank">Flipkart</a>
+                <a class="btn-sm meesho" href="#" target="_blank">Meesho</a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- SLIDING CART SIDEBAR -->
+<div id="cart-sidebar" class="cart-sidebar">
+    <div class="cart-header">
+        <h3>Your Shopping Cart</h3>
+        <span id="close-cart" class="close-cart">&times;</span>
+    </div>
+    <div id="cart-items-container" class="cart-items-container">
+        <!-- Items added dynamically by JavaScript -->
+        <p class="empty-msg">Your cart is empty.</p>
+    </div>
+    <div class="cart-footer">
+        <button id="whatsapp-checkout-btn" class="btn checkout-btn">
+            <i class="fab fa-whatsapp"></i> Order & Pay via WhatsApp
+        </button>
+    </div>
+</div>
+<div id="cart-overlay" class="cart-overlay"></div>
 
 <footer>
     <p>© 2026 Mahiverse Globle. All Rights Reserved.</p>
