@@ -1,2 +1,2 @@
 # MAHIVERSE-GLOBLE
-Official website of Mahiverse Glob
+Official website of Mahiverse Globle
