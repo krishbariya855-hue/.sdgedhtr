@@ -38,12 +38,15 @@
 }
 .flipkart { background: #2874f0; }
 .meesho { background: #ff3f6c; }
+
 .add-to-cart-btn {
     width: 100%;
     border: none;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
     font-weight: 500;
+    display: block;
+    z-index: 10;
 }
 
 /* SLIDING CART PANEL */
@@ -85,8 +88,8 @@
     padding: 12px 0;
     border-bottom: 1px solid #f9f9f9;
 }
-.cart-item-details h4 { font-size: 14px; }
-.cart-item-details p { font-size: 12px; color: #777; }
+.cart-item-details h4 { font-size: 14px; margin: 0; }
+.cart-item-details p { font-size: 12px; color: #777; margin: 4px 0 0 0; }
 .remove-item-btn {
     background: transparent;
     border: none;
@@ -96,6 +99,16 @@
 }
 .empty-msg { text-align: center; color: #aaa; margin-top: 40px; }
 .cart-footer { padding: 20px; border-top: 1px solid #eee; }
+
+.cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
 .checkout-btn { width: 100%; text-align: center; border: none; cursor: pointer; background: #25D366; }
 .checkout-btn:hover { background: #1ebe57; }
 .cart-overlay {
@@ -109,6 +122,7 @@
     display: none;
 }
 .cart-overlay.show { display: block; }
+
 @media(max-width: 400px) {
     .cart-sidebar { width: 100%; right: -100%; }
 }
