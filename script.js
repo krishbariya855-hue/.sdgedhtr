@@ -1,156 +1,287 @@
-console.log("Mahiverse Globle core engine running!");
+// ===============================
+// MAHIVERSE GLOBLE
+// Shopping Cart Engine
+// Part 1
+// ===============================
 
-// Initialize Shopping Cart array
-let cart = [];
+console.log("MAHIVERSE GLOBLE Loaded Successfully");
 
+// WhatsApp Number
+const WHATSAPP_NUMBER = "916354179230";
+
+// Cart Array
+let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
+
+// Wait until page loads
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM Selectors
-    const cartIconNav = document.getElementById("cart-icon-nav");
-    const cartSidebar = document.getElementById("cart-sidebar");
-    const cartOverlay = document.getElementById("cart-overlay");
-    const closeCartBtn = document.getElementById("close-cart");
-    const cartItemsContainer = document.getElementById("cart-items-container");
-    const cartCount = document.getElementById("cart-count");
-    const cartTotalAmount = document.getElementById("cart-total-amount");
-    const whatsappCheckoutBtn = document.getElementById("whatsapp-checkout-btn");
 
-    // Open Cart Panel
-    if (cartIconNav) {
-        cartIconNav.addEventListener("click", (e) => {
-            e.preventDefault();
-            if (cartSidebar) cartSidebar.classList.add("open");
-            if (cartOverlay) cartOverlay.classList.add("show");
-        });
-    }
+const cartIcon = document.getElementById("cart-icon-nav");
+const cartSidebar = document.getElementById("cart-sidebar");
+const cartOverlay = document.getElementById("cart-overlay");
+const closeCart = document.getElementById("close-cart");
 
-    // Close Cart Panel Function
-    function closeCart() {
-        if (cartSidebar) cartSidebar.classList.remove("open");
-        if (cartOverlay) cartOverlay.classList.show ? cartOverlay.classList.remove("show") : cartOverlay.style.display = "none";
-    }
+const cartItemsContainer = document.getElementById("cart-items-container");
+const cartCount = document.getElementById("cart-count");
+const cartTotal = document.getElementById("cart-total-amount");
 
-    if (closeCartBtn) closeCartBtn.addEventListener("click", closeCart);
-    if (cartOverlay) cartOverlay.addEventListener("click", closeCart);
+const checkoutBtn = document.getElementById("whatsapp-checkout-btn");
 
-    // Add to Cart Click Engine
-    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-    addToCartButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            e.preventDefault();
-            const card = e.target.closest(".card");
-            if (!card) return;
+// Open Cart
+if(cartIcon){
 
-            const id = card.getAttribute("data-id");
-            const name = card.getAttribute("data-name");
-            
-            const weightSelect = card.querySelector(".weight-select");
-            const selectedWeight = weightSelect ? weightSelect.value : "Standard";
-            
-            // Extract prices dynamically from data-price attributes
-            const selectedOption = weightSelect ? weightSelect.options[weightSelect.selectedIndex] : null;
-            const price = selectedOption ? parseFloat(selectedOption.getAttribute("data-price")) : 0;
+cartIcon.addEventListener("click",(e)=>{
 
-            const itemKey = `${id}-${selectedWeight}`;
+e.preventDefault();
 
-            // Add or increment quantities inside array
-            const existingItem = cart.find(item => item.key === itemKey);
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    key: itemKey,
-                    name: name,
-                    weight: selectedWeight,
-                    price: price,
-                    quantity: 1
-                });
-            }
+cartSidebar.classList.add("open");
 
-            updateCartUI();
-            
-            // Display cart sidebar feedback animation
-            if (cartSidebar) cartSidebar.classList.add("open");
-            if (cartOverlay) {
-                cartOverlay.style.display = "block";
-                cartOverlay.classList.add("show");
-            }
-        });
-    });
+cartOverlay.classList.add("show");
 
-    // Update UI Elements and Calculate running total
-    function updateCartUI() {
-        if (!cartItemsContainer || !cartCount || !cartTotalAmount) return;
+});
 
-        cartItemsContainer.innerHTML = "";
-        let totalItems = 0;
-        let totalPrice = 0;
+}
 
-        if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
-            cartCount.textContent = "0";
-            cartTotalAmount.textContent = "₹0";
-            return;
-        }
+// Close Cart
+function closeCartPanel(){
 
-        cart.forEach((item, index) => {
-            totalItems += item.quantity;
-            const itemTotal = item.price * item.quantity;
-            totalPrice += itemTotal;
+cartSidebar.classList.remove("open");
 
-            const priceLabel = item.price === 0 ? "Bulk Request" : `₹${item.price} (₹${itemTotal})`;
+cartOverlay.classList.remove("show");
 
-            const itemRow = document.createElement("div");
-            itemRow.classList.add("cart-item");
-            itemRow.innerHTML = `
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p>Weight: ${item.weight} | Qty: ${item.quantity}</p>
-                    <p style="color: #25D366; font-weight:500; margin: 2px 0 0 0;">${priceLabel}</p>
-                </div>
-                <button class="remove-item-btn" data-index="${index}"><i class="fas fa-trash"></i></button>
-            `;
-            cartItemsContainer.appendChild(itemRow);
-        });
+}
 
-        cartCount.textContent = totalItems;
-        cartTotalAmount.textContent = `₹${totalPrice}`;
+if(closeCart){
 
-        // Simple, clean listener to handle item removals safely
-        cartItemsContainer.querySelectorAll(".remove-item-btn").forEach(btn => {
-            btn.addEventListener("click", (el) => {
-                const targetIdx = parseInt(el.currentTarget.getAttribute("data-index"));
-                cart.splice(targetIdx, 1);
-                updateCartUI();
-            });
-        });
-    }
+closeCart.addEventListener("click",closeCartPanel);
 
-    // Order Compilation Hook for WhatsApp Checkout API
-    if (whatsappCheckoutBtn) {
-        whatsappCheckoutBtn.addEventListener("click", () => {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
+}
 
-            let message = "Hello Mahiverse Globle! 🌿%0AI want to place an order:%0A%0A";
-            let grandTotal = 0;
-            
-            cart.forEach((item, i) => {
-                const lineTotal = item.price * item.quantity;
-                grandTotal += lineTotal;
-                
-                if(item.price === 0) {
-                    message += `${i+1}. *${item.name}* (${item.weight}) — Qty: ${item.quantity} [Bulk Quote Needed]%0A`;
-                } else {
-                    message += `${i+1}. *${item.name}* (${item.weight}) — Qty: ${item.quantity} (₹${lineTotal})%0A`;
-                }
-            });
-            
-            message += `%0A*Total Estimated Value:* ₹${grandTotal}`;
-            message += "%0APlease verify availability and send payment details! 🙏";
+if(cartOverlay){
 
-            window.open(`https://wa.me/916354179230?text=${message}`, "_blank");
-        });
-    }
+cartOverlay.addEventListener("click",closeCartPanel);
+
+}
+
+// Update UI on page load
+updateCartUI();// ===============================
+// Part 2 - Add To Cart Engine
+// ===============================
+
+// Add to Cart Buttons
+const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+
+addToCartButtons.forEach(button => {
+
+button.addEventListener("click", () => {
+
+const card = button.closest(".card");
+
+const id = card.dataset.id;
+const name = card.dataset.name;
+
+const select = card.querySelector(".weight-select");
+
+const weight = select.value;
+
+const option = select.options[select.selectedIndex];
+
+const price = Number(option.dataset.price);
+
+const key = id + "-" + weight;
+
+// Check if already exists
+const existingItem = cart.find(item => item.key === key);
+
+if(existingItem){
+
+existingItem.quantity++;
+
+}else{
+
+cart.push({
+
+key:key,
+
+id:id,
+
+name:name,
+
+weight:weight,
+
+price:price,
+
+quantity:1
+
+});
+
+}
+
+// Save Cart
+localStorage.setItem(
+"mahiverse_cart",
+JSON.stringify(cart)
+);
+
+// Refresh UI
+updateCartUI();
+
+// Open Sidebar
+cartSidebar.classList.add("open");
+cartOverlay.classList.add("show");
+
+});
+
+});
+
+// ===============================
+// Update Cart UI
+// ===============================
+
+function updateCartUI(){
+
+if(!cartItemsContainer) return;
+
+cartItemsContainer.innerHTML="";
+
+let totalItems=0;
+let totalPrice=0;
+
+if(cart.length===0){
+
+cartItemsContainer.innerHTML=
+'<p class="empty-msg">Your cart is empty.</p>';
+
+cartCount.textContent="0";
+
+cartTotal.textContent="₹0";
+
+return;
+
+}
+
+cart.forEach((item,index)=>{
+
+totalItems+=item.quantity;
+
+totalPrice+=item.price*item.quantity;
+
+const div=document.createElement("div");
+
+div.className="cart-item";
+
+div.innerHTML=`
+
+<div class="cart-item-details">
+
+<h4>${item.name}</h4>
+
+<p>${item.weight}</p>
+
+<p>Qty : ${item.quantity}</p>
+
+<p><strong>₹${item.price*item.quantity}</strong></p>
+
+</div>
+
+<button class="remove-item-btn"
+
+data-index="${index}">
+
+<i class="fas fa-trash"></i>
+
+</button>
+
+`;
+
+cartItemsContainer.appendChild(div);
+
+});
+
+cartCount.textContent=totalItems;
+
+cartTotal.textContent="₹"+totalPrice;
+}// ===============================
+// Part 3 - Remove Items & WhatsApp Checkout
+// ===============================
+
+// Remove Item
+cartItemsContainer.addEventListener("click",(e)=>{
+
+const btn=e.target.closest(".remove-item-btn");
+
+if(!btn) return;
+
+const index=parseInt(btn.dataset.index);
+
+cart.splice(index,1);
+
+localStorage.setItem(
+"mahiverse_cart",
+JSON.stringify(cart)
+);
+
+updateCartUI();
+
+});
+
+// WhatsApp Checkout
+
+if(checkoutBtn){
+
+checkoutBtn.addEventListener("click",()=>{
+
+if(cart.length===0){
+
+alert("Your cart is empty!");
+
+return;
+
+}
+
+let message="Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order:\n\n";
+
+let total=0;
+
+cart.forEach((item,i)=>{
+
+const amount=item.price*item.quantity;
+
+total+=amount;
+
+message+=`${i+1}. ${item.name}\n`;
+message+=`Weight : ${item.weight}\n`;
+message+=`Quantity : ${item.quantity}\n`;
+
+if(item.price===0){
+
+message+="Price : Bulk Order\n\n";
+
+}else{
+
+message+=`Amount : ₹${amount}\n\n`;
+
+}
+
+});
+
+message+=`Estimated Total : ₹${total}\n\n`;
+
+message+="Please confirm availability and payment details. Thank you!";
+
+window.open(
+
+`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`,
+
+"_blank"
+
+);
+
+});
+
+}
+
+// ===============================
+// End Script
+// ===============================
+
 });
