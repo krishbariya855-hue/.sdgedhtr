@@ -339,3 +339,18 @@ menuToggle.addEventListener("click", ()=>{
     navbar.classList.toggle("active");
 
 });
+/* ============================
+   LOADING SCREEN
+============================ */
+
+window.addEventListener("load", ()=>{
+
+    const loader = document.getElementById("loader");
+
+    setTimeout(()=>{
+
+        loader.classList.add("loader-hide");
+
+    },1000);
+
+});
