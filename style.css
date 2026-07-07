@@ -781,3 +781,44 @@ nav{
     color:#14532d;
     font-weight:700;
 }
+/* =====================================
+   PRODUCT CARD UPGRADE
+===================================== */
+
+.product-badge{
+    display:inline-block;
+    background:#FFD700;
+    color:#14532d;
+    padding:6px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:12px;
+}
+
+.rating{
+    color:#ffb400;
+    font-size:18px;
+    margin:10px 0;
+}
+
+.rating span{
+    color:#666;
+    font-size:14px;
+}
+
+.product-features{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:15px 0;
+}
+
+.product-features span{
+    background:#eef8ef;
+    color:#14532d;
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:600;
+}
