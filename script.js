@@ -305,3 +305,25 @@ hiddenElements.forEach((el)=>{
     el.classList.add("hidden");
     observer.observe(el);
 });
+/* ============================
+   BACK TO TOP BUTTON
+============================ */
+
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+    if(window.scrollY > 300){
+        backToTop.style.display = "flex";
+        backToTop.style.justifyContent = "center";
+        backToTop.style.alignItems = "center";
+    }else{
+        backToTop.style.display = "none";
+    }
+});
+
+backToTop.addEventListener("click", () => {
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+});
