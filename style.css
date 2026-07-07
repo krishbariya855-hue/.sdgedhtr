@@ -470,3 +470,44 @@ nav{
     font-size:18px;
     line-height:1.8;
 }
+/* ===============================
+   CUSTOMER REVIEWS
+================================ */
+
+.reviews{
+    padding:80px 8%;
+    background:#f8f9fa;
+}
+
+.review-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.review-card{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.review-card:hover{
+    transform:translateY(-10px);
+}
+
+.review-card h3{
+    color:#14532d;
+    margin:15px 0;
+}
+
+.review-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+.review-card h4{
+    margin-top:20px;
+    color:#D4AF37;
+}
