@@ -700,3 +700,51 @@ nav{
 }
 
 }
+/* ===================================
+   LOADING SCREEN
+=================================== */
+
+#loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:#ffffff;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity .6s ease, visibility .6s ease;
+}
+
+#loader img{
+    width:120px;
+    margin-bottom:20px;
+    animation:spinLogo 2s linear infinite;
+}
+
+#loader h2{
+    color:#14532d;
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+#loader p{
+    color:#666;
+}
+
+.loader-hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+@keyframes spinLogo{
+    from{
+        transform:rotate(0deg);
+    }
+    to{
+        transform:rotate(360deg);
+    }
+}
