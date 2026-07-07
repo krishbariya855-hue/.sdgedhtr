@@ -1054,3 +1054,58 @@ font-size:34px;
 }
 
 }
+/* ===================================
+   PRODUCT SPECIFICATIONS
+=================================== */
+
+.product-specs{
+
+margin-top:60px;
+
+}
+
+.product-specs h2{
+
+color:#14532d;
+
+margin-bottom:25px;
+
+font-size:32px;
+
+}
+
+.spec-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+background:#fff;
+
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+
+border-radius:12px;
+
+overflow:hidden;
+
+}
+
+.spec-table td{
+
+padding:18px;
+
+border-bottom:1px solid #eee;
+
+}
+
+.spec-table tr:nth-child(even){
+
+background:#f8f9fa;
+
+}
+
+.spec-table strong{
+
+color:#14532d;
+
+}
