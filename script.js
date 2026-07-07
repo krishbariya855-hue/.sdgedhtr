@@ -285,3 +285,23 @@ window.open(
 // ===============================
 
 });
+/* ============================
+   SCROLL ANIMATION
+============================ */
+
+const observer = new IntersectionObserver((entries)=>{
+    entries.forEach((entry)=>{
+        if(entry.isIntersecting){
+            entry.target.classList.add("show");
+        }
+    });
+});
+
+const hiddenElements = document.querySelectorAll(
+".trust-section, .stats-section, .products, .why, .reviews, .about, .faq, .contact"
+);
+
+hiddenElements.forEach((el)=>{
+    el.classList.add("hidden");
+    observer.observe(el);
+});
