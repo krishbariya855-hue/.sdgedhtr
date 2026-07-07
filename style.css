@@ -291,4 +291,71 @@ nav{
     gap:15px;
 }
 
+}/* ===========================================
+   MAHIVERSE GLOBLE WEBSITE 2.0 HEADER
+=========================================== */
+
+.header{
+    position:sticky;
+    top:0;
+    width:100%;
+    background:#ffffff;
+    z-index:9999;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.nav-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    height:80px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+    color:#1B4332;
+    text-decoration:none;
+    letter-spacing:1px;
+}
+
+.logo span{
+    color:#D4AF37;
+}
+
+.navbar{
+    display:flex;
+    align-items:center;
+    gap:30px;
+}
+
+.navbar a{
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:.3s;
+}
+
+.navbar a:hover{
+    color:#D4AF37;
+}
+
+.order-btn{
+    background:#1B4332;
+    color:#fff !important;
+    padding:12px 24px;
+    border-radius:30px;
+    transition:.3s;
+}
+
+.order-btn:hover{
+    background:#D4AF37;
+    color:#1B4332 !important;
+    transform:translateY(-2px);
 }
