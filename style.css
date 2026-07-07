@@ -148,11 +148,12 @@ section h2{
 
 .card{
     background:#fff;
-    border-radius:18px;
-    padding:25px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,.08);
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
     transition:.35s;
+    text-align:center;
+    padding:25px;
 }
 
 .card:hover{
@@ -161,22 +162,28 @@ section h2{
 }
 
 .card img{
-    height:260px;
-    object-fit:contain;
+    width:100%;
+    max-width:250px;
     margin:auto;
+    display:block;
+    transition:.35s;
+}
+
+.card:hover img{
+    transform:scale(1.05);
 }
 
 .card h3{
+    color:#14532d;
     margin-top:20px;
     font-size:24px;
-    color:#333;
 }
 
 .card p{
-    color:#777;
-    margin:10px 0 20px;
+    color:#666;
+    margin:12px 0;
+    line-height:1.6;
 }
-
 /* ===========================
    Why Choose Us
 =========================== */
@@ -439,4 +446,27 @@ nav{
 .stat-box p{
     color:#ffffff;
     font-size:18px;
+}
+/* ===============================
+   SECTION TITLE
+================================ */
+
+.section-title{
+    text-align:center;
+    margin-bottom:50px;
+}
+
+.section-title h2{
+    font-size:42px;
+    color:#14532d;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+.section-title p{
+    max-width:700px;
+    margin:auto;
+    color:#666;
+    font-size:18px;
+    line-height:1.8;
 }
