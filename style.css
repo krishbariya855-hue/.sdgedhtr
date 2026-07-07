@@ -924,3 +924,54 @@ nav{
     line-height:1.7;
 }
 
+/* ===================================
+   BULK ORDER SECTION
+=================================== */
+
+.bulk-order{
+    background:linear-gradient(135deg,#14532d,#1b6b3a);
+    color:#fff;
+    text-align:center;
+    padding:80px 8%;
+}
+
+.bulk-content{
+    max-width:900px;
+    margin:auto;
+}
+
+.bulk-order h2{
+    font-size:42px;
+    margin-bottom:20px;
+}
+
+.bulk-order p{
+    font-size:18px;
+    line-height:1.8;
+    margin-bottom:30px;
+}
+
+.bulk-points{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:15px;
+    margin-bottom:35px;
+}
+
+.bulk-points span{
+    background:rgba(255,255,255,.15);
+    padding:12px 18px;
+    border-radius:30px;
+    font-weight:600;
+}
+
+.bulk-order .btn{
+    background:#FFD700;
+    color:#14532d;
+    font-weight:700;
+}
+
+.bulk-order .btn:hover{
+    background:#ffffff;
+}
