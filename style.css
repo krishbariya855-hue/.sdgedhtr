@@ -359,3 +359,44 @@ nav{
     color:#1B4332 !important;
     transform:translateY(-2px);
 }
+/* ===============================
+   TRUST BADGES
+================================== */
+
+.trust-section{
+    padding:70px 8%;
+    background:#ffffff;
+}
+
+.trust-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.trust-box{
+    background:#fff;
+    border-radius:15px;
+    padding:30px 20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,0.08);
+    transition:0.3s;
+    font-size:45px;
+}
+
+.trust-box:hover{
+    transform:translateY(-8px);
+}
+
+.trust-box h3{
+    margin-top:15px;
+    color:#14532d;
+    font-size:22px;
+}
+
+.trust-box p{
+    color:#666;
+    margin-top:10px;
+    line-height:1.6;
+    font-size:15px;
+}
