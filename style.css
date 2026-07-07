@@ -1194,3 +1194,40 @@ color:#14532d;
     font-size:42px;
     margin-bottom:15px;
 }
+/* ===================================
+   STORAGE SECTION
+=================================== */
+
+.storage-section{
+    padding:80px 8%;
+    background:#f8f9fa;
+}
+
+.storage-section h2{
+    text-align:center;
+    color:#14532d;
+    margin-bottom:40px;
+}
+
+.storage-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+.storage-card{
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.storage-card h3{
+    color:#14532d;
+    margin-bottom:15px;
+}
+
+.storage-card p{
+    color:#666;
+    line-height:1.8;
+}
