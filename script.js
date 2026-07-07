@@ -354,3 +354,46 @@ window.addEventListener("load", ()=>{
     },1000);
 
 });
+/* ============================
+   PRODUCT IMAGE POPUP
+============================ */
+
+const productImages = document.querySelectorAll(".card img");
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const closeImage = document.querySelector(".close-image");
+
+if(productImages.length){
+    productImages.forEach(img=>{
+
+        img.style.cursor="zoom-in";
+
+        img.addEventListener("click",()=>{
+
+            imageModal.style.display="flex";
+            modalImage.src=img.src;
+
+        });
+
+    });
+}
+
+if(closeImage){
+
+    closeImage.addEventListener("click",()=>{
+
+        imageModal.style.display="none";
+
+    });
+
+}
+
+window.addEventListener("click",(e)=>{
+
+    if(e.target===imageModal){
+
+        imageModal.style.display="none";
+
+    }
+
+});
