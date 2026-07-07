@@ -1231,3 +1231,32 @@ color:#14532d;
     color:#666;
     line-height:1.8;
 }
+/* Product Gallery */
+
+.gallery-section{
+    padding:80px 8%;
+}
+
+.gallery-section h2{
+    text-align:center;
+    color:#14532d;
+    margin-bottom:40px;
+}
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.gallery img{
+    width:100%;
+    border-radius:16px;
+    box-shadow:0 10px 25px rgba(0,0,0,.12);
+    transition:.3s;
+    cursor:pointer;
+}
+
+.gallery img:hover{
+    transform:scale(1.03);
+}
