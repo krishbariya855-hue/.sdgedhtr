@@ -400,3 +400,43 @@ nav{
     line-height:1.6;
     font-size:15px;
 }
+/* ===============================
+   STATISTICS SECTION
+================================ */
+
+.stats-section{
+    padding:80px 8%;
+    background:#14532d;
+}
+
+.stats-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+}
+
+.stat-box{
+    background:rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.15);
+    border-radius:15px;
+    padding:35px 20px;
+    text-align:center;
+    transition:.3s;
+}
+
+.stat-box:hover{
+    transform:translateY(-8px);
+    background:rgba(255,255,255,.15);
+}
+
+.stat-box h2{
+    color:#FFD700;
+    font-size:42px;
+    margin-bottom:10px;
+    font-weight:700;
+}
+
+.stat-box p{
+    color:#ffffff;
+    font-size:18px;
+}
