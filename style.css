@@ -1260,3 +1260,31 @@ color:#14532d;
 .gallery img:hover{
     transform:scale(1.03);
 }
+/* ==========================
+   PRODUCT SEARCH
+========================== */
+
+.search-box{
+    max-width:550px;
+    margin:30px auto 45px;
+    background:#fff;
+    border-radius:50px;
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.search-box i{
+    color:#14532d;
+    font-size:18px;
+}
+
+.search-box input{
+    width:100%;
+    border:none;
+    outline:none;
+    padding:16px;
+    font-size:16px;
+    background:transparent;
+}
