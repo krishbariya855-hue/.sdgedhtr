@@ -13,20 +13,8 @@ let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
 document.addEventListener("DOMContentLoaded", () => {
     
     // UI Elements
-    const cartIcon = document.getElementById("cart-icon-nav");
-    const cartSidebar = document.getElementById("cart-sidebar");
-    const cartOverlay = document.getElementById("cart-overlay");
-    const closeCart = document.getElementById("close-cart");
-    const cartItemsContainer = document.getElementById("cart-items-container");
-    const cartCount = document.getElementById("cart-count");
-    const cartTotal = document.getElementById("cart-total-amount");
-    const checkoutBtn = document.getElementById("whatsapp-checkout-btn");
-    const menuToggle = document.getElementById("menu-toggle");
-    const navbar = document.getElementById("navbar");
-    const backToTop = document.getElementById("backToTop");
-
-    // ===========================================
-    // SHOPPING CART SYSTEMS
+   // ===========================================
+    // UPGRADED SHOPPING CART INTERFACE ENGINE
     // ===========================================
     
     function closeCartPanel() {
@@ -62,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const price = Number(option.dataset.price);
             const key = id + "-" + weight;
 
-            // Check if item variant already exists in cart array
             const existingItem = cart.find(item => item.key === key);
             if (existingItem) {
                 existingItem.quantity++;
@@ -77,6 +64,163 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
+            localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+            updateCartUI();
+
+            if (cartSidebar && cartOverlay) {
+                cartSidebar.classList.add("open");
+                cartOverlay.classList.add("show");
+            }
+        });
+    });
+
+    // Unified UI Tracker & Button Injector (Fixes the ₹0 Bug)
+    function updateCartUI() {
+        if (!cartItemsContainer) return;
+        cartItemsContainer.innerHTML = "";
+
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        // Calculate totals first
+        cart.forEach((item) => {
+            totalItems += item.quantity;
+            totalPrice += item.price * item.quantity;
+        });
+
+        // Sync Nav Counter
+        if (cartCount) cartCount.textContent = totalItems;
+
+        // Render Cart items list
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+            if (cartSidebar) {
+                const cartFooter = cartSidebar.querySelector(".cart-footer");
+                if (cartFooter) {
+                    cartFooter.innerHTML = `
+                        <div class="cart-total-row">
+                            <span>Estimated Total:</span>
+                            <span id="cart-total-amount">₹0</span>
+                        </div>
+                    `;
+                }
+            }
+            return;
+        }
+
+        cart.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.innerHTML = `
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>${item.weight}</p>
+                    <p>Qty: ${item.quantity}</p>
+                    <p><strong>₹${item.price * item.quantity}</strong></p>
+                </div>
+                <button class="remove-item-btn" data-index="${index}">Remove</button>
+            `;
+            cartItemsContainer.appendChild(div);
+        });
+
+        // Dynamically rebuild the footer with the CORRECT price math totals injected
+        if (cartSidebar) {
+            const cartFooter = cartSidebar.querySelector(".cart-footer");
+            if (cartFooter) {
+                cartFooter.innerHTML = `
+                    <div class="cart-total-row">
+                        <span>Estimated Total:</span>
+                        <span id="cart-total-amount">₹${totalPrice}</span>
+                    </div>
+                    <div class="payment-selector-wrapper">
+                        <button id="upi-checkout-btn" class="checkout-btn-premium btn-upi-checkout">
+                            ⚡ Pay Instant via UPI (GPay/PhonePe)
+                        </button>
+                        <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-intl-checkout">
+                            🌐 Request International Export Invoice
+                        </button>
+                    </div>
+                `;
+            }
+        }
+    }
+
+    // Helper to generate text receipt strings
+    function generateOrderString() {
+        let orderDetails = "";
+        let total = 0;
+        cart.forEach((item, i) => {
+            const amount = item.price * item.quantity;
+            total += amount;
+            orderDetails += `${i + 1}. ${item.name}\n`;
+            orderDetails += `   Weight: ${item.weight}\n`;
+            orderDetails += `   Quantity: ${item.quantity}\n`;
+            orderDetails += item.price === 0 ? "   Price: Bulk Order Inquiry\n\n" : `   Amount: ₹${amount}\n\n`;
+        });
+        return { orderDetails, total };
+    }
+
+    // Handle Item Deletion Events
+    if (cartItemsContainer) {
+        cartItemsContainer.addEventListener("click", (e) => {
+            if (e.target.classList.contains("remove-item-btn")) {
+                const index = parseInt(e.target.dataset.index);
+                cart.splice(index, 1);
+                localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+                updateCartUI();
+            }
+        });
+    }
+
+    // ROUTE 1: UPI Button Action Handler (Locked to moddyroy4@okaxis)
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "upi-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const { orderDetails, total } = generateOrderString();
+            
+            // Fixed Configuration Details linked to Axis Account
+            const upiAddress = "moddyroy4@okaxis"; 
+            const merchantName = "MAHIVERSE GLOBLE";
+            const transactionNote = encodeURIComponent(`Mahiverse Globle Order Purchase`);
+            
+            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${transactionNote}`;
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am completing my payment order via UPI:\n\n${orderDetails}Total Amount Paid: ₹${total}\n\nTransaction target opened: ${upiUrl}\n\nPlease verify settlement status and confirm shipping. Thank you!`;
+            
+            // Fire native UPI intent routing links
+            window.open(upiUrl, "_self");
+            
+            // Redirect smoothly to WhatsApp order matching desk after 1 second delay
+            setTimeout(() => {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+            }, 1000);
+        }
+    });
+
+    // ROUTE 2: WhatsApp Manual Invoice Action Handler
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "whatsapp-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const { orderDetails, total } = generateOrderString();
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n${orderDetails}`;
+            message += `Estimated Order Total: ₹${total}\n\n`;
+            message += "Please confirm availability, bulk terms, and payment invoice details. Thank you!";
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+    });
+
+    // Initial load mount run
+    updateCartUI();
             localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
             updateCartUI();
 
