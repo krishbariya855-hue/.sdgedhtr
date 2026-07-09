@@ -44,19 +44,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Add To Cart Operations
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+    // Add To Cart Operations - Multi-Page Bulletproof Edition
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
         button.addEventListener("click", () => {
-            const card = button.closest(".card") || button.closest(".single-details");
+            // Check both standard grid cards and individual product presentation panels
+            const card = button.closest(".card") || button.closest(".single-details") || button.closest(".single-product");
             if (!card) return;
 
-            const id = card.dataset.id;
-            const name = card.dataset.name;
-            const select = card.querySelector(".weight-select");
+            const id = card.dataset.id || "onion-powder-premium";
+            const name = card.dataset.name || "Premium Dehydrated Red Onion Powder";
             
-            if (!select) return;
+            // Try every possible selector layout to grab the drop-down menu element securely
+            const select = card.querySelector(".weight-select") || 
+                           card.querySelector("#weightSelect") || 
+                           document.getElementById("weightSelect");
+            
+            if (!select) {
+                console.error("Critical Error: Dropdown selection element could not be targeted.");
+                return;
+            }
+            
             const weight = select.value;
             const option = select.options[select.selectedIndex];
-            const price = Number(option.dataset.price);
+            const price = Number(option.getAttribute("data-price") || option.dataset.price);
             const key = id + "-" + weight;
 
             const existingItem = cart.find(item => item.key === key);
@@ -73,6 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
 
+            localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+            updateCartUI();
+
+            if (cartSidebar && cartOverlay) {
+                cartSidebar.classList.add("open");
+                cartOverlay.classList.add("show");
+            }
+        });
+    });
             localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
             updateCartUI();
 
