@@ -991,13 +991,74 @@ section {
     color: #14532d;
 }
 
+/* ===========================================
+   UPGRADED CHECKOUT & PAYMENT SELECTION SELECTORS
+=========================================== */
+.cart-footer {
+    padding: 25px;
+    border-top: 1px solid #f3ede2;
+    background: #faf8f4;
+}
+
+.cart-total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c1a04;
+    margin-bottom: 20px;
+}
+
+#cart-total-amount {
+    color: #14532d;
+}
+
+/* Payment Gateway Selector Layout */
+.payment-selector-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 5px;
+}
+
 .checkout-btn-premium {
     width: 100%;
-    background: #14532d;
-    color: #fff;
     border: none;
     cursor: pointer;
+    padding: 15px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+/* Domestic UPI Dynamic Intent Button */
+.btn-upi-checkout {
+    background: #14532d;
+    color: #ffffff;
     box-shadow: 0 4px 15px rgba(20, 83, 45, 0.15);
+}
+
+.btn-upi-checkout:hover {
+    background: #1b6b3a;
+    transform: translateY(-2px);
+}
+
+/* International Corporate Invoice Button */
+.btn-intl-checkout {
+    background: #ffffff;
+    color: #14532d;
+    border: 2px solid #14532d;
+}
+
+.btn-intl-checkout:hover {
+    background: rgba(20, 83, 45, 0.05);
+    transform: translateY(-2px);
+}
 }
 
 .checkout-btn-premium:hover {
