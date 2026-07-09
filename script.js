@@ -172,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return { orderDetails, total };
     }
 
-    // Handle Active Item Removals
+    // Handle Active Item Removals via Delegation
     if (cartItemsContainer) {
         cartItemsContainer.addEventListener("click", (e) => {
             if (e.target.classList.contains("remove-item-btn")) {
@@ -207,4 +207,117 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Launch corresponding tracking confirmation message context window
             setTimeout(() => {
-                window.open(
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+            }, 1000);
+        }
+    });
+
+    // ROUTE 2: WhatsApp Manual Invoice / Export Option
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "whatsapp-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const { orderDetails, total } = generateOrderString();
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n${orderDetails}`;
+            message += `Estimated Order Total: ₹${total}\n\n`;
+            message += "Please confirm availability, bulk terms, and payment invoice details. Thank you!";
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+    });
+
+    // Initial mount initialization execution
+    updateCartUI();
+
+    // ===========================================
+    // NAVIGATION & INTERFACE HOOKS
+    // ===========================================
+    if (menuToggle && navbar) {
+        menuToggle.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+        });
+    }
+
+    if (backToTop) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = "flex";
+                backToTop.style.justifyContent = "center";
+                backToTop.style.alignItems = "center";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+    // ===========================================
+    // PREMIUM IMAGE POPUP MODAL
+    // ===========================================
+    const productImages = document.querySelectorAll(".card img, .product-img-container img");
+    const imageModal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeImage = document.querySelector(".close-image");
+
+    if (productImages.length && imageModal && modalImage) {
+        productImages.forEach(img => {
+            img.style.cursor = "zoom-in";
+            img.addEventListener("click", () => {
+                imageModal.style.display = "flex";
+                modalImage.src = img.src;
+            });
+        });
+    }
+
+    if (closeImage && imageModal) {
+        closeImage.addEventListener("click", () => {
+            imageModal.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", (e) => {
+        if (imageModal && e.target === imageModal) {
+            imageModal.style.display = "none";
+        }
+    });
+
+});
+
+// ===========================================
+// PERFORMANCE LOAD TIMERS
+// ===========================================
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    if (loader) {
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 500);
+    }
+});
+
+// Scroll Reveal Intersection Matrix
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.1 });
+
+const hiddenElements = document.querySelectorAll(
+    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
+);
+
+hiddenElements.forEach((el) => {
+    el.classList.add("hidden");
+    observer.observe(el);
+});
