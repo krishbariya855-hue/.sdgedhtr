@@ -402,6 +402,7 @@ section {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    transition: all 0.3s ease;
 }
 
 .card:hover {
@@ -798,66 +799,9 @@ section {
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     z-index: 9999;
-    display: none; /* Controlled via JS toggles */
+    display: none;
 }
 
-/* ===========================================
-   RESPONSIVE LAYOUT RESPONSIVENESS
-=========================================== */
-@media (max-width: 992px) {
-    .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-    }
-    .hero-text p {
-        margin: 0 auto 35px;
-    }
-    .hero-actions {
-        justify-content: center;
-    }
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    .navbar {
-        display: none;
-        position: absolute;
-        top: 85px;
-        left: 0;
-        width: 100%;
-        background: #ffffff;
-        flex-direction: column;
-        padding: 25px 0;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        border-top: 1px solid #f3ede2;
-        gap: 0;
-    }
-    .navbar.active {
-        display: flex;
-    }
-    .navbar a {
-        width: 100%;
-        padding: 15px;
-        text-align: center;
-    }
-    .order-btn {
-        margin: 15px auto 0;
-        width: 80%;
-    }
-    .hero-text h1 {
-        font-size: 38px;
-    }
-    .section-header h2 {
-        font-size: 30px;
-    }
-}
 /* ===========================================
    PREMIUM CART SIDEBAR ENGINE DESIGN
 =========================================== */
@@ -883,7 +827,7 @@ section {
 .cart-sidebar {
     position: fixed;
     top: 0;
-    right: -420px; /* Hidden out of view by default */
+    right: -420px;
     width: 100%;
     max-width: 400px;
     height: 100%;
@@ -896,7 +840,7 @@ section {
 }
 
 .cart-sidebar.open {
-    right: 0; /* Smoothly slide into view */
+    right: 0;
 }
 
 .cart-header {
@@ -972,23 +916,63 @@ section {
     text-decoration: underline;
 }
 
-.cart-footer {
-    padding: 25px;
+/* ===========================================
+   PREMIUM CART SHIPPING FORM STYLES
+=========================================== */
+.cart-shipping-form {
+    padding: 20px 25px;
+    background: #ffffff;
     border-top: 1px solid #f3ede2;
-    background: #faf8f4;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.cart-total-row {
+.cart-shipping-form h3 {
+    font-size: 16px;
+    color: #14532d;
+    margin-bottom: 5px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group {
     display: flex;
-    justify-content: space-between;
-    font-size: 18px;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 12px;
     font-weight: 700;
     color: #2c1a04;
-    margin-bottom: 20px;
 }
 
-#cart-total-amount {
-    color: #14532d;
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: 'DM Sans', sans-serif;
+    color: #333;
+    background: #faf8f4;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: #14532d;
+    outline: none;
+    background: #ffffff;
+}
+
+.form-group textarea {
+    resize: none;
+    height: 70px;
 }
 
 /* ===========================================
@@ -1059,15 +1043,68 @@ section {
     background: rgba(20, 83, 45, 0.05);
     transform: translateY(-2px);
 }
-}
-
-.checkout-btn-premium:hover {
-    background: #1b6b3a;
-}
 
 .nav-cart-trigger {
     position: relative;
     font-weight: 600 !important;
+}
+
+/* ===========================================
+   RESPONSIVE LAYOUT RESPONSIVENESS
+=========================================== */
+@media (max-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+    .hero-text p {
+        margin: 0 auto 35px;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    .navbar {
+        display: none;
+        position: absolute;
+        top: 85px;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        flex-direction: column;
+        padding: 25px 0;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        border-top: 1px solid #f3ede2;
+        gap: 0;
+    }
+    .navbar.active {
+        display: flex;
+    }
+    .navbar a {
+        width: 100%;
+        padding: 15px;
+        text-align: center;
+    }
+    .order-btn {
+        margin: 15px auto 0;
+        width: 80%;
+    }
+    .hero-text h1 {
+        font-size: 38px;
+    }
+    .section-header h2 {
+        font-size: 30px;
+    }
 }
 
 /* Adjust layout on tiny mobile displays */
