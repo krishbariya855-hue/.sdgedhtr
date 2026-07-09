@@ -85,11 +85,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Unified UI Tracker & Dual Payment Button Injector
+    // Unified UI Tracker, Shipping Form Injector & Dynamic Button Sync
     function updateCartUI() {
         if (!cartItemsContainer) return;
         cartItemsContainer.innerHTML = "";
 
+        const formContainer = document.getElementById("cart-shipping-form-container");
         let totalItems = 0;
         let totalPrice = 0;
 
@@ -105,6 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Condition Check: Empty State Manifestation
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+            if (formContainer) formContainer.innerHTML = ""; // Clear form if empty
             if (cartSidebar) {
                 const cartFooter = cartSidebar.querySelector(".cart-footer");
                 if (cartFooter) {
@@ -135,6 +137,31 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItemsContainer.appendChild(div);
         });
 
+        // Inject Dynamic Shipping Details Form if present on the page layout
+        if (formContainer && !formContainer.querySelector(".cart-shipping-form")) {
+            formContainer.innerHTML = `
+                <div class="cart-shipping-form">
+                    <h3>📋 Delivery Information</h3>
+                    <div class="form-group">
+                        <label for="cust-name">Full Name *</label>
+                        <input type="text" id="cust-name" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-phone">Mobile Number *</label>
+                        <input type="tel" id="cust-phone" placeholder="Enter 10-digit mobile number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-email">Email ID *</label>
+                        <input type="email" id="cust-email" placeholder="name@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cust-address">Courier Shipping Address *</label>
+                        <textarea id="cust-address" placeholder="Flat/House No, Building, Street, City, State & Pincode" required></textarea>
+                    </div>
+                </div>
+            `;
+        }
+
         // Rebuild Dynamic Payment UI blocks with accurate math metrics
         if (cartSidebar) {
             const cartFooter = cartSidebar.querySelector(".cart-footer");
@@ -155,6 +182,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
             }
         }
+    }
+
+    // Input Validation Helper Modality
+    function getShippingDetails() {
+        const name = document.getElementById("cust-name")?.value.trim();
+        const phone = document.getElementById("cust-phone")?.value.trim();
+        const email = document.getElementById("cust-email")?.value.trim();
+        const address = document.getElementById("cust-address")?.value.trim();
+
+        if (!name || !phone || !email || !address) {
+            alert("Please fill out all delivery information fields before checking out!");
+            return null;
+        }
+        return { name, phone, email, address };
     }
 
     // Processing helpers to generate plain text receipts
@@ -184,7 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ROUTE 1: UPI Gateway Handler (Locked to Axis Bank VPA target)
+    // ROUTE 1: UPI Gateway Handler (Locked to Axis Bank VPA target with Address Capture)
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "upi-checkout-btn") {
             if (cart.length === 0) {
@@ -192,132 +233,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const shipping = getShippingDetails();
+            if (!shipping) return; // Halt script execution if form validation fails
+
             const { orderDetails, total } = generateOrderString();
             
             const upiAddress = "moddyroy4@okaxis"; 
             const merchantName = "MAHIVERSE GLOBLE";
-            const transactionNote = encodeURIComponent(`Mahiverse Globle Order Purchase`);
-            
-            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${transactionNote}`;
-            
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am completing my payment order via UPI:\n\n${orderDetails}Total Amount Paid: ₹${total}\n\nTransaction target opened: ${upiUrl}\n\nPlease verify settlement status and confirm shipping. Thank you!`;
-            
-            // Fire native operational app application context
-            window.open(upiUrl, "_self");
-            
-            // Launch corresponding tracking confirmation message context window
-            setTimeout(() => {
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-            }, 1000);
-        }
-    });
-
-    // ROUTE 2: WhatsApp Manual Invoice / Export Option
-    document.addEventListener("click", (e) => {
-        if (e.target && e.target.id === "whatsapp-checkout-btn") {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-
-            const { orderDetails, total } = generateOrderString();
-            
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n${orderDetails}`;
-            message += `Estimated Order Total: ₹${total}\n\n`;
-            message += "Please confirm availability, bulk terms, and payment invoice details. Thank you!";
-
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-        }
-    });
-
-    // Initial mount initialization execution
-    updateCartUI();
-
-    // ===========================================
-    // NAVIGATION & INTERFACE HOOKS
-    // ===========================================
-    if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-        });
-    }
-
-    if (backToTop) {
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTop.style.display = "flex";
-                backToTop.style.justifyContent = "center";
-                backToTop.style.alignItems = "center";
-            } else {
-                backToTop.style.display = "none";
-            }
-        });
-
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-
-    // ===========================================
-    // PREMIUM IMAGE POPUP MODAL
-    // ===========================================
-    const productImages = document.querySelectorAll(".card img, .product-img-container img");
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    const closeImage = document.querySelector(".close-image");
-
-    if (productImages.length && imageModal && modalImage) {
-        productImages.forEach(img => {
-            img.style.cursor = "zoom-in";
-            img.addEventListener("click", () => {
-                imageModal.style.display = "flex";
-                modalImage.src = img.src;
-            });
-        });
-    }
-
-    if (closeImage && imageModal) {
-        closeImage.addEventListener("click", () => {
-            imageModal.style.display = "none";
-        });
-    }
-
-    window.addEventListener("click", (e) => {
-        if (imageModal && e.target === imageModal) {
-            imageModal.style.display = "none";
-        }
-    });
-
-});
-
-// ===========================================
-// PERFORMANCE LOAD TIMERS
-// ===========================================
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    if (loader) {
-        loader.style.opacity = "0";
-        loader.style.visibility = "hidden";
-        setTimeout(() => {
-            loader.style.display = "none";
-        }, 500);
-    }
-});
-
-// Scroll Reveal Intersection Matrix
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
-    });
-}, { threshold: 0.1 });
-
-const hiddenElements = document.querySelectorAll(
-    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
-);
-
-hiddenElements.forEach((el) => {
-    el.classList.add("hidden");
-    observer.observe(el);
-});
+            const transactionNote = encode
