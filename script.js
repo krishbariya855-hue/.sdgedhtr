@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
     const closeCart = document.getElementById("close-cart");
-    const cartItemsContainer = document.getElementById("cart-items-container");
     const cartCount = document.getElementById("cart-count");
     const menuToggle = document.getElementById("menu-toggle");
     const navbar = document.getElementById("navbar");
@@ -41,14 +40,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
-    if (cartOverlay) chartOverlay?.addEventListener("click", closeCartPanel); // Safe fallback
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
     // Add To Cart Operations
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
         button.addEventListener("click", () => {
-            const card = button.closest(".card");
+            const card = button.closest(".card") || button.closest(".single-details");
             if (!card) return;
 
             const id = card.dataset.id;
@@ -87,8 +85,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Unified UI Tracker, Shipping Form Injector & Dynamic Button Sync
     function updateCartUI() {
-        if (!cartItemsContainer) return;
-        cartItemsContainer.innerHTML = "";
+        const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
+        if (!itemsContainer) return;
+        itemsContainer.innerHTML = "";
 
         const formContainer = document.getElementById("cart-shipping-form-container");
         let totalItems = 0;
@@ -103,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Condition Check: Empty State
         if (cart.length === 0) {
-            cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+            itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
             if (formContainer) formContainer.innerHTML = ""; 
             if (cartSidebar) {
                 const cartFooter = cartSidebar.querySelector(".cart-footer");
@@ -132,7 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <button class="remove-item-btn" data-index="${index}">Remove</button>
             `;
-            cartItemsContainer.appendChild(div);
+            itemsContainer.appendChild(div);
         });
 
         // Inject Dynamic Shipping Details Form safely
@@ -210,8 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return { orderDetails, total };
     }
 
-    if (cartItemsContainer) {
-        cartItemsContainer.addEventListener("click", (e) => {
+    const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
+    if (itemsContainer) {
+        itemsContainer.addEventListener("click", (e) => {
             if (e.target.classList.contains("remove-item-btn")) {
                 const index = parseInt(e.target.dataset.index);
                 cart.splice(index, 1);
@@ -258,120 +258,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ROUTE 2: WhatsApp Manual Invoice
     document.addEventListener("click", (e) => {
-        if (e.target && e.target.id === "whatsapp-checkout-btn") {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-
-            const shipping = getShippingDetails();
-            if (!shipping) return; 
-
-            const { orderDetails, total } = generateOrderString();
-            
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n`;
-            message += `📋 COURIER SHIPPING DETAILS:\n`;
-            message += `Name: ${shipping.name}\n`;
-            message += `Phone: ${shipping.phone}\n`;
-            message += `Email: ${shipping.email}\n`;
-            message += `Delivery Address: ${shipping.address}\n\n`;
-            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Estimated Order Total: ₹${total}\n\n`;
-            message += "Please confirm availability, bulk courier profiles, and payment invoice details. Thank you!";
-
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-        }
-    });
-
-    // Initial mount update run
-    updateCartUI();
-
-    // ===========================================
-    // NAVIGATION & INTERFACE HOOKS
-    // ===========================================
-    if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-        });
-    }
-
-    if (backToTop) {
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTop.style.display = "flex";
-                backToTop.style.justifyContent = "center";
-                backToTop.style.alignItems = "center";
-            } else {
-                backToTop.style.display = "none";
-            }
-        });
-
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-    }
-
-    // ===========================================
-    // PREMIUM IMAGE POPUP MODAL
-    // ===========================================
-    const productImages = document.querySelectorAll(".card img, .product-img-container img");
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    const closeImage = document.querySelector(".close-image");
-
-    if (productImages.length && imageModal && modalImage) {
-        productImages.forEach(img => {
-            img.style.cursor = "zoom-in";
-            img.addEventListener("click", () => {
-                imageModal.style.display = "flex";
-                modalImage.src = img.src;
-            });
-        });
-    }
-
-    if (closeImage && imageModal) {
-        closeImage.addEventListener("click", () => {
-            imageModal.style.display = "none";
-        });
-    }
-
-    window.addEventListener("click", (e) => {
-        if (imageModal && e.target === imageModal) {
-            imageModal.style.display = "none";
-        }
-    });
-
-});
-
-// ===========================================
-// PERFORMANCE LOAD TIMERS
-// ===========================================
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    if (loader) {
-        loader.style.opacity = "0";
-        loader.style.visibility = "hidden";
-        setTimeout(() => {
-            loader.style.display = "none";
-        }, 500);
-    }
-});
-
-// Scroll Reveal Matrix
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
-    });
-}, { threshold: 0.1 });
-
-const hiddenElements = document.querySelectorAll(
-    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
-);
-
-hiddenElements.forEach((el) => {
-    if(el) {
-        el.classList.add("hidden");
-        observer.observe(el);
-    }
-});
+        if (e.target &&
