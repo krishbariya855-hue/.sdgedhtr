@@ -12,7 +12,7 @@ let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
 // 2. DOM Content Loaded Dependent Sub-Systems
 document.addEventListener("DOMContentLoaded", () => {
     
-    // UI Elements Selector Matrix
+    // UI Elements Selector Matrix Safely Checked
     const cartIcon = document.getElementById("cart-icon-nav");
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
+    if (cartOverlay) chartOverlay?.addEventListener("click", closeCartPanel); // Safe fallback
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
     // Add To Cart Operations
@@ -77,7 +78,6 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
             updateCartUI();
 
-            // Auto reveal sidebar panel on successful item insertion
             if (cartSidebar && cartOverlay) {
                 cartSidebar.classList.add("open");
                 cartOverlay.classList.add("show");
@@ -94,19 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
         let totalItems = 0;
         let totalPrice = 0;
 
-        // Calculate layout totals first
         cart.forEach((item) => {
             totalItems += item.quantity;
             totalPrice += item.price * item.quantity;
         });
 
-        // Synchronize Top Navbar Counter Component
         if (cartCount) cartCount.textContent = totalItems;
 
-        // Condition Check: Empty State Manifestation
+        // Condition Check: Empty State
         if (cart.length === 0) {
             cartItemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
-            if (formContainer) formContainer.innerHTML = ""; // Clear form if empty
+            if (formContainer) formContainer.innerHTML = ""; 
             if (cartSidebar) {
                 const cartFooter = cartSidebar.querySelector(".cart-footer");
                 if (cartFooter) {
@@ -121,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Render Cart Array Stack Items
+        // Render Cart Items
         cart.forEach((item, index) => {
             const div = document.createElement("div");
             div.className = "cart-item";
@@ -137,7 +135,7 @@ document.addEventListener("DOMContentLoaded", () => {
             cartItemsContainer.appendChild(div);
         });
 
-        // Inject Dynamic Shipping Details Form if present on the page layout
+        // Inject Dynamic Shipping Details Form safely
         if (formContainer && !formContainer.querySelector(".cart-shipping-form")) {
             formContainer.innerHTML = `
                 <div class="cart-shipping-form">
@@ -162,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // Rebuild Dynamic Payment UI blocks with accurate math metrics
+        // Rebuild Dynamic Payment UI blocks
         if (cartSidebar) {
             const cartFooter = cartSidebar.querySelector(".cart-footer");
             if (cartFooter) {
@@ -198,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return { name, phone, email, address };
     }
 
-    // Processing helpers to generate plain text receipts
     function generateOrderString() {
         let orderDetails = "";
         let total = 0;
@@ -213,7 +210,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return { orderDetails, total };
     }
 
-    // Handle Active Item Removals via Delegation
     if (cartItemsContainer) {
         cartItemsContainer.addEventListener("click", (e) => {
             if (e.target.classList.contains("remove-item-btn")) {
@@ -225,7 +221,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ROUTE 1: UPI Gateway Handler (Locked to Axis Bank VPA target with Address Capture)
+    // ROUTE 1: UPI Gateway Handler
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "upi-checkout-btn") {
             if (cart.length === 0) {
@@ -234,10 +230,148 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const shipping = getShippingDetails();
-            if (!shipping) return; // Halt script execution if form validation fails
+            if (!shipping) return; 
 
             const { orderDetails, total } = generateOrderString();
             
             const upiAddress = "moddyroy4@okaxis"; 
             const merchantName = "MAHIVERSE GLOBLE";
-            const transactionNote = encode
+            const transactionNote = encodeURIComponent(`Mahiverse Globle Order Purchase`);
+            
+            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${transactionNote}`;
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am completing my payment order via UPI:\n\n`;
+            message += `📋 COURIER SHIPPING DETAILS:\n`;
+            message += `Name: ${shipping.name}\n`;
+            message += `Phone: ${shipping.phone}\n`;
+            message += `Email: ${shipping.email}\n`;
+            message += `Delivery Address: ${shipping.address}\n\n`;
+            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Total Amount Settled: ₹${total}\n\nUPI intent launched. Please verify transaction status. Thank you!`;
+            
+            window.open(upiUrl, "_self");
+            
+            setTimeout(() => {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+            }, 1000);
+        }
+    });
+
+    // ROUTE 2: WhatsApp Manual Invoice
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "whatsapp-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const shipping = getShippingDetails();
+            if (!shipping) return; 
+
+            const { orderDetails, total } = generateOrderString();
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n`;
+            message += `📋 COURIER SHIPPING DETAILS:\n`;
+            message += `Name: ${shipping.name}\n`;
+            message += `Phone: ${shipping.phone}\n`;
+            message += `Email: ${shipping.email}\n`;
+            message += `Delivery Address: ${shipping.address}\n\n`;
+            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Estimated Order Total: ₹${total}\n\n`;
+            message += "Please confirm availability, bulk courier profiles, and payment invoice details. Thank you!";
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+    });
+
+    // Initial mount update run
+    updateCartUI();
+
+    // ===========================================
+    // NAVIGATION & INTERFACE HOOKS
+    // ===========================================
+    if (menuToggle && navbar) {
+        menuToggle.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+        });
+    }
+
+    if (backToTop) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = "flex";
+                backToTop.style.justifyContent = "center";
+                backToTop.style.alignItems = "center";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+    // ===========================================
+    // PREMIUM IMAGE POPUP MODAL
+    // ===========================================
+    const productImages = document.querySelectorAll(".card img, .product-img-container img");
+    const imageModal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeImage = document.querySelector(".close-image");
+
+    if (productImages.length && imageModal && modalImage) {
+        productImages.forEach(img => {
+            img.style.cursor = "zoom-in";
+            img.addEventListener("click", () => {
+                imageModal.style.display = "flex";
+                modalImage.src = img.src;
+            });
+        });
+    }
+
+    if (closeImage && imageModal) {
+        closeImage.addEventListener("click", () => {
+            imageModal.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", (e) => {
+        if (imageModal && e.target === imageModal) {
+            imageModal.style.display = "none";
+        }
+    });
+
+});
+
+// ===========================================
+// PERFORMANCE LOAD TIMERS
+// ===========================================
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    if (loader) {
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 500);
+    }
+});
+
+// Scroll Reveal Matrix
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.1 });
+
+const hiddenElements = document.querySelectorAll(
+    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
+);
+
+hiddenElements.forEach((el) => {
+    if(el) {
+        el.classList.add("hidden");
+        observer.observe(el);
+    }
+});
