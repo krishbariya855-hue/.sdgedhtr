@@ -140,33 +140,91 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Premium Formatted WhatsApp Checkout Engine
-    if (checkoutBtn) {
-        checkoutBtn.addEventListener("click", () => {
+ // Premium Dual-Route Checkout Engine (Domestic UPI & International Export)
+    if (cartItemsContainer) {
+        // Find the checkout container or footer to place buttons dynamically
+        const cartFooter = document.querySelector(".cart-footer");
+        
+        if (cartFooter) {
+            // Replace old single button layout with clean dual selector container
+            cartFooter.innerHTML = `
+                <div class="cart-total-row">
+                    <span>Estimated Total:</span>
+                    <span id="cart-total-amount">₹0</span>
+                </div>
+                <div class="payment-selector-wrapper">
+                    <button id="upi-checkout-btn" class="checkout-btn-premium btn-upi-checkout">
+                        ⚡ Pay Instant via UPI (GPay/PhonePe)
+                    </button>
+                    <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-intl-checkout">
+                        🌐 Request International Export Invoice
+                    </button>
+                </div>
+            `;
+        }
+    }
+
+    // Function to process cart data into message strings
+    function generateOrderString() {
+        let orderDetails = "";
+        let total = 0;
+        cart.forEach((item, i) => {
+            const amount = item.price * item.quantity;
+            total += amount;
+            orderDetails += `${i + 1}. ${item.name}\n`;
+            orderDetails += `   Weight: ${item.weight}\n`;
+            orderDetails += `   Quantity: ${item.quantity}\n`;
+            orderDetails += item.price === 0 ? "   Price: Bulk Order Inquiry\n\n" : `   Amount: ₹${amount}\n\n`;
+        });
+        return { orderDetails, total };
+    }
+
+    // Action ROUTE 1: UPI Gateway Handler
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "upi-checkout-btn") {
             if (cart.length === 0) {
                 alert("Your cart is empty!");
                 return;
             }
 
-            let message = "Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order:\n\n";
-            let total = 0;
+            const { orderDetails, total } = generateOrderString();
+            
+            // Generate standard UPI merchant link configuration
+            const upiAddress = "mahiversegloble@gmail.com"; 
+            const merchantName = "MAHIVERSE GLOBLE";
+            const transactionNote = encodeURIComponent(`Order Delivery Purchase`);
+            
+            // Standardizing the mobile deep-linking protocol string
+            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${transactionNote}`;
+            
+            // Logically route order metrics straight to WhatsApp verification window
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI just initiated an instant UPI payment transaction:\n\n${orderDetails}Estimated Order Total: ₹${total}\n\nApp Transaction Link Opened: ${upiUrl}\n\nPlease verify settlement status and confirm shipping tracking details. Thank you!`;
+            
+            // Fire both execution contexts
+            window.open(upiUrl, "_self"); // Fires native local processing app directly on customer's phone
+            setTimeout(() => {
+                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+            }, 1000);
+        }
+    });
 
-            cart.forEach((item, i) => {
-                const amount = item.price * item.quantity;
-                total += amount;
-                message += `${i + 1}. ${item.name}\n`;
-                message += `   Weight: ${item.weight}\n`;
-                message += `   Quantity: ${item.quantity}\n`;
-                message += item.price === 0 ? "   Price: Bulk Order Inquiry\n\n" : `   Amount: ₹${amount}\n\n`;
-            });
+    // Action ROUTE 2: Export Invoice Handler
+    document.addEventListener("click", (e) => {
+        if (e.target && e.target.id === "whatsapp-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
 
+            const { orderDetails, total } = generateOrderString();
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following international export/bulk order request:\n\n${orderDetails}`;
             message += `Estimated Order Total: ₹${total}\n\n`;
-            message += "Please confirm availability, shipping profiles, and payment details. Thank you!";
+            message += "Please confirm availability, custom packaging profiles, and commercial shipping payment details. Thank you!";
 
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-        });
-    }
-
+        }
+    });
     // Initialize UI Sync on Mount
     updateCartUI();
 
