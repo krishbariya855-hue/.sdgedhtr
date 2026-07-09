@@ -25,14 +25,16 @@
       <div id="cart-items-container" class="cart-items-body">
           <p class="empty-msg">Your cart is currently empty.</p>
       </div>
+      
+      <!-- Live Interactive Delivery Form Node Target -->
+      <div id="cart-shipping-form-container"></div>
+      
       <div class="cart-footer">
           <div class="cart-total-row">
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
-          <button id="whatsapp-checkout-btn" class="btn checkout-btn-premium">
-              Proceed to WhatsApp Verification
-          </button>
+          <!-- Buttons dynamically controlled by updateCartUI in script.js -->
       </div>
   </div>
 
@@ -72,29 +74,53 @@
       </div>
       <div class="product-grid">
           
-          <!-- Garlic Product Card -->
-          <div class="card">
+          <!-- Interactive Garlic Product Card -->
+          <div class="card" data-id="garlic-powder-premium" data-name="Premium Dehydrated Garlic Powder">
               <div class="product-img-container">
                   <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase">
               </div>
               <span class="product-badge">Grade A Export</span>
               <h3>Dehydrated Premium Garlic Powder</h3>
               <p>Deeply aromatic, rich consistency, ideal for gourmet seasonings, commercial spice mixes, and restaurant bases.</p>
-              <div class="card-footer">
-                  <a href="garlic-powder.html" class="btn btn-card">View Options & Order</a>
+              
+              <!-- Weight Variant Selection Dropdown -->
+              <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                  <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                      <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
+                      <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
+                      <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
+                      <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                  </select>
+              </div>
+              
+              <div class="card-footer" style="width: 100%;">
+                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;">🛒 Add to Cart</button>
+                  <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
               </div>
           </div>
           
-          <!-- Onion Product Card -->
-          <div class="card">
+          <!-- Interactive Onion Product Card -->
+          <div class="card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
               <div class="product-img-container">
                   <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase">
               </div>
               <span class="product-badge">Grade A Export</span>
               <h3>Dehydrated Premium Red Onion Powder</h3>
               <p>Sweet pungent aroma notes, flawless flow distribution profile perfect for snack coating drums and large culinary operations.</p>
-              <div class="card-footer">
-                  <a href="onion-powder.html" class="btn btn-card">View Options & Order</a>
+              
+              <!-- Weight Variant Selection Dropdown -->
+              <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                  <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                      <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
+                      <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
+                      <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
+                      <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                  </select>
+              </div>
+
+              <div class="card-footer" style="width: 100%;">
+                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;">🛒 Add to Cart</button>
+                  <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
               </div>
           </div>
 
