@@ -1,103 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/jpeg" href="logo.png.jpeg">
-    <meta name="description" content="MAHIVERSE GLOBLE - Premium Garlic Powder and Red Onion Powder. 100% Natural, Fresh, High Quality Spices.">
-
-<meta name="keywords" content="Garlic Powder, Onion Powder, Premium Spices, Indian Spices, Mahiverse Globle">
-
-<meta name="author" content="MAHIVERSE GLOBLE">
-
-<meta name="robots" content="index, follow">
-
-<link rel="canonical" href="https://www.mahiversegloble.com/">
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-J3L6NB28Y2"></script>
-   
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-J3L6NB28Y2');
-</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us | Mahiverse Globle</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Open Graph -->
-<meta property="og:title" content="MAHIVERSE GLOBLE">
-<meta property="og:description" content="Premium Garlic Powder & Red Onion Powder">
-<meta property="og:image" content="https://www.mahiversegloble.com/logo.png.jpeg">
-<meta property="og:url" content="https://www.mahiversegloble.com/">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="MAHIVERSE GLOBLE">
-    <!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MAHIVERSE GLOBLE">
-<meta name="twitter:description" content="Premium Garlic Powder & Red Onion Powder">
-<meta name="twitter:image" content="https://www.mahiversegloble.com/logo.png.jpeg">
-   
-</script> 
-    <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"MAHIVERSE GLOBLE",
-  "url":"https://www.mahiversegloble.com",
-  "logo":"https://www.mahiversegloble.com/logo.png.jpeg",
-  "email":"mailto:mahiversegloble@gmail.com",
-  "telephone":"+91-6354179230",
-  "sameAs":[]
-}
-</script>
-    <script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"WebSite",
-  "name":"MAHIVERSE GLOBLE",
-  "url":"https://www.mahiversegloble.com"
-}
-</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Our Enterprise | MAHIVERSE GLOBLE</title>
+  <link rel="icon" type="image/jpeg" href="logo.png.jpeg">
+  <meta name="description" content="Discover the story of MAHIVERSE GLOBLE. Sourcing premium agricultural derivatives and export-grade spices directly from India for global markets.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style-v3.css">
 </head>
 <body>
-<header class="header">
-    <div class="container nav-container">
 
-        <a href="index.html" class="logo">
-            MAHIVERSE <span>GLOBLE</span>
-        </a>
+  <!-- Premium Cart Sidebar Interface -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+      <div class="cart-header">
+          <h2>Your Selection</h2>
+          <button id="close-cart" class="close-cart-btn">✕</button>
+      </div>
+      <div id="cart-items-container" class="cart-items-body">
+          <p class="empty-msg">Your cart is currently empty.</p>
+      </div>
+      <div class="cart-footer">
+          <div class="cart-total-row">
+              <span>Estimated Total:</span>
+              <span id="cart-total-amount">₹0</span>
+          </div>
+          <button id="whatsapp-checkout-btn" class="btn checkout-btn-premium">
+              Proceed to WhatsApp Verification
+          </button>
+      </div>
+  </div>
 
-        <nav class="navbar">
-            <a href="index.html">Home</a>
-            <a href="products.html">Products</a>
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact</a>
+  <!-- Header Section -->
+  <header class="header">
+      <div class="container nav-container">
+          <a href="index.html" class="logo">MAHIVERSE <span>GLOBLE</span></a>
+          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <nav class="navbar" id="navbar">
+              <a href="index.html">Home</a>
+              <a href="products.html">Products</a>
+              <a href="about.html" class="active">About Us</a>
+              <a href="contact.html">Contact</a>
+              <a href="#" id="cart-icon-nav" class="nav-cart-trigger">
+                  🛒 Cart (<span id="cart-count">0</span>)
+              </a>
+              <a href="https://wa.me/916354179230" target="_blank" class="order-btn">Order Now</a>
+          </nav>
+      </div>
+  </header>
 
-            <a href="https://wa.me/916354179230" target="_blank" class="order-btn">
-                Order Now
-            </a>
-        </nav>
+  <!-- About Hero Banner Section -->
+  <section class="product-hero" style="background: linear-gradient(rgba(20, 83, 45, 0.9), rgba(20, 83, 45, 0.9)), url('garlic-farm.webp (1).jpg'); background-size: cover; background-position: center; padding: 100px 0; color: #fff; text-align: center;">
+      <div class="container">
+          <h1 style="font-size: 46px; margin-bottom: 15px; color: #fff;">Our Global Mission</h1>
+          <p style="max-width: 700px; margin: auto; font-size: 18px; color: #e1ede4; line-height: 1.7;">
+              Bridging premier Indian agricultural belts to global distribution networks with absolute purity and uncompromising export quality.
+          </p>
+      </div>
+  </section>
 
-    </div>
-</header>
-<section class="about" style="min-height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 60px 8%;">
-    <h2>About Mahiverse Globle</h2>
-    <p style="font-size: 18px; color: #555; max-width: 700px; margin-bottom: 20px; text-align: center;">
-        At Mahiverse Globle, we are deeply committed to bringing premium quality spices straight to your kitchen. We focus entirely on purity, freshness, and bringing out authentic traditional tastes without any artificial enhancements.
-    </p>
-    <p style="font-size: 16px; color: #666; max-width: 700px; text-align: center;">
-        Every single grain of our premium garlic powder and red onion powder goes through meticulous processing and strict quality checks, ensuring that your culinary creations always possess a rich, aromatic, and exceptional profile.
-    </p>
-</section>
+  <!-- Deep Corporate Profile Section -->
+  <section class="about-brief" style="background: #ffffff; color: #2b2b2b; padding: 90px 0; text-align: left;">
+      <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+          <div class="about-text-content">
+              <span class="tagline" style="color: #14532d; font-weight: 700; text-transform: uppercase; font-size: 13px; letter-spacing: 2px;">Who We Are</span>
+              <h2 style="font-size: 36px; color: #2c1a04; margin: 15px 0 25px; font-family: 'Playfair Display', serif;">The Standard of Pure Pulverized Spices</h2>
+              <p style="color: #555; font-size: 16px; margin-bottom: 20px; line-height: 1.8;">
+                  MAHIVERSE GLOBLE is committed to processing premium variations of high-aroma dehydrated onion and garlic powders. Sourced directly from sustainably managed, nutrient-rich agricultural landscapes across India, we prioritize structural cleanliness, uniform mesh processing, and absolute batch hygiene.
+              </p>
+              <p style="color: #555; font-size: 16px; line-height: 1.8;">
+                  From strict domestic culinary demands to massive international volume container shipments, our infrastructure is built to ensure consistent moisture-locked purity, preserving the intense flavor essence of natural agricultural spices from farm to global table.
+              </p>
+          </div>
+          <div class="about-image-wrapper">
+              <img src="garlic-lifestyle.webp.jpg" alt="Premium Quality Sourced Ingredients" style="border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.06); width: 100%;">
+          </div>
+      </div>
+  </section>
 
-<footer>
-    <p>© 2026 Mahiverse Globle. All Rights Reserved.</p>
-</footer>
+  <!-- Grid Sourcing Pillars Layout -->
+  <section class="trust-section" style="background: #faf8f4;">
+      <div class="section-header">
+          <h2>Our Operational Pillars</h2>
+          <p>The core disciplines driving our export supply stability.</p>
+      </div>
+      <div class="trust-container">
+          <div class="trust-box" style="background: #ffffff;">
+              <span class="icon">🌾</span>
+              <h3>Ethical Sourcing</h3>
+              <p>Direct supply partnerships with regional farmers ensuring optimal raw crop grade selection.</p>
+          </div>
+          <div class="trust-box" style="background: #ffffff;">
+              <span class="icon">🔬</span>
+              <h3>Quality Validation</h3>
+              <p>Zero tolerance for clumping agents, industrial fillers, or artificial coloration targets.</p>
+          </div>
+          <div class="trust-box" style="background: #ffffff;">
+              <span class="icon">🌐</span>
+              <h3>Global Logistics</h3>
+              <p>Structured export alignment to coordinate timely maritime and domestic freight shipping workflows smoothly.</p>
+          </div>
+      </div>
+  </section>
 
-<script src="script.js"></script>
+  <!-- Corporate Unified Footer -->
+  <footer class="footer">
+      <div class="container footer-container">
+          <div class="footer-box brand-box">
+              <h2>MAHIVERSE <span>GLOBLE</span></h2>
+              <p>Premium Grade Agricultural Derivatives & Pulverized Spices crafted to global export protocols.</p>
+          </div>
+          <div class="footer-box links-box">
+              <h3>Navigation Links</h3>
+              <a href="index.html">Home</a>
+              <a href="products.html">Products</a>
+              <a href="about.html">About Us</a>
+              <a href="contact.html">Contact Us</a>
+          </div>
+          <div class="footer-box contact-box">
+              <h3>Corporate Info</h3>
+              <p>📞 +91 6354179230</p>
+              <p>📧 mahiversegloble@gmail.com</p>
+          </div>
+      </div>
+      <div class="footer-bottom">
+          <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
+      </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
