@@ -837,8 +837,11 @@ section {
     display: flex;
     flex-direction: column;
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* FIX INJECTED HERE: Enforces structural internal scrolling */
+    overflow-y: auto; 
+    max-height: 100vh;
 }
-
 .cart-sidebar.open {
     right: 0;
 }
