@@ -8,7 +8,7 @@ console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
 // 1. Global Configurations
 const WHATSAPP_NUMBER = "916354179230";
 let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
-let activeStep = 1; // Track wizard state: 1 = View Cart / Details Form, 2 = Summary & Payment
+let activeStep = 1; // 1 = View Cart & Address, 2 = Summary & Payment
 
 // GLOBALLY EXPOSED TRIGGER: Inline markup action path handlers
 window.addToCartDirect = function(productId, productName) {
@@ -44,8 +44,7 @@ window.addToCartDirect = function(productId, productName) {
 
     localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
     
-    // Default to Step 1 screen presentation frame when loading new choices
-    activeStep = 1;
+    activeStep = 1; // Force Step 1 screen reset on new addition
     updateCartUI();
 
     const cartSidebar = document.getElementById("cart-sidebar");
@@ -59,7 +58,6 @@ window.addToCartDirect = function(productId, productName) {
 // Wizard Tab Visibility Controller
 window.setCheckoutStep = function(stepNumber) {
     if (stepNumber === 2) {
-        // Validate shipping input fields first before advancing the screen frame layout
         const name = document.getElementById("cust-name")?.value.trim();
         const phone = document.getElementById("cust-phone")?.value.trim();
         const email = document.getElementById("cust-email")?.value.trim();
@@ -69,12 +67,18 @@ window.setCheckoutStep = function(stepNumber) {
             alert("Please fill out all delivery information fields before moving to payment channels!");
             return;
         }
+        
+        // Save form inputs temporarily to localStorage so they survive the step toggle render
+        localStorage.setItem("temp_cust_name", name);
+        localStorage.setItem("temp_cust_phone", phone);
+        localStorage.setItem("temp_cust_email", email);
+        localStorage.setItem("temp_cust_address", address);
     }
     activeStep = stepNumber;
     updateCartUI();
 };
 
-// Unified UI Tracker, Shipping Form Injector & Two-Step Frame Engine
+// Unified UI Tracker & Two-Step Render Engine
 function updateCartUI() {
     const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
     if (!itemsContainer) return;
@@ -93,7 +97,6 @@ function updateCartUI() {
     const cartCount = document.getElementById("cart-count");
     if (cartCount) cartCount.textContent = totalItems;
 
-    // Empty State Check
     if (cart.length === 0) {
         itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
         if (formContainer) formContainer.innerHTML = ""; 
@@ -111,9 +114,8 @@ function updateCartUI() {
         return;
     }
 
-    // STEP 1 CONTENT VIEW ENGINE
+    // STEP 1 CONTENT VIEW: Cart Items + Blank Data Form
     if (activeStep === 1) {
-        // Render Chosen Product Summary Items List Row Metrics
         cart.forEach((item, index) => {
             const div = document.createElement("div");
             div.className = "cart-item";
@@ -128,32 +130,36 @@ function updateCartUI() {
             itemsContainer.appendChild(div);
         });
 
-        // Ensure the delivery information entry form is showing below selection items
-        if (formContainer && !formContainer.querySelector(".cart-shipping-form")) {
+        if (formContainer) {
+            // Restore field data parameters from temporary store values if they exist
+            const savedName = localStorage.getItem("temp_cust_name") || "";
+            const savedPhone = localStorage.getItem("temp_cust_phone") || "";
+            const savedEmail = localStorage.getItem("temp_cust_email") || "";
+            const savedAddress = localStorage.getItem("temp_cust_address") || "";
+
             formContainer.innerHTML = `
                 <div class="cart-shipping-form">
                     <h3>📋 Delivery Information</h3>
                     <div class="form-group">
                         <label for="cust-name">Full Name *</label>
-                        <input type="text" id="cust-name" placeholder="Enter your full name" required>
+                        <input type="text" id="cust-name" value="${savedName}" placeholder="Enter your full name" required>
                     </div>
                     <div class="form-group">
                         <label for="cust-phone">Mobile Number *</label>
-                        <input type="tel" id="cust-phone" placeholder="Enter 10-digit mobile number" required>
+                        <input type="tel" id="cust-phone" value="${savedPhone}" placeholder="Enter 10-digit mobile number" required>
                     </div>
                     <div class="form-group">
                         <label for="cust-email">Email ID *</label>
-                        <input type="email" id="cust-email" placeholder="name@email.com" required>
+                        <input type="email" id="cust-email" value="${savedEmail}" placeholder="name@email.com" required>
                     </div>
                     <div class="form-group">
                         <label for="cust-address">Courier Shipping Address *</label>
-                        <textarea id="cust-address" placeholder="Flat/House No, Building, Street, City, State & Pincode" required></textarea>
+                        <textarea id="cust-address" placeholder="Flat/House No, Building, Street, City, State & Pincode" required>${savedAddress}</textarea>
                     </div>
                 </div>
             `;
         }
 
-        // Render Wizard Next Window Control Anchor Trigger
         if (cartSidebar) {
             const cartFooter = cartSidebar.querySelector(".cart-footer");
             if (cartFooter) {
@@ -170,14 +176,12 @@ function updateCartUI() {
         }
     } 
     
-    // STEP 2 CONTENT VIEW ENGINE (Payment Window)
+    // STEP 2 CONTENT VIEW: Summary Preview Card + Payment Buttons
     else if (activeStep === 2) {
-        // Read out collected delivery fields safely
-        const name = document.getElementById("cust-name")?.value || "";
-        const phone = document.getElementById("cust-phone")?.value || "";
-        const address = document.getElementById("cust-address")?.value || "";
+        const name = localStorage.getItem("temp_cust_name") || "";
+        const phone = localStorage.getItem("temp_cust_phone") || "";
+        const address = localStorage.getItem("temp_cust_address") || "";
 
-        // Replace product rows list view with a condensed address header profile context summary layout card
         itemsContainer.innerHTML = `
             <div class="shipping-summary-profile">
                 <h4>📍 Shipping Summary Profile</h4>
@@ -188,10 +192,8 @@ function updateCartUI() {
             </div>
         `;
 
-        // Empty out input blocks to look perfectly packed and clean
         if (formContainer) formContainer.innerHTML = "";
 
-        // Inject active, operational check-out routing path option buttons into cart base wrapper viewport
         if (cartSidebar) {
             const cartFooter = cartSidebar.querySelector(".cart-footer");
             if (cartFooter) {
@@ -214,30 +216,6 @@ function updateCartUI() {
     }
 }
 
-// Input Field Parsing Logic
-function getShippingDetails() {
-    const name = document.getElementById("cust-name")?.value.trim();
-    const phone = document.getElementById("cust-phone")?.value.trim();
-    const email = document.getElementById("cust-email")?.value.trim();
-    const address = document.getElementById("cust-address")?.value.trim();
-
-    // If step 2 elements have wiped values out, fallback cleanly to reading text element summaries
-    if (activeStep === 2) {
-        return {
-            name: "Verified Customer Profile",
-            phone: "Attached to Order Document",
-            email: "Attached",
-            address: "Specified Destination"
-        };
-    }
-
-    if (!name || !phone || !email || !address) {
-        alert("Please fill out all delivery information fields before checking out!");
-        return null;
-    }
-    return { name, phone, email, address };
-}
-
 function generateOrderString() {
     let orderDetails = "";
     let total = 0;
@@ -252,7 +230,7 @@ function generateOrderString() {
     return { orderDetails, total };
 }
 
-// 2. DOM Content Loaded Dependent UI Observers
+// 2. DOM Content Loaded Observers & Handlers
 document.addEventListener("DOMContentLoaded", () => {
     const cartIcon = document.getElementById("cart-icon-nav");
     const cartSidebar = document.getElementById("cart-sidebar");
@@ -290,21 +268,27 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ROUTE 1: UPI Gateway Handler Execution Engine
+    // ROUTE 1: UPI Gateway Click Handler
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "upi-checkout-btn") {
             if (cart.length === 0) {
                 alert("Your cart is empty!");
                 return;
             }
+            
+            const name = localStorage.getItem("temp_cust_name") || "Customer";
+            const phone = localStorage.getItem("temp_cust_phone") || "";
+            const email = localStorage.getItem("temp_cust_email") || "";
+            const address = localStorage.getItem("temp_cust_address") || "";
 
             const { orderDetails, total } = generateOrderString();
             const upiAddress = "moddyroy4@okaxis"; 
             const merchantName = "MAHIVERSE GLOBLE";
             const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${encodeURIComponent('Mahiverse Order')}`;
             
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nAn instant UPI payment has been processed via checkout application desk framework.\n\n`;
-            message += `🛒 ORDER ITEM SELECTION MATRIX:\n${orderDetails}Total Amount Settled: ₹${total}\n\nPayment channel transaction target requested successfully. Please cross-reference status desk logs and issue delivery courier details. Thank you!`;
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nAn instant UPI payment has been processed:\n\n`;
+            message += `📋 COURIER SHIPPING DETAILS:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nAddress: ${address}\n\n`;
+            message += `🛒 ORDER PROFILE:\n${orderDetails}Total Amount Paid: ₹${total}`;
             
             window.open(upiUrl, "_self");
             setTimeout(() => {
@@ -313,7 +297,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ROUTE 2: WhatsApp Manual Invoice Export Engine
+    // ROUTE 2: WhatsApp Manual Invoice Click Handler
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "whatsapp-checkout-btn") {
             if (cart.length === 0) {
@@ -321,9 +305,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const name = localStorage.getItem("temp_cust_name") || "Customer";
+            const phone = localStorage.getItem("temp_cust_phone") || "";
+            const email = localStorage.getItem("temp_cust_email") || "";
+            const address = localStorage.getItem("temp_cust_address") || "";
+
             const { orderDetails, total } = generateOrderString();
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am forwarding an order validation invoice profile request.\n\n`;
-            message += `🛒 ORDER ITEM SELECTION MATRIX:\n${orderDetails}Estimated Cargo Valuation: ₹${total}\n\nPlease cross-reference terms and verify stock logistics dispatch dates. Thank you!`;
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to check an order invoice profile:\n\n`;
+            message += `📋 COURIER SHIPPING DETAILS:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nAddress: ${address}\n\n`;
+            message += `🛒 ORDER PROFILE:\n${orderDetails}Estimated Order Total: ₹${total}`;
 
             window.open(`https://wa.me/916354179230?text=${encodeURIComponent(message)}`, "_blank");
         }
