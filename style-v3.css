@@ -1196,3 +1196,11 @@ section {
 .btn-edit-profile-back:hover {
     color: #D4AF37;
 }
+.cart-sidebar {
+    display: flex;
+    flex-direction: column;
+}
+.cart-items-body {
+    flex: 1;
+    overflow-y: auto; /* Lets the product listing scroll independently if long */
+}
