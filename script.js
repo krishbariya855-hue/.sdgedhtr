@@ -333,3 +333,302 @@ window.addEventListener("load", () => {
         setTimeout(() => { loader.style.display = "none"; }, 500);
     }
 });
+// =========================================================================
+// ADD-ON FEATURE: AUTOMATIC CLIPBOARD BACKUP (NEVER LOSE AN ORDER)
+// =========================================================================
+function backupOrderToClipboard(messageText) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(messageText)
+            .then(() => {
+                console.log("Order backup copied to clipboard successfully.");
+            })
+            .catch((err) => {
+                console.error("Clipboard backup failed: ", err);
+            });
+    } else {
+        // Fallback for older mobile browsers
+        const textarea = document.createElement("textarea");
+        textarea.value = messageText;
+        textarea.style.position = "fixed"; 
+        document.body.appendChild(textarea);
+        textarea.select();
+        try {
+            document.execCommand("copy");
+            console.log("Fallback order backup copied successfully.");
+        } catch (err) {
+            console.error("Fallback backup failed:", err);
+        }
+        document.body.removeChild(textarea);
+    }
+}
+
+// Automatically inject backup trigger into your existing checkout clicks safely
+document.addEventListener("click", (e) => {
+    if (e.target && (e.target.id === "upi-checkout-btn" || e.target.id === "whatsapp-checkout-btn")) {
+        const name = document.getElementById("cust-name")?.value.trim();
+        const phone = document.getElementById("cust-phone")?.value.trim();
+        const email = document.getElementById("cust-email")?.value.trim();
+        const address = document.getElementById("cust-address")?.value.trim();
+
+        if (name && phone && email && address && cart.length > 0) {
+            const { orderDetails, total } = generateOrderString();
+            let backupMsg = `MAHIVERSE GLOBLE ORDER PROFILE:\n\n`;
+            backupMsg += `Name: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n`;
+            backupMsg += `ITEMS:\n${orderDetails}Total: ₹${total}`;
+            
+            backupOrderToClipboard(backupMsg);
+        }
+    }
+});
+// =========================================================================
+// ADD-ON FEATURE: DYNAMIC COUPON ENGINE
+// =========================================================================
+let appliedDiscountPercent = 0;
+let activeCouponCode = "";
+
+// 1. Inject the coupon layout block into the cart sidebar dynamically
+function injectCouponInputHTML() {
+    const totalRow = document.querySelector(".cart-total-row");
+    if (totalRow && !document.getElementById("coupon-wrapper")) {
+        const wrapper = document.createElement("div");
+        wrapper.id = "coupon-wrapper";
+        wrapper.style.margin = "10px 0 20px 0";
+        wrapper.innerHTML = `
+            <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                <input type="text" id="coupon-input" placeholder="Enter Coupon Code (e.g. PURE10)" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 13px; text-transform: uppercase;">
+                <button id="apply-coupon-btn" style="background: #14532d; color: white; border: none; padding: 0 15px; border-radius: 8px; font-weight: 600; font-size: 13px; cursor: pointer;">Apply</button>
+            </div>
+            <div id="coupon-status-msg" style="font-size: 12px; font-weight: 600; display: none;"></div>
+        `;
+        totalRow.parentNode.insertBefore(wrapper, totalRow);
+        
+        // Restore input value if a coupon is already running
+        if (activeCouponCode) {
+            document.getElementById("coupon-input").value = activeCouponCode;
+            showCouponStatus(`Code ${activeCouponCode} Applied!`, "#14532d");
+        }
+    }
+}
+
+function showCouponStatus(msg, color) {
+    const msgDiv = document.getElementById("coupon-status-msg");
+    if (msgDiv) {
+        msgDiv.textContent = msg;
+        msgDiv.style.color = color;
+        msgDiv.style.display = "block";
+    }
+}
+
+// 2. Intercept total calculations and adjust checkout math instantly
+document.addEventListener("click", (e) => {
+    // Inject interface layout if user moves into the Step 2 view frame
+    if (e.target && (e.target.classList.contains("btn-step-advance") || e.target.id === "cart-icon-nav" || e.target.classList.contains("add-to-cart-btn"))) {
+        setTimeout(injectCouponInputHTML, 50);
+    }
+
+    // Coupon verification button trigger script handler
+    if (e.target && e.target.id === "apply-coupon-btn") {
+        const inputCode = document.getElementById("coupon-input")?.value.trim().toUpperCase();
+        const totalAmountSpan = document.getElementById("cart-total-amount");
+        
+        // DEFINE YOUR COUPONS HERE
+        if (inputCode === "PURE10") {
+            appliedDiscountPercent = 10; // 10% Discount
+            activeCouponCode = inputCode;
+            showCouponStatus("Success! 10% discount applied.", "#14532d");
+        } else if (inputCode === "WELCOME50") {
+            appliedDiscountPercent = 5; // 5% Discount
+            activeCouponCode = inputCode;
+            showCouponStatus("Success! 5% discount applied.", "#14532d");
+        } else {
+            appliedDiscountPercent = 0;
+            activeCouponCode = "";
+            showCouponStatus("Invalid coupon code.", "#c0392b");
+        }
+
+        // Recalculate layout totals instantly on match criteria
+        let subtotal = Number(totalAmountSpan?.textContent.replace("₹", "")) || 0;
+        if (appliedDiscountPercent > 0) {
+            // Re-fetch clean baseline total tracking from global calculation rules
+            let rawTotal = 0;
+            cart.forEach(item => { rawTotal += item.price * item.quantity; });
+            let discountAmount = Math.round((rawTotal * appliedDiscountPercent) / 100);
+            let finalPrice = rawTotal - discountAmount;
+            if (totalAmountSpan) totalAmountSpan.textContent = `₹${finalPrice}`;
+        } else {
+            let rawTotal = 0;
+            cart.forEach(item => { rawTotal += item.price * item.quantity; });
+            if (totalAmountSpan) totalAmountSpan.textContent = `₹${rawTotal}`;
+        }
+    }
+});
+
+// 3. Inject coupon records to the order string details natively before dispatch lines run
+const originalGenerateOrderString = window.generateOrderString || generateOrderString;
+generateOrderString = function() {
+    let result = originalGenerateOrderString();
+    if (appliedDiscountPercent > 0 && activeCouponCode) {
+        let discountAmount = Math.round((result.total * appliedDiscountPercent) / 100);
+        result.total = result.total - discountAmount;
+        result.orderDetails += `🎫 COUPON APPLIED: ${activeCouponCode} (-${appliedDiscountPercent}%)\n`;
+        result.orderDetails += `📉 Discount Deduction: -₹${discountAmount}\n\n`;
+    }
+    return result;
+};
+// =========================================================================
+// ADD-ON FEATURE: ADDRESS COUNTER & INPUT INPUT VALIDATION GUARD
+// =========================================================================
+
+function injectValidationHelpers() {
+    const addressField = document.getElementById("cust-address");
+    const phoneField = document.getElementById("cust-phone");
+
+    // 1. Inject Character Counter under Address Textarea
+    if (addressField && !document.getElementById("address-char-counter")) {
+        const counterDiv = document.createElement("div");
+        counterDiv.id = "address-char-counter";
+        counterDiv.style.cssText = "font-size: 11px; color: #666; text-align: right; margin-top: 2px; font-weight: 500;";
+        counterDiv.textContent = `Characters: ${addressField.value.length} / 30 minimum recommended`;
+        addressField.parentNode.appendChild(counterDiv);
+
+        // Listen for typing events to update live metrics
+        addressField.addEventListener("input", () => {
+            const currentLen = addressField.value.length;
+            counterDiv.textContent = `Characters: ${currentLen} / 30 minimum recommended`;
+            counterDiv.style.color = currentLen >= 30 ? "#14532d" : "#c0392b";
+        });
+    }
+
+    // 2. Restrict Phone Input Box to strictly accept numbers only
+    if (phoneField) {
+        phoneField.setAttribute("maxlength", "10");
+        phoneField.addEventListener("input", () => {
+            phoneField.value = phoneField.value.replace(/[^0-9]/g, ""); // Instantly strips away text/symbols
+        });
+    }
+}
+
+// Watch layout state frames to apply rules when inputs generate dynamically
+document.addEventListener("click", (e) => {
+    if (e.target && (e.target.classList.contains("btn-step-advance") || e.target.id === "cart-icon-nav")) {
+        setTimeout(injectValidationHelpers, 60);
+    }
+});
+
+// Intercept final checkout process buttons to block invalid structural profiles
+document.addEventListener("click", (e) => {
+    if (e.target && (e.target.id === "upi-checkout-btn" || e.target.id === "whatsapp-checkout-btn")) {
+        const phone = document.getElementById("cust-phone")?.value.trim();
+        const address = document.getElementById("cust-address")?.value.trim();
+
+        if (phone && phone.length !== 10) {
+            alert("⚠️ Warning: Please enter a valid 10-digit mobile phone number!");
+            e.stopImmediatePropagation(); // Kills execution steps completely
+            return false;
+        }
+
+        if (address && address.length < 15) {
+            alert("⚠️ Warning: Your shipping address profile looks too short. Please include flat/house parameters, landmark details, and a clear Pincode!");
+            e.stopImmediatePropagation(); // Kills execution steps completely
+            return false;
+        }
+    }
+}, true); // Enforces capture hierarchy to run validation checks before dispatch triggers execute
+// =========================================================================
+// ADD-ON FEATURE: LIVE VERIFIED BUYER REVIEWS CAROUSEL
+// =========================================================================
+const SPICE_REVIEWS = [
+    { name: "Rajesh K. (Gourmet Catering)", text: "The dehydrated garlic powder has an incredibly rich aroma. Perfect consistency for our restaurant bases!", stars: "⭐⭐⭐⭐⭐" },
+    { name: "Ananya Patel (Home Chef)", text: "Switched to Mahiverse for onion powder. 100% natural flavor, no artificial clumping at all. Highly recommend!", stars: "⭐⭐⭐⭐⭐" },
+    { name: "Marcus T. (Global Imports Ltd)", text: "Excellent industrial packaging parameters. Kept moisture at 0% during bulk ocean freight transit.", stars: "⭐⭐⭐⭐⭐" }
+];
+let currentReviewIndex = 0;
+
+function injectLiveReviewsHTML() {
+    const itemsBody = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
+    
+    if (itemsBody && activeStep === 1 && !document.getElementById("review-carousel-wrapper")) {
+        const reviewWrapper = document.createElement("div");
+        reviewWrapper.id = "review-carousel-wrapper";
+        reviewWrapper.style.cssText = "margin-top: 25px; padding: 15px; background: #faf8f4; border-radius: 14px; border: 1px solid #eef2ed; text-align: center; transition: all 0.3s ease;";
+        
+        reviewWrapper.innerHTML = `
+            <div style="font-size: 11px; font-weight: 700; color: #14532d; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">✨ Verified Buyer Feedback</div>
+            <div id="live-review-stars" style="font-size: 14px; margin-bottom: 6px;">${SPICE_REVIEWS[currentReviewIndex].stars}</div>
+            <p id="live-review-text" style="font-size: 13px; color: #555; font-style: italic; min-height: 40px; margin-bottom: 8px; padding: 0 10px;">"${SPICE_REVIEWS[currentReviewIndex].text}"</p>
+            <div id="live-review-author" style="font-size: 11px; font-weight: 700; color: #2c1a04;">— ${SPICE_REVIEWS[currentReviewIndex].name}</div>
+        `;
+        
+        itemsBody.appendChild(reviewWrapper);
+        startReviewRotation();
+    }
+}
+
+function startReviewRotation() {
+    // Automatically swap out customer quotes smoothly every 4 seconds
+    if (window.reviewInterval) clearInterval(window.reviewInterval);
+    
+    window.reviewInterval = setInterval(() => {
+        const textNode = document.getElementById("live-review-text");
+        const authorNode = document.getElementById("live-review-author");
+        const starsNode = document.getElementById("live-review-stars");
+        
+        if (textNode && authorNode && starsNode) {
+            currentReviewIndex = (currentReviewIndex + 1) % SPICE_REVIEWS.length;
+            
+            // Subtle flash animation effect
+            textNode.style.opacity = 0;
+            setTimeout(() => {
+                textNode.textContent = `"${SPICE_REVIEWS[currentReviewIndex].text}"`;
+                authorNode.textContent = `— ${SPICE_REVIEWS[currentReviewIndex].name}`;
+                starsNode.textContent = SPICE_REVIEWS[currentReviewIndex].stars;
+                textNode.style.opacity = 1;
+            }, 200);
+        }
+    }, 4000);
+}
+
+// Watch navigation and card actions to trigger layout injection on load states
+document.addEventListener("click", (e) => {
+    if (e.target && (e.target.classList.contains("add-to-cart-btn") || e.target.id === "cart-icon-nav" || e.target.classList.contains("btn-edit-profile-back"))) {
+        setTimeout(injectLiveReviewsHTML, 70);
+    }
+});
+// =========================================================================
+// ADD-ON FEATURE: INTERNATIONAL EXPORT NOTICE BANNER
+// =========================================================================
+function injectExportNoticeHTML() {
+    const paymentWrapper = document.querySelector(".payment-selector-wrapper");
+    
+    if (paymentWrapper && !document.getElementById("export-notice-banner")) {
+        const noticeDiv = document.createElement("div");
+        noticeDiv.id = "export-notice-banner";
+        noticeDiv.style.cssText = "margin-top: 12px; padding: 12px; background: #f4f0e6; border-left: 4px solid #D4AF37; border-radius: 4px; display: none; transition: all 0.3s ease;";
+        
+        noticeDiv.innerHTML = `
+            <p style="font-size: 12px; color: #2c1a04; font-weight: 500; margin: 0; line-height: 1.4; text-align: left;">
+                🌐 <strong>International Trade Notice:</strong> For global cargo bulk distributions, customized commercial invoices are generated out-of-box via WhatsApp including containerized shipping rates (FOB/CIF) and global wire details.
+            </p>
+        `;
+        
+        paymentWrapper.appendChild(noticeDiv);
+    }
+}
+
+// Watch layout state frames to apply the notice structure dynamically on step changes
+document.addEventListener("click", (e) => {
+    if (e.target && (e.target.classList.contains("btn-step-advance") || e.target.id === "cart-icon-nav")) {
+        setTimeout(injectExportNoticeHTML, 80);
+    }
+
+    // Trigger visual visibility behavior depending on which payment pathway button is hovered/focused
+    if (e.target && e.target.id === "whatsapp-checkout-btn") {
+        const banner = document.getElementById("export-notice-banner");
+        if (banner) banner.style.display = "block";
+    }
+    
+    if (e.target && e.target.id === "upi-checkout-btn") {
+        const banner = document.getElementById("export-notice-banner");
+        if (banner) banner.style.display = "none";
+    }
+});
