@@ -42,9 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
-    // Add To Cart Operations
-    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-    // Add To Cart Operations - Multi-Page Bulletproof Edition
+// Add To Cart Operations - Multi-Page Bulletproof Edition
     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
     addToCartButtons.forEach(button => {
         button.addEventListener("click", () => {
@@ -92,19 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 cartOverlay.classList.add("show");
             }
         });
-    });
-            localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
-            updateCartUI();
-
-            if (cartSidebar && cartOverlay) {
-                cartSidebar.classList.add("open");
-                cartOverlay.classList.add("show");
-            }
-        });
-    });
-
-    // Unified UI Tracker, Shipping Form Injector & Dynamic Button Sync
-    function updateCartUI() {
+    });eCartUI() {
         const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
         if (!itemsContainer) return;
         itemsContainer.innerHTML = "";
