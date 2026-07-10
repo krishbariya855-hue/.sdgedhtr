@@ -42,55 +42,73 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
-// Add To Cart Operations - Multi-Page Bulletproof Edition
-    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
-    addToCartButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            // Check both standard grid cards and individual product presentation panels
-            const card = button.closest(".card") || button.closest(".single-details") || button.closest(".single-product");
-            if (!card) return;
+    // Add To Cart Operations - Global Auto-Detect Fallback Edition
+    document.addEventListener("click", (e) => {
+        const button = e.target.closest(".add-to-cart-btn");
+        if (!button) return; // Exit if what was clicked wasn't an add to cart button
 
-            const id = card.dataset.id || "onion-powder-premium";
-            const name = card.dataset.name || "Premium Dehydrated Red Onion Powder";
-            
-            // Try every possible selector layout to grab the drop-down menu element securely
-            const select = card.querySelector(".weight-select") || 
-                           card.querySelector("#weightSelect") || 
-                           document.getElementById("weightSelect");
-            
-            if (!select) {
-                console.error("Critical Error: Dropdown selection element could not be targeted.");
-                return;
-            }
-            
-            const weight = select.value;
-            const option = select.options[select.selectedIndex];
-            const price = Number(option.getAttribute("data-price") || option.dataset.price);
-            const key = id + "-" + weight;
-
-            const existingItem = cart.find(item => item.key === key);
-            if (existingItem) {
-                existingItem.quantity++;
+        // 1. Locate the container element holding the product details
+        const container = button.closest(".card") || button.closest(".single-details") || button.closest(".single-product") || document.body;
+        
+        // 2. Safely grab ID and Name with absolute URL-based fallbacks
+        let id = container.dataset.id;
+        let name = container.dataset.name;
+        
+        if (!id || !name) {
+            if (window.location.href.includes("onion-powder")) {
+                id = "onion-powder-premium";
+                name = "Premium Dehydrated Red Onion Powder";
+            } else if (window.location.href.includes("garlic-powder")) {
+                id = "garlic-powder-premium";
+                name = "Premium Dehydrated Garlic Powder";
             } else {
-                cart.push({
-                    key: key,
-                    id: id,
-                    name: name,
-                    weight: weight,
-                    price: price,
-                    quantity: 1
-                });
+                id = "product-premium";
+                name = "Premium Dehydrated Spice Powder";
             }
+        }
 
-            localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
-            updateCartUI();
+        // 3. Locate the selected variant dropdown menu dynamically
+        const select = document.querySelector(".weight-select") || 
+                       document.getElementById("weightSelect") || 
+                       container.querySelector("select");
+        
+        if (!select) {
+            alert("Error: Packaging selector dropdown menu not found!");
+            return;
+        }
 
-            if (cartSidebar && cartOverlay) {
-                cartSidebar.classList.add("open");
-                cartOverlay.classList.add("show");
-            }
-        });
-    });eCartUI() {
+        const weight = select.value;
+        const option = select.options[select.selectedIndex];
+        const price = Number(option.getAttribute("data-price") || option.dataset.price || 0);
+        const key = id + "-" + weight;
+
+        // 4. Update Cart Array Stack
+        const existingItem = cart.find(item => item.key === key);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({
+                key: key,
+                id: id,
+                name: name,
+                weight: weight,
+                price: price,
+                quantity: 1
+            });
+        }
+
+        // 5. Save and Render UI changes instantly
+        localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+        updateCartUI();
+
+        if (cartSidebar && cartOverlay) {
+            cartSidebar.classList.add("open");
+            cartOverlay.classList.add("show");
+        }
+    });
+
+    // Unified UI Tracker, Shipping Form Injector & Dynamic Button Sync
+    function updateCartUI() {
         const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
         if (!itemsContainer) return;
         itemsContainer.innerHTML = "";
@@ -264,4 +282,120 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ROUTE 2: WhatsApp Manual Invoice
     document.addEventListener("click", (e) => {
-        if (e.target &&
+        if (e.target && e.target.id === "whatsapp-checkout-btn") {
+            if (cart.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+
+            const shipping = getShippingDetails();
+            if (!shipping) return; 
+
+            const { orderDetails, total } = generateOrderString();
+            
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n`;
+            message += `📋 COURIER SHIPPING DETAILS:\n`;
+            message += `Name: ${shipping.name}\n`;
+            message += `Phone: ${shipping.phone}\n`;
+            message += `Email: ${shipping.email}\n`;
+            message += `Delivery Address: ${shipping.address}\n\n`;
+            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Estimated Order Total: ₹${total}\n\n`;
+            message += "Please confirm availability, bulk courier profiles, and payment invoice details. Thank you!";
+
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+        }
+    });
+
+    // Initial mount update run
+    updateCartUI();
+
+    // ===========================================
+    // NAVIGATION & INTERFACE HOOKS
+    // ===========================================
+    if (menuToggle && navbar) {
+        menuToggle.addEventListener("click", () => {
+            navbar.classList.toggle("active");
+        });
+    }
+
+    if (backToTop) {
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 300) {
+                backToTop.style.display = "flex";
+                backToTop.style.justifyContent = "center";
+                backToTop.style.alignItems = "center";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+
+    // ===========================================
+    // PREMIUM IMAGE POPUP MODAL
+    // ===========================================
+    const productImages = document.querySelectorAll(".card img, .product-img-container img");
+    const imageModal = document.getElementById("imageModal");
+    const modalImage = document.getElementById("modalImage");
+    const closeImage = document.querySelector(".close-image");
+
+    if (productImages.length && imageModal && modalImage) {
+        productImages.forEach(img => {
+            img.style.cursor = "zoom-in";
+            img.addEventListener("click", () => {
+                imageModal.style.display = "flex";
+                modalImage.src = img.src;
+            });
+        });
+    }
+
+    if (closeImage && imageModal) {
+        closeImage.addEventListener("click", () => {
+            imageModal.style.display = "none";
+        });
+    }
+
+    window.addEventListener("click", (e) => {
+        if (imageModal && e.target === imageModal) {
+            imageModal.style.display = "none";
+        }
+    });
+
+});
+
+// ===========================================
+// PERFORMANCE LOAD TIMERS
+// ===========================================
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    if (loader) {
+        loader.style.opacity = "0";
+        loader.style.visibility = "hidden";
+        setTimeout(() => {
+            loader.style.display = "none";
+        }, 500);
+    }
+});
+
+// Scroll Reveal Matrix
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+        }
+    });
+}, { threshold: 0.1 });
+
+const hiddenElements = document.querySelectorAll(
+    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
+);
+
+hiddenElements.forEach((el) => {
+    if(el) {
+        el.classList.add("hidden");
+        observer.observe(el);
+    }
+});
