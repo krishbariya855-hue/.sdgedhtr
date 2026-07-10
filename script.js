@@ -57,17 +57,16 @@ window.addToCartDirect = function(productId, productName) {
 
 // Wizard Tab Visibility Controller
 window.setCheckoutStep = function(stepNumber) {
-    if (stepNumber === 2) {
-        const name = document.getElementById("cust-name")?.value.trim();
-        const phone = document.getElementById("cust-phone")?.value.trim();
-        const email = document.getElementById("cust-email")?.value.trim();
-        const address = document.getElementById("cust-address")?.value.trim();
-
-        if (!name || !phone || !email || !address) {
-            alert("Please fill out all delivery information fields before moving to payment channels!");
-            return;
-        }
-        
+    if (stepNumber === 1) {
+        // Moving back to cart view, just change step
+        activeStep = 1;
+        updateCartUI();
+    } else if (stepNumber === 2) {
+        // Go to Step 2 smoothly where the empty form is waiting
+        activeStep = 2;
+        updateCartUI();
+    }
+};
         // Save form inputs temporarily to localStorage so they survive the step toggle render
         localStorage.setItem("temp_cust_name", name);
         localStorage.setItem("temp_cust_phone", phone);
@@ -78,6 +77,7 @@ window.setCheckoutStep = function(stepNumber) {
     updateCartUI();
 };
 
+// Unified UI Tracker & Two-Step Render Engine
 // Unified UI Tracker & Two-Step Render Engine
 function updateCartUI() {
     const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
@@ -114,6 +114,94 @@ function updateCartUI() {
         return;
     }
 
+    // STEP 1 CONTENT VIEW: Cart Items Only
+    if (activeStep === 1) {
+        cart.forEach((item, index) => {
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.innerHTML = `
+                <div class="cart-item-details">
+                    <h4>${item.name}</h4>
+                    <p>${item.weight} (Qty: ${item.quantity})</p>
+                    <p><strong>₹${item.price * item.quantity}</strong></p>
+                </div>
+                <button class="remove-item-btn" data-index="${index}">Remove</button>
+            `;
+            itemsContainer.appendChild(div);
+        });
+
+        if (formContainer) formContainer.innerHTML = ""; 
+
+        if (cartSidebar) {
+            const cartFooter = cartSidebar.querySelector(".cart-footer");
+            if (cartFooter) {
+                cartFooter.innerHTML = `
+                    <div class="cart-total-row">
+                        <span>Subtotal:</span>
+                        <span id="cart-total-amount">₹${totalPrice}</span>
+                    </div>
+                    <button class="btn-step-advance" onclick="window.setCheckoutStep(2)">
+                        Proceed to Delivery Form →
+                    </button>
+                `;
+            }
+        }
+    } 
+    
+    // STEP 2 CONTENT VIEW: Render Form inside the main container
+    else if (activeStep === 2) {
+        itemsContainer.innerHTML = ""; 
+
+        const savedName = localStorage.getItem("temp_cust_name") || "";
+        const savedPhone = localStorage.getItem("temp_cust_phone") || "";
+        const savedEmail = localStorage.getItem("temp_cust_email") || "";
+        const savedAddress = localStorage.getItem("temp_cust_address") || "";
+
+        const formDiv = document.createElement("div");
+        formDiv.className = "cart-shipping-form";
+        formDiv.innerHTML = `
+            <h3>📋 Delivery Information</h3>
+            <div class="form-group">
+                <label for="cust-name">Full Name *</label>
+                <input type="text" id="cust-name" value="${savedName}" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="cust-phone">Mobile Number *</label>
+                <input type="tel" id="cust-phone" value="${savedPhone}" placeholder="Enter 10-digit mobile number" required>
+            </div>
+            <div class="form-group">
+                <label for="cust-email">Email ID *</label>
+                <input type="email" id="cust-email" value="${savedEmail}" placeholder="name@email.com" required>
+            </div>
+            <div class="form-group">
+                <label for="cust-address">Courier Shipping Address *</label>
+                <textarea id="cust-address" placeholder="Flat/House No, Building, Street, City, State & Pincode" required>${savedAddress}</textarea>
+            </div>
+            <button class="btn-edit-profile-back" onclick="window.setCheckoutStep(1)">← Back to Cart Items</button>
+        `;
+        itemsContainer.appendChild(formDiv);
+
+        if (cartSidebar) {
+            const cartFooter = cartSidebar.querySelector(".cart-footer");
+            if (cartFooter) {
+                cartFooter.innerHTML = `
+                    <div class="cart-total-row">
+                        <span>Total Due:</span>
+                        <span id="cart-total-amount">₹${totalPrice}</span>
+                    </div>
+                    <div class="payment-selector-wrapper">
+                        <button id="upi-checkout-btn" class="checkout-btn-premium btn-upi-checkout">
+                            ⚡ Pay Instant via UPI
+                        </button>
+                        <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-intl-checkout">
+                            🌐 International Invoice
+                        </button>
+                    </div>
+                `;
+            }
+        }
+    }
+}
     // STEP 1 CONTENT VIEW: Cart Items + Blank Data Form
     if (activeStep === 1) {
         cart.forEach((item, index) => {
