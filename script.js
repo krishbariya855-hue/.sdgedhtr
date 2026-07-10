@@ -632,7 +632,4 @@ document.addEventListener("click", (e) => {
         if (banner) banner.style.display = "none";
     }
 });
-// Preloader Close Hooks
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    ...
+
