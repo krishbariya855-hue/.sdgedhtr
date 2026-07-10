@@ -838,9 +838,16 @@ section {
     flex-direction: column;
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     
-    /* FIX INJECTED HERE: Enforces structural internal scrolling */
+    /* ENFORCES SINGLE MASTER SCROLLBAR FOR EVERYTHING */
     overflow-y: auto; 
     max-height: 100vh;
+}
+
+.cart-items-body {
+    /* REMOVES INTERNAL RIVAL SCROLLBAR BOXES */
+    flex-grow: 0; 
+    padding: 25px 25px 10px 25px;
+    overflow-y: visible; 
 }
 .cart-sidebar.open {
     right: 0;
