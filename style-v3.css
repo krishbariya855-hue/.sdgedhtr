@@ -217,18 +217,25 @@ h1, h2, h3, .logo {
     max-width: 540px;
 }
 
+/* Update just this class to perfectly center the child buttons vertically */
 .hero-actions {
     display: flex;
+    align-items: center; 
     gap: 20px;
 }
 
+/* Update this class to fix the vertical clipping/weirdness */
 .btn {
-    display: inline-block;
-    padding: 15px 35px;
+    display: inline-flex;  /* Keeps them side-by-side but allows vertical centering */
+    align-items: center;   /* Perfectly centers text inside the button vertically */
+    justify-content: center; /* Perfectly centers text horizontally */
+    padding: 0 35px;       /* Remove vertical padding, let height do the work */
+    height: 54px;          /* Clean structural height so it never cuts off */
     border-radius: 30px;
     font-weight: 600;
     font-size: 15px;
     text-align: center;
+    box-sizing: border-box; /* Ensures borders stay inside the 54px height */
 }
 
 .btn-primary {
