@@ -1124,3 +1124,68 @@ section {
         right: -100%;
     }
 }
+/* ===========================================
+   TWO-STEP CHECKOUT SIDEBAR INTERFACE STYLES
+=========================================== */
+.btn-step-advance {
+    width: 100%;
+    background: #14532d;
+    color: #ffffff;
+    border: none;
+    padding: 16px 20px;
+    border-radius: 30px;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(20, 83, 45, 0.2);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-step-advance:hover {
+    background: #1b6b3a;
+    transform: translateY(-1px);
+}
+
+.shipping-summary-profile {
+    background: #faf8f4;
+    border: 1px dashed #14532d;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.shipping-summary-profile h4 {
+    font-family: 'DM Sans', sans-serif;
+    color: #14532d;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.shipping-summary-profile p {
+    font-size: 14px;
+    color: #444;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.btn-edit-profile-back {
+    background: transparent;
+    border: none;
+    color: #14532d;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 5px;
+    text-decoration: underline;
+}
+
+.btn-edit-profile-back:hover {
+    color: #D4AF37;
+}
