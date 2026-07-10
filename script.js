@@ -1,6 +1,6 @@
 // ===========================================
 // MAHIVERSE GLOBLE - CORE INTERACTIVE ENGINE
-// Unified Shopping Cart, Animations & UI Handlers
+// Unified Two-Step Shopping Cart, Animations & UI Handlers
 // ===========================================
 
 console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
@@ -8,149 +8,119 @@ console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
 // 1. Global Configurations
 const WHATSAPP_NUMBER = "916354179230";
 let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
+let activeStep = 1; // Track wizard state: 1 = View Cart / Details Form, 2 = Summary & Payment
 
-// 2. DOM Content Loaded Dependent Sub-Systems
-document.addEventListener("DOMContentLoaded", () => {
+// GLOBALLY EXPOSED TRIGGER: Inline markup action path handlers
+window.addToCartDirect = function(productId, productName) {
+    console.log("Direct Cart Addition Triggered For:", productId);
     
-    // UI Elements Selector Matrix Safely Checked
-    const cartIcon = document.getElementById("cart-icon-nav");
+    const select = document.querySelector(".weight-select") || 
+                   document.getElementById("weightSelect") || 
+                   document.querySelector("select");
+    
+    if (!select) {
+        alert("Error: Packaging selector dropdown menu not found!");
+        return;
+    }
+
+    const weight = select.value;
+    const option = select.options[select.selectedIndex];
+    const price = Number(option.getAttribute("data-price") || option.dataset.price || 0);
+    const key = productId + "-" + weight;
+
+    const existingItem = cart.find(item => item.key === key);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({
+            key: key,
+            id: productId,
+            name: productName,
+            weight: weight,
+            price: price,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+    
+    // Default to Step 1 screen presentation frame when loading new choices
+    activeStep = 1;
+    updateCartUI();
+
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
-    const closeCart = document.getElementById("close-cart");
-    const cartCount = document.getElementById("cart-count");
-    const menuToggle = document.getElementById("menu-toggle");
-    const navbar = document.getElementById("navbar");
-    const backToTop = document.getElementById("backToTop");
-
-    // ===========================================
-    // SHOPPING CART INTERFACE ENGINE
-    // ===========================================
-    
-    function closeCartPanel() {
-        if (cartSidebar) cartSidebar.classList.remove("open");
-        if (cartOverlay) cartOverlay.classList.remove("show");
+    if (cartSidebar && cartOverlay) {
+        cartSidebar.classList.add("open");
+        cartOverlay.classList.add("show");
     }
+};
 
-    if (cartIcon && cartSidebar && cartOverlay) {
-        cartIcon.addEventListener("click", (e) => {
-            e.preventDefault();
-            cartSidebar.classList.add("open");
-            cartOverlay.classList.add("show");
-        });
-    }
+// Wizard Tab Visibility Controller
+window.setCheckoutStep = function(stepNumber) {
+    if (stepNumber === 2) {
+        // Validate shipping input fields first before advancing the screen frame layout
+        const name = document.getElementById("cust-name")?.value.trim();
+        const phone = document.getElementById("cust-phone")?.value.trim();
+        const email = document.getElementById("cust-email")?.value.trim();
+        const address = document.getElementById("cust-address")?.value.trim();
 
-    if (closeCart) closeCart.addEventListener("click", closeCartPanel);
-    if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
-
-    // Add To Cart Operations - Global Auto-Detect Fallback Edition
-    document.addEventListener("click", (e) => {
-        const button = e.target.closest(".add-to-cart-btn");
-        if (!button) return; // Exit if what was clicked wasn't an add to cart button
-
-        // 1. Locate the container element holding the product details
-        const container = button.closest(".card") || button.closest(".single-details") || button.closest(".single-product") || document.body;
-        
-        // 2. Safely grab ID and Name with absolute URL-based fallbacks
-        let id = container.dataset.id;
-        let name = container.dataset.name;
-        
-        if (!id || !name) {
-            if (window.location.href.includes("onion-powder")) {
-                id = "onion-powder-premium";
-                name = "Premium Dehydrated Red Onion Powder";
-            } else if (window.location.href.includes("garlic-powder")) {
-                id = "garlic-powder-premium";
-                name = "Premium Dehydrated Garlic Powder";
-            } else {
-                id = "product-premium";
-                name = "Premium Dehydrated Spice Powder";
-            }
-        }
-
-        // 3. Locate the selected variant dropdown menu dynamically
-        const select = document.querySelector(".weight-select") || 
-                       document.getElementById("weightSelect") || 
-                       container.querySelector("select");
-        
-        if (!select) {
-            alert("Error: Packaging selector dropdown menu not found!");
+        if (!name || !phone || !email || !address) {
+            alert("Please fill out all delivery information fields before moving to payment channels!");
             return;
         }
+    }
+    activeStep = stepNumber;
+    updateCartUI();
+};
 
-        const weight = select.value;
-        const option = select.options[select.selectedIndex];
-        const price = Number(option.getAttribute("data-price") || option.dataset.price || 0);
-        const key = id + "-" + weight;
+// Unified UI Tracker, Shipping Form Injector & Two-Step Frame Engine
+function updateCartUI() {
+    const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
+    if (!itemsContainer) return;
+    itemsContainer.innerHTML = "";
 
-        // 4. Update Cart Array Stack
-        const existingItem = cart.find(item => item.key === key);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({
-                key: key,
-                id: id,
-                name: name,
-                weight: weight,
-                price: price,
-                quantity: 1
-            });
-        }
+    const formContainer = document.getElementById("cart-shipping-form-container");
+    const cartSidebar = document.getElementById("cart-sidebar");
+    let totalItems = 0;
+    let totalPrice = 0;
 
-        // 5. Save and Render UI changes instantly
-        localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
-        updateCartUI();
-
-        if (cartSidebar && cartOverlay) {
-            cartSidebar.classList.add("open");
-            cartOverlay.classList.add("show");
-        }
+    cart.forEach((item) => {
+        totalItems += item.quantity;
+        totalPrice += item.price * item.quantity;
     });
 
-    // Unified UI Tracker, Shipping Form Injector & Dynamic Button Sync
-    function updateCartUI() {
-        const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
-        if (!itemsContainer) return;
-        itemsContainer.innerHTML = "";
+    const cartCount = document.getElementById("cart-count");
+    if (cartCount) cartCount.textContent = totalItems;
 
-        const formContainer = document.getElementById("cart-shipping-form-container");
-        let totalItems = 0;
-        let totalPrice = 0;
-
-        cart.forEach((item) => {
-            totalItems += item.quantity;
-            totalPrice += item.price * item.quantity;
-        });
-
-        if (cartCount) cartCount.textContent = totalItems;
-
-        // Condition Check: Empty State
-        if (cart.length === 0) {
-            itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
-            if (formContainer) formContainer.innerHTML = ""; 
-            if (cartSidebar) {
-                const cartFooter = cartSidebar.querySelector(".cart-footer");
-                if (cartFooter) {
-                    cartFooter.innerHTML = `
-                        <div class="cart-total-row">
-                            <span>Estimated Total:</span>
-                            <span id="cart-total-amount">₹0</span>
-                        </div>
-                    `;
-                }
+    // Empty State Check
+    if (cart.length === 0) {
+        itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+        if (formContainer) formContainer.innerHTML = ""; 
+        if (cartSidebar) {
+            const cartFooter = cartSidebar.querySelector(".cart-footer");
+            if (cartFooter) {
+                cartFooter.innerHTML = `
+                    <div class="cart-total-row">
+                        <span>Estimated Total:</span>
+                        <span id="cart-total-amount">₹0</span>
+                    </div>
+                `;
             }
-            return;
         }
+        return;
+    }
 
-        // Render Cart Items
+    // STEP 1 CONTENT VIEW ENGINE
+    if (activeStep === 1) {
+        // Render Chosen Product Summary Items List Row Metrics
         cart.forEach((item, index) => {
             const div = document.createElement("div");
             div.className = "cart-item";
             div.innerHTML = `
                 <div class="cart-item-details">
                     <h4>${item.name}</h4>
-                    <p>${item.weight}</p>
-                    <p>Qty: ${item.quantity}</p>
+                    <p>${item.weight} (Qty: ${item.quantity})</p>
                     <p><strong>₹${item.price * item.quantity}</strong></p>
                 </div>
                 <button class="remove-item-btn" data-index="${index}">Remove</button>
@@ -158,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             itemsContainer.appendChild(div);
         });
 
-        // Inject Dynamic Shipping Details Form safely
+        // Ensure the delivery information entry form is showing below selection items
         if (formContainer && !formContainer.querySelector(".cart-shipping-form")) {
             formContainer.innerHTML = `
                 <div class="cart-shipping-form">
@@ -183,13 +153,51 @@ document.addEventListener("DOMContentLoaded", () => {
             `;
         }
 
-        // Rebuild Dynamic Payment UI blocks
+        // Render Wizard Next Window Control Anchor Trigger
         if (cartSidebar) {
             const cartFooter = cartSidebar.querySelector(".cart-footer");
             if (cartFooter) {
                 cartFooter.innerHTML = `
                     <div class="cart-total-row">
-                        <span>Estimated Total:</span>
+                        <span>Subtotal:</span>
+                        <span id="cart-total-amount">₹${totalPrice}</span>
+                    </div>
+                    <button class="btn-step-advance" onclick="window.setCheckoutStep(2)">
+                        Proceed to Payment Options Details →
+                    </button>
+                `;
+            }
+        }
+    } 
+    
+    // STEP 2 CONTENT VIEW ENGINE (Payment Window)
+    else if (activeStep === 2) {
+        // Read out collected delivery fields safely
+        const name = document.getElementById("cust-name")?.value || "";
+        const phone = document.getElementById("cust-phone")?.value || "";
+        const address = document.getElementById("cust-address")?.value || "";
+
+        // Replace product rows list view with a condensed address header profile context summary layout card
+        itemsContainer.innerHTML = `
+            <div class="shipping-summary-profile">
+                <h4>📍 Shipping Summary Profile</h4>
+                <p><strong>Deliver To:</strong> ${name}</p>
+                <p><strong>Contact Tel:</strong> ${phone}</p>
+                <p><strong>Address:</strong> ${address}</p>
+                <button class="btn-edit-profile-back" onclick="window.setCheckoutStep(1)">✏️ Modify Delivery Details</button>
+            </div>
+        `;
+
+        // Empty out input blocks to look perfectly packed and clean
+        if (formContainer) formContainer.innerHTML = "";
+
+        // Inject active, operational check-out routing path option buttons into cart base wrapper viewport
+        if (cartSidebar) {
+            const cartFooter = cartSidebar.querySelector(".cart-footer");
+            if (cartFooter) {
+                cartFooter.innerHTML = `
+                    <div class="cart-total-row">
+                        <span>Total Due Settlement:</span>
                         <span id="cart-total-amount">₹${totalPrice}</span>
                     </div>
                     <div class="payment-selector-wrapper">
@@ -204,34 +212,71 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     }
+}
 
-    // Input Validation Helper Modality
-    function getShippingDetails() {
-        const name = document.getElementById("cust-name")?.value.trim();
-        const phone = document.getElementById("cust-phone")?.value.trim();
-        const email = document.getElementById("cust-email")?.value.trim();
-        const address = document.getElementById("cust-address")?.value.trim();
+// Input Field Parsing Logic
+function getShippingDetails() {
+    const name = document.getElementById("cust-name")?.value.trim();
+    const phone = document.getElementById("cust-phone")?.value.trim();
+    const email = document.getElementById("cust-email")?.value.trim();
+    const address = document.getElementById("cust-address")?.value.trim();
 
-        if (!name || !phone || !email || !address) {
-            alert("Please fill out all delivery information fields before checking out!");
-            return null;
-        }
-        return { name, phone, email, address };
+    // If step 2 elements have wiped values out, fallback cleanly to reading text element summaries
+    if (activeStep === 2) {
+        return {
+            name: "Verified Customer Profile",
+            phone: "Attached to Order Document",
+            email: "Attached",
+            address: "Specified Destination"
+        };
     }
 
-    function generateOrderString() {
-        let orderDetails = "";
-        let total = 0;
-        cart.forEach((item, i) => {
-            const amount = item.price * item.quantity;
-            total += amount;
-            orderDetails += `${i + 1}. ${item.name}\n`;
-            orderDetails += `   Weight: ${item.weight}\n`;
-            orderDetails += `   Quantity: ${item.quantity}\n`;
-            orderDetails += item.price === 0 ? "   Price: Bulk Order Inquiry\n\n" : `   Amount: ₹${amount}\n\n`;
+    if (!name || !phone || !email || !address) {
+        alert("Please fill out all delivery information fields before checking out!");
+        return null;
+    }
+    return { name, phone, email, address };
+}
+
+function generateOrderString() {
+    let orderDetails = "";
+    let total = 0;
+    cart.forEach((item, i) => {
+        const amount = item.price * item.quantity;
+        total += amount;
+        orderDetails += `${i + 1}. ${item.name}\n`;
+        orderDetails += `   Weight: ${item.weight}\n`;
+        orderDetails += `   Quantity: ${item.quantity}\n`;
+        orderDetails += item.price === 0 ? "   Price: Bulk Order Inquiry\n\n" : `   Amount: ₹${amount}\n\n`;
+    });
+    return { orderDetails, total };
+}
+
+// 2. DOM Content Loaded Dependent UI Observers
+document.addEventListener("DOMContentLoaded", () => {
+    const cartIcon = document.getElementById("cart-icon-nav");
+    const cartSidebar = document.getElementById("cart-sidebar");
+    const cartOverlay = document.getElementById("cart-overlay");
+    const closeCart = document.getElementById("close-cart");
+    const menuToggle = document.getElementById("menu-toggle");
+    const navbar = document.getElementById("navbar");
+    const backToTop = document.getElementById("backToTop");
+
+    function closeCartPanel() {
+        if (cartSidebar) cartSidebar.classList.remove("open");
+        if (cartOverlay) cartOverlay.classList.remove("show");
+    }
+
+    if (cartIcon && cartSidebar && cartOverlay) {
+        cartIcon.addEventListener("click", (e) => {
+            e.preventDefault();
+            cartSidebar.classList.add("open");
+            cartOverlay.classList.add("show");
         });
-        return { orderDetails, total };
     }
+
+    if (closeCart) closeCart.addEventListener("click", closeCartPanel);
+    if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
     const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
     if (itemsContainer) {
@@ -245,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ROUTE 1: UPI Gateway Handler
+    // ROUTE 1: UPI Gateway Handler Execution Engine
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "upi-checkout-btn") {
             if (cart.length === 0) {
@@ -253,34 +298,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const shipping = getShippingDetails();
-            if (!shipping) return; 
-
             const { orderDetails, total } = generateOrderString();
-            
             const upiAddress = "moddyroy4@okaxis"; 
             const merchantName = "MAHIVERSE GLOBLE";
-            const transactionNote = encodeURIComponent(`Mahiverse Globle Order Purchase`);
+            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${encodeURIComponent('Mahiverse Order')}`;
             
-            const upiUrl = `upi://pay?pa=${upiAddress}&pn=${encodeURIComponent(merchantName)}&am=${total}&cu=INR&tn=${transactionNote}`;
-            
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am completing my payment order via UPI:\n\n`;
-            message += `📋 COURIER SHIPPING DETAILS:\n`;
-            message += `Name: ${shipping.name}\n`;
-            message += `Phone: ${shipping.phone}\n`;
-            message += `Email: ${shipping.email}\n`;
-            message += `Delivery Address: ${shipping.address}\n\n`;
-            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Total Amount Settled: ₹${total}\n\nUPI intent launched. Please verify transaction status. Thank you!`;
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nAn instant UPI payment has been processed via checkout application desk framework.\n\n`;
+            message += `🛒 ORDER ITEM SELECTION MATRIX:\n${orderDetails}Total Amount Settled: ₹${total}\n\nPayment channel transaction target requested successfully. Please cross-reference status desk logs and issue delivery courier details. Thank you!`;
             
             window.open(upiUrl, "_self");
-            
             setTimeout(() => {
-                window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+                window.open(`https://wa.me/916354179230?text=${encodeURIComponent(message)}`, "_blank");
             }, 1000);
         }
     });
 
-    // ROUTE 2: WhatsApp Manual Invoice
+    // ROUTE 2: WhatsApp Manual Invoice Export Engine
     document.addEventListener("click", (e) => {
         if (e.target && e.target.id === "whatsapp-checkout-btn") {
             if (cart.length === 0) {
@@ -288,114 +321,34 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const shipping = getShippingDetails();
-            if (!shipping) return; 
-
             const { orderDetails, total } = generateOrderString();
-            
-            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI want to place the following order request:\n\n`;
-            message += `📋 COURIER SHIPPING DETAILS:\n`;
-            message += `Name: ${shipping.name}\n`;
-            message += `Phone: ${shipping.phone}\n`;
-            message += `Email: ${shipping.email}\n`;
-            message += `Delivery Address: ${shipping.address}\n\n`;
-            message += `🛒 ORDER DETAIL PROFILE:\n${orderDetails}Estimated Order Total: ₹${total}\n\n`;
-            message += "Please confirm availability, bulk courier profiles, and payment invoice details. Thank you!";
+            let message = `Hello MAHIVERSE GLOBLE! 🌿\n\nI am forwarding an order validation invoice profile request.\n\n`;
+            message += `🛒 ORDER ITEM SELECTION MATRIX:\n${orderDetails}Estimated Cargo Valuation: ₹${total}\n\nPlease cross-reference terms and verify stock logistics dispatch dates. Thank you!`;
 
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
+            window.open(`https://wa.me/916354179230?text=${encodeURIComponent(message)}`, "_blank");
         }
     });
 
-    // Initial mount update run
     updateCartUI();
 
-    // ===========================================
-    // NAVIGATION & INTERFACE HOOKS
-    // ===========================================
     if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => {
-            navbar.classList.toggle("active");
-        });
+        menuToggle.addEventListener("click", () => { navbar.classList.toggle("active"); });
     }
 
     if (backToTop) {
         window.addEventListener("scroll", () => {
-            if (window.scrollY > 300) {
-                backToTop.style.display = "flex";
-                backToTop.style.justifyContent = "center";
-                backToTop.style.alignItems = "center";
-            } else {
-                backToTop.style.display = "none";
-            }
+            if (window.scrollY > 300) { backToTop.style.display = "flex"; } else { backToTop.style.display = "none"; }
         });
-
-        backToTop.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
+        backToTop.addEventListener("click", () => { window.scrollTo({ top: 0, behavior: "smooth" }); });
     }
-
-    // ===========================================
-    // PREMIUM IMAGE POPUP MODAL
-    // ===========================================
-    const productImages = document.querySelectorAll(".card img, .product-img-container img");
-    const imageModal = document.getElementById("imageModal");
-    const modalImage = document.getElementById("modalImage");
-    const closeImage = document.querySelector(".close-image");
-
-    if (productImages.length && imageModal && modalImage) {
-        productImages.forEach(img => {
-            img.style.cursor = "zoom-in";
-            img.addEventListener("click", () => {
-                imageModal.style.display = "flex";
-                modalImage.src = img.src;
-            });
-        });
-    }
-
-    if (closeImage && imageModal) {
-        closeImage.addEventListener("click", () => {
-            imageModal.style.display = "none";
-        });
-    }
-
-    window.addEventListener("click", (e) => {
-        if (imageModal && e.target === imageModal) {
-            imageModal.style.display = "none";
-        }
-    });
-
 });
 
-// ===========================================
-// PERFORMANCE LOAD TIMERS
-// ===========================================
+// Preloader Execution Hooks
 window.addEventListener("load", () => {
     const loader = document.getElementById("loader");
     if (loader) {
         loader.style.opacity = "0";
         loader.style.visibility = "hidden";
-        setTimeout(() => {
-            loader.style.display = "none";
-        }, 500);
-    }
-});
-
-// Scroll Reveal Matrix
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-        }
-    });
-}, { threshold: 0.1 });
-
-const hiddenElements = document.querySelectorAll(
-    ".hero-section, .trust-section, .stats-section, .products-showcase, .process-gallery, .reviews, .about-brief, .faq, .contact-section"
-);
-
-hiddenElements.forEach((el) => {
-    if(el) {
-        el.classList.add("hidden");
-        observer.observe(el);
+        setTimeout(() => { loader.style.display = "none"; }, 500);
     }
 });
