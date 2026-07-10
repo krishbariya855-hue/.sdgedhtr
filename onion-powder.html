@@ -6,49 +6,41 @@
   <title>Dehydrated Premium Red Onion Powder | MAHIVERSE GLOBLE</title>
   <link rel="icon" type="image/jpeg" href="logo.png.jpeg">
   <meta name="description" content="Pure, high-aroma dehydrated premium red onion powder processed specifically for global food supply chains and domestic retail markets.">
-  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  
   <link rel="stylesheet" href="style-v3.css">
 </head>
 <body>
 
-  <!-- Premium Cart Sidebar Interface -->
-  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-overlay" id="cart-overlay" onclick="closeCartPanel()"></div>
   <div class="cart-sidebar" id="cart-sidebar">
       <div class="cart-header">
           <h2>Your Selection</h2>
-          <button id="close-cart" class="close-cart-btn">✕</button>
+          <button id="close-cart" class="close-cart-btn" onclick="closeCartPanel()">✕</button>
       </div>
       <div id="cart-items-container" class="cart-items-body">
           <p class="empty-msg">Your cart is currently empty.</p>
       </div>
-      
-      <!-- Live Interactive Delivery Form Node Target -->
       <div id="cart-shipping-form-container"></div>
-      
       <div class="cart-footer">
           <div class="cart-total-row">
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
-          <!-- Buttons dynamically controlled by updateCartUI in script.js -->
       </div>
   </div>
 
-  <!-- Header Section -->
   <header class="header">
       <div class="container nav-container">
           <a href="index.html" class="logo">MAHIVERSE <span>GLOBLE</span></a>
-          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <div class="menu-toggle" id="menu-toggle" onclick="toggleNavbar()">☰</div>
           <nav class="navbar" id="navbar">
               <a href="index.html">Home</a>
               <a href="products.html" class="active">Products</a>
               <a href="about.html">About Us</a>
               <a href="contact.html">Contact</a>
-              <a href="#" id="cart-icon-nav" class="nav-cart-trigger">
+              <a href="#" id="cart-icon-nav" class="nav-cart-trigger" onclick="openCartPanel(event)">
                   🛒 Cart (<span id="cart-count">0</span>)
               </a>
               <a href="https://wa.me/916354179230" target="_blank" class="order-btn">Order Now</a>
@@ -56,19 +48,15 @@
       </div>
   </header>
 
-  <!-- Single Product Display Section -->
   <section class="single-product container">
-      <!-- Image Showcase -->
       <div class="single-image">
-          <img src="onion-packaging.webp.jpg" alt="MAHIVERSE GLOBLE Premium Red Onion Powder" id="mainProductImg">
+          <img src="onion-packaging.webp.jpg" alt="MAHIVERSE GLOBLE Premium Red Onion Powder">
       </div>
       
-      <!-- Interactive Pricing Card -->
-      <div class="single-details card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
+      <div class="single-details card">
           <span class="product-badge">Premium Quality</span>
           <h1>Premium Red Onion Powder</h1>
           <div class="rating">⭐⭐⭐⭐⭐ <span>(4.8/5 Client Rating)</span></div>
-          
           <p>Our premium dehydrated red onion powder delivers a deep, sweet, and localized pungent aroma profile. Perfect distribution profile milled precisely to ensure absolute consistency across gourmet kitchen batches and large food manufacturing lines.</p>
           
           <div class="product-features">
@@ -77,7 +65,6 @@
               <span>🔬 Export Certified</span>
           </div>
 
-          <!-- Interactive Weight Selector Loop -->
           <div class="purchase-controls" style="margin: 25px 0; width: 100%; text-align: left;">
               <label for="weightSelect" style="display: block; font-weight: 700; margin-bottom: 8px; color: #14532d;">Select Packaging Profile:</label>
               <select id="weightSelect" class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 15px; font-weight: 600; color: #333;">
@@ -89,65 +76,24 @@
           </div>
 
           <div class="card-footer" style="width: 100%;">
-              <button class="btn btn-primary add-to-cart-btn" style="width: 100%; border: none; cursor: pointer; padding: 16px;">
+              <button class="btn btn-primary add-to-cart-btn" onclick="handleAddToCartClick()" style="width: 100%; border: none; cursor: pointer; padding: 16px;">
                   🛒 Add Selected Pack to Cart
               </button>
           </div>
       </div>
   </section>
 
-  <!-- Technical Specifications Matrix Section -->
   <section class="product-specs container" style="padding-top: 0;">
       <h2>Technical Grading Matrix</h2>
       <table class="spec-table">
-          <tr>
-              <td><strong>Product Classification</strong></td>
-              <td>Dehydrated Allium Cepa (Red Onion Powder Grade A)</td>
-          </tr>
-          <tr>
-              <td><strong>Form / Mesh Particle Size</strong></td>
-              <td>Fine Pulverized Powder Profile (40-60 Mesh)</td>
-          </tr>
-          <tr>
-              <td><strong>Moisture Threshold</strong></td>
-              <td>Strictly under 5.0% Max allocation profiles</td>
-          </tr>
-          <tr>
-              <td><strong>Additive Additions</strong></td>
-              <td>0% - Completely Clean of Artificial Flow Agents or Fillers</td>
-          </tr>
-          <tr>
-              <td><strong>Origin</strong></td>
-              <td>100% Premium Cultivated Agricultural Belts, India</td>
-          </tr>
+          <tr><td><strong>Product Classification</strong></td><td>Dehydrated Allium Cepa (Red Onion Powder Grade A)</td></tr>
+          <tr><td><strong>Form / Mesh Particle Size</strong></td><td>Fine Pulverized Powder Profile (40-60 Mesh)</td></tr>
+          <tr><td><strong>Moisture Threshold</strong></td><td>Strictly under 5.0% Max allocation profiles</td></tr>
+          <tr><td><strong>Additive Additions</strong></td><td>0% - Completely Clean of Artificial Flow Agents or Fillers</td></tr>
+          <tr><td><strong>Origin</strong></td><td>100% Premium Cultivated Agricultural Belts, India</td></tr>
       </table>
   </section>
 
-  <!-- Culinary & Industrial Use Section -->
-  <section class="product-uses" style="background: #ffffff; padding: 60px 0;">
-      <div class="container">
-          <h2 style="text-align: center; color: #14532d; margin-bottom: 40px;">Culinary Applications</h2>
-          <div class="uses-grid">
-              <div class="use-card">
-                  <div class="use-icon">🍲</div>
-                  <h3 style="color:#14532d; margin-bottom:10px;">Gravies & Stews</h3>
-                  <p style="color:#666; font-size:14px;">Integrates instantly into liquid bases to add rich body and savory sweetness.</p>
-              </div>
-              <div class="use-card">
-                  <div class="use-icon">🍔</div>
-                  <h3 style="color:#14532d; margin-bottom:10px;">Processed Foods</h3>
-                  <p style="color:#666; font-size:14px;">Ideal flavor profile builder for premium patties, nuggets, and commercial batters.</p>
-              </div>
-              <div class="use-card">
-                  <div class="use-icon">🧂</div>
-                  <h3 style="color:#14532d; margin-bottom:10px;">Gourmet Blends</h3>
-                  <p style="color:#666; font-size:14px;">Mixes uniformly with standard table salts and dry ground seasoning profiles.</p>
-              </div>
-          </div>
-      </div>
-  </section>
-
-  <!-- Corporate Footer -->
   <footer class="footer">
       <div class="container footer-container">
           <div class="footer-box brand-box">
@@ -171,6 +117,154 @@
           <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
       </div>
   </footer>
-<script src="script.js?v=5.0"></script>
-</body>
-</html>
+
+  <script>
+    const WHATSAPP_NUMBER = "916354179230";
+    let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
+    let activeStep = 1;
+
+    function openCartPanel(e) {
+        if(e) e.preventDefault();
+        document.getElementById("cart-sidebar").classList.add("open");
+        document.getElementById("cart-overlay").classList.add("show");
+    }
+
+    function closeCartPanel() {
+        document.getElementById("cart-sidebar").classList.remove("open");
+        document.getElementById("cart-overlay").classList.remove("show");
+    }
+
+    function toggleNavbar() {
+        document.getElementById("navbar").classList.toggle("active");
+    }
+
+    function handleAddToCartClick() {
+        console.log("Add to cart clicked!");
+        const select = document.getElementById("weightSelect");
+        if (!select) return;
+
+        const weight = select.value;
+        const option = select.options[select.selectedIndex];
+        const price = Number(option.getAttribute("data-price") || 0);
+        const key = "onion-powder-premium-" + weight;
+
+        const existingItem = cart.find(item => item.key === key);
+        if (existingItem) {
+            existingItem.quantity++;
+        } else {
+            cart.push({
+                key: key,
+                id: "onion-powder-premium",
+                name: "Premium Dehydrated Red Onion Powder",
+                weight: weight,
+                price: price,
+                quantity: 1
+            });
+        }
+
+        localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
+        activeStep = 1;
+        updateCartUI();
+        openCartPanel();
+    }
+
+    function setCheckoutStep(stepNumber) {
+        if (stepNumber === 2) {
+            const name = document.getElementById("cust-name")?.value.trim();
+            const phone = document.getElementById("cust-phone")?.value.trim();
+            const email = document.getElementById("cust-email")?.value.trim();
+            const address = document.getElementById("cust-address")?.value.trim();
+
+            if (!name || !phone || !email || !address) {
+                alert("Please fill out all delivery information fields before moving to payment options!");
+                return;
+            }
+            
+            localStorage.setItem("temp_cust_name", name);
+            localStorage.setItem("temp_cust_phone", phone);
+            localStorage.setItem("temp_cust_email", email);
+            localStorage.setItem("temp_cust_address", address);
+        }
+        activeStep = stepNumber;
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const itemsContainer = document.getElementById("cart-items-container");
+        const formContainer = document.getElementById("cart-shipping-form-container");
+        const cartSidebar = document.getElementById("cart-sidebar");
+        if (!itemsContainer) return;
+
+        itemsContainer.innerHTML = "";
+        let totalItems = 0;
+        let totalPrice = 0;
+
+        cart.forEach((item) => {
+            totalItems += item.quantity;
+            totalPrice += item.price * item.quantity;
+        });
+
+        document.getElementById("cart-count").textContent = totalItems;
+
+        if (cart.length === 0) {
+            itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
+            if (formContainer) formContainer.innerHTML = ""; 
+            const footer = cartSidebar.querySelector(".cart-footer");
+            if (footer) footer.innerHTML = '<div class="cart-total-row"><span>Estimated Total:</span><span>₹0</span></div>';
+            return;
+        }
+
+        if (activeStep === 1) {
+            cart.forEach((item, index) => {
+                const div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `
+                    <div class="cart-item-details">
+                        <h4>${item.name}</h4>
+                        <p>${item.weight} (Qty: ${item.quantity})</p>
+                        <p><strong>₹${item.price * item.quantity}</strong></p>
+                    </div>
+                    <button class="remove-item-btn" onclick="removeCartItem(${index})">Remove</button>
+                `;
+                itemsContainer.appendChild(div);
+            });
+
+            if (formContainer) {
+                const savedName = localStorage.getItem("temp_cust_name") || "";
+                const savedPhone = localStorage.getItem("temp_cust_phone") || "";
+                const savedEmail = localStorage.getItem("temp_cust_email") || "";
+                const savedAddress = localStorage.getItem("temp_cust_address") || "";
+
+                formContainer.innerHTML = `
+                    <div class="cart-shipping-form">
+                        <h3>📋 Delivery Information</h3>
+                        <div class="form-group"><label>Full Name *</label><input type="text" id="cust-name" value="${savedName}" required></div>
+                        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="cust-phone" value="${savedPhone}" required></div>
+                        <div class="form-group"><label>Email ID *</label><input type="email" id="cust-email" value="${savedEmail}" required></div>
+                        <div class="form-group"><label>Courier Shipping Address *</label><textarea id="cust-address" required>${savedAddress}</textarea></div>
+                    </div>
+                `;
+            }
+
+            const footer = cartSidebar.querySelector(".cart-footer");
+            if (footer) {
+                footer.innerHTML = `
+                    <div class="cart-total-row"><span>Subtotal:</span><span>₹${totalPrice}</span></div>
+                    <button class="btn-step-advance" onclick="setCheckoutStep(2)">Proceed to Payment Options Details →</button>
+                `;
+            }
+        } else if (activeStep === 2) {
+            const name = localStorage.getItem("temp_cust_name") || "";
+            const phone = localStorage.getItem("temp_cust_phone") || "";
+            const address = localStorage.getItem("temp_cust_address") || "";
+
+            itemsContainer.innerHTML = `
+                <div class="shipping-summary-profile">
+                    <h4>📍 Shipping Summary Profile</h4>
+                    <p><strong>Deliver To:</strong> ${name}</p>
+                    <p><strong>Contact Tel:</strong> ${phone}</p>
+                    <p><strong>Address:</strong> ${address}</p>
+                    <button class="btn-edit-profile-back" onclick="setCheckoutStep(1)">✏️ Modify Delivery Details</button>
+                </div>
+            `;
+            if (formContainer) form
