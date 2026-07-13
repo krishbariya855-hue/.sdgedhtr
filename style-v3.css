@@ -1365,3 +1365,57 @@ section {
         font-size: 32px !important;
     }
 }
+/* ==========================================================================
+   MAHIVERSE GLOBLE - MOBILE MENU ANIMATION STATES
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Style the navbar as a full-width dropdown when activated */
+    .navbar {
+        display: none; /* Hidden by default on mobile */
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 75px; /* Directly below header height */
+        left: 0;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border-top: 2px solid #14532d;
+        gap: 15px !important;
+        z-index: 9998;
+    }
+
+    /* Active State triggered via JavaScript */
+    .navbar.mobile-active {
+        display: flex !important;
+        animation: slideDownMenu 0.3s ease-out forwards;
+    }
+
+    .navbar a {
+        width: 100%;
+        padding: 12px 15px;
+        background: #faf8f4;
+        border-radius: 8px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .navbar a.order-btn {
+        text-align: center;
+        background: #14532d;
+        color: #fff !important;
+        margin-top: 5px;
+    }
+}
+
+/* Smooth dropdown entry animation */
+@keyframes slideDownMenu {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
