@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mahiversegloble.com/sitemap.xml
+Sitemap: https://www.mahiversegloble.com/sitemap.xml
