@@ -3,7 +3,6 @@
 <html lang="en">
 
 <head>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -25,27 +24,43 @@
     gtag('config', 'G-J3L6NB28Y2');
   </script>
 
-  <!-- Google Fonts - Premium Typography Preconnected for Instant Delivery -->
+  <!-- Google Fonts Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-  <!-- Critical Minimal Layout CSS to load above-the-fold content immediately -->
+  <!-- Robust Critical CSS Layout to Eliminate Layout Shifts (CLS) -->
   <style>
-    body { font-family:'DM Sans',sans-serif; background:#faf8f4; color:#2b2b2b; margin:0; padding:0; overflow-x:hidden; }
-    .header { position:sticky; top:0; width:100%; background:#fff; z-index:9999; box-shadow:0 4px 20px rgba(0,0,0,0.05); }
-    .container { width:90%; max-width:1200px; margin:auto; }
-    .nav-container { display:flex; justify-content:space-between; align-items:center; height:85px; }
-    .hero-section { min-height:80vh; display:flex; align-items:center; padding:60px 0; background:linear-gradient(to right,#faf8f4 60%,#f4f0e6); }
-    .hero-container { width:90%; max-width:1200px; margin:auto; display:grid; grid-template-columns:1.2fr 0.8fr; gap:60px; align-items:center; }
-    .hero-text h1 { font-family:'Playfair Display',serif; font-size:54px; line-height:1.15; color:#2c1a04; margin-bottom:20px; }
-    .floating-img { max-width:100%; height:auto; border-radius:30px; box-shadow:0 20px 40px rgba(0,0,0,0.1); }
-    @media (max-width:992px){.hero-container{grid-template-columns:1fr; text-align:center;}}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'DM Sans', sans-serif; background: #faf8f4; color: #2b2b2b; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, .logo { font-family: 'Playfair Display', serif; }
+    .header { position: sticky; top: 0; width: 100%; background: #ffffff; z-index: 9999; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); }
+    .container { width: 90%; max-width: 1200px; margin: auto; }
+    .nav-container { display: flex; justify-content: space-between; align-items: center; height: 85px; }
+    
+    /* Pre-allocating Exact Space for Hero Grid to stop element shifting */
+    .hero-section { min-height: 80vh; display: flex; align-items: center; padding: 60px 0; background: linear-gradient(to right, #faf8f4 60%, #f4f0e6); }
+    .hero-container { width: 90%; max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
+    .hero-text h1 { font-size: 54px; line-height: 1.15; color: #2c1a04; margin-bottom: 20px; }
+    .hero-text p { font-size: 18px; color: #555; margin-bottom: 35px; }
+    .hero-actions { display: flex; gap: 20px; }
+    .btn { display: inline-flex; height: 54px; align-items: center; justify-content: center; padding: 0 35px; border-radius: 30px; font-weight: 600; text-decoration: none; }
+    .btn-primary { background: #14532d; color: #fff; }
+    .btn-secondary { background: transparent; color: #14532d; border: 2px solid #14532d; }
+    
+    /* Image Placeholder box constraints */
+    .hero-image-wrapper { position: relative; display: flex; justify-content: center; min-height: 400px; }
+    .floating-img { max-width: 100%; height: auto; border-radius: 30px; object-fit: cover; }
+    
+    @media (max-width: 992px) {
+      .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+      .hero-actions { justify-content: center; }
+      .hero-text h1 { font-size: 38px; }
+    }
   </style>
 
-  <!-- Non-blocking asynchronous loading for style-v3.css -->
-  <link rel="stylesheet" href="style-v3.css" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="style-v3.css"></noscript>
+  <!-- Load standard styles normally to fix layout flash issues -->
+  <link rel="stylesheet" href="style-v3.css">
 
   <!-- Open Graph / Meta -->
   <meta property="og:title" content="MAHIVERSE GLOBLE">
@@ -54,10 +69,7 @@
   <meta property="og:url" content="https://www.mahiversegloble.com/">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="MAHIVERSE GLOBLE">
-
-
 </head>
-
 
 
 <body>
