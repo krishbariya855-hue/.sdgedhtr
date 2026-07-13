@@ -69,65 +69,120 @@
   </section>
 
   <!-- Grid Showcase Grid Layout -->
-  <section class="products-showcase" style="background: #faf8f4;">
-      <div class="section-header">
-          <h2>Our Core Signature Portfolio</h2>
-          <p>Finely pulverized, high-aroma dehydrated options prepared for commercial and retail buyers.</p>
-      </div>
-      <div class="product-grid">
-          
-          <!-- Interactive Garlic Product Card -->
-          <div class="card" data-id="garlic-powder-premium" data-name="Premium Dehydrated Garlic Powder">
-              <div class="product-img-container">
-                  <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase">
-              </div>
-              <span class="product-badge">Grade A Export</span>
-              <h3>Dehydrated Premium Garlic Powder</h3>
-              <p>Deeply aromatic, rich consistency, ideal for gourmet seasonings, commercial spice mixes, and restaurant bases.</p>
-              
-              <!-- Weight Variant Selection Dropdown -->
-              <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-                  <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
-                      <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
-                      <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
-                      <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
-                      <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
-                  </select>
-              </div>
-              
-              <div class="card-footer" style="width: 100%;">
-                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;">🛒 Add to Cart</button>
-                  <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
-              </div>
-          </div>
-          
-          <!-- Interactive Onion Product Card -->
-          <div class="card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
-              <div class="product-img-container">
-                  <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase">
-              </div>
-              <span class="product-badge">Grade A Export</span>
-              <h3>Dehydrated Premium Red Onion Powder</h3>
-              <p>Sweet pungent aroma notes, flawless flow distribution profile perfect for snack coating drums and large culinary operations.</p>
-              
-              <!-- Weight Variant Selection Dropdown -->
-              <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-                  <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
-                      <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
-                      <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
-                      <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
-                      <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
-                  </select>
-              </div>
+ <section class="products-showcase" style="background: #faf8f4; padding: 60px 0;">
+    <div class="container">
+        <div class="section-header" style="text-align: center; margin-bottom: 50px;">
+            <h2>Our Core Signature Portfolio</h2>
+            <p>Finely pulverized, high-aroma dehydrated options prepared for commercial and retail buyers.</p>
+        </div>
 
-              <div class="card-footer" style="width: 100%;">
-                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;">🛒 Add to Cart</button>
-                  <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
-              </div>
-          </div>
+        <div class="product-grid">
+            
+            <!-- 1. Interactive Garlic Product Card -->
+            <div class="card" data-id="garlic-powder-premium" data-name="Premium Dehydrated Garlic Powder">
+                <div class="product-img-container">
+                    <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase" loading="lazy" width="300" height="260">
+                </div>
+                <span class="product-badge">Grade A Export</span>
+                <h3>Dehydrated Premium Garlic Powder</h3>
+                <p>Deeply aromatic, rich consistency, ideal for gourmet seasonings, commercial spice mixes, and restaurant bases.</p>
+                <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                        <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
+                        <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
+                        <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
+                        <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                    </select>
+                </div>
+                <div class="card-footer" style="width: 100%;">
+                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
+                </div>
+            </div>
+            
+            <!-- 2. Interactive Red Onion Product Card -->
+            <div class="card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
+                <div class="product-img-container">
+                    <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase" loading="lazy" width="300" height="260">
+                </div>
+                <span class="product-badge">Grade A Export</span>
+                <h3>Dehydrated Premium Red Onion Powder</h3>
+                <p>Sweet pungent aroma notes, perfect distribution profile for large food manufacturing operations and retail supply.</p>
+                <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                        <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
+                        <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
+                        <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
+                        <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                    </select>
+                </div>
+                <div class="card-footer" style="width: 100%;">
+                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
+                </div>
+            </div>
 
-      </div>
-  </section>
+            <!-- 3. Premium Natural Cow Dung Powder Card -->
+            <div class="card" data-id="cow-dung-powder-premium" data-name="Export Grade Premium Cow Dung Powder">
+                <div class="product-img-container" style="background: #f2efe9; display: flex; justify-content: center; align-items: center; min-height: 260px;">
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; left: 15px; background: #14532d; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">100% Organic</span>
+                    <div style="font-size: 72px;">🌱</div>
+                </div>
+                <span class="product-badge">Bulk Ready</span>
+                <h3>Export Grade Cow Dung Powder</h3>
+                <p>Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory standards.</p>
+                <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                        <option value="1kg Trial Pack" data-price="250">1kg Pack — ₹250</option>
+                        <option value="5kg Garden Pack" data-price="950">5kg Pack — ₹950</option>
+                        <option value="Commercial Bulk Cargo" data-price="0">Full Container Load — Inquire Price</option>
+                    </select>
+                </div>
+                <div class="card-footer" style="width: 100%;">
+                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('cow-dung-powder-premium', 'Export Grade Premium Cow Dung Powder')">🛒 Add to Cart</button>
+                </div>
+            </div>
+
+            <!-- 4. Expansion Pipeline Elements Group: Turmeric -->
+            <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
+                <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
+                    <div class="placeholder-icon" style="font-size: 72px;">🍂</div>
+                </div>
+                <h3>High-Curcumin Turmeric Powder</h3>
+                <p>Pure, export-grade traditional Indian Turmeric. Superior color density and natural volatile oil preservation.</p>
+                <div class="card-footer" style="width: 100%;">
+                    <a href="contact.html" class="btn btn-secondary" style="width: 100%; text-align: center; display: inline-flex; justify-content: center; align-items: center; height: 45px; text-decoration: none;">Pre-Book Bulk Orders</a>
+                </div>
+            </div>
+
+            <!-- 5. Expansion Pipeline Elements Group: Ginger -->
+            <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
+                <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
+                    <div class="placeholder-icon" style="font-size: 72px;">🪵</div>
+                </div>
+                <h3>Dehydrated Ginger Powder</h3>
+                <p>Sharp, highly pungent ginger root derivatives finely sifted for international manufacturing clients.</p>
+                <div class="card-footer" style="width: 100%;">
+                    <a href="contact.html" class="btn btn-secondary" style="width: 100%; text-align: center; display: inline-flex; justify-content: center; align-items: center; height: 45px; text-decoration: none;">Pre-Book Bulk Orders</a>
+                </div>
+            </div>
+
+            <!-- 6. Expansion Pipeline Elements Group: Pure Ground Blends -->
+            <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
+                <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
+                    <div class="placeholder-icon" style="font-size: 72px;">🌶️</div>
+                </div>
+                <h3>Coriander & Chilli Powder</h3>
+                <p>Premium Coriander Powder and high-heat Red Chilli Powder lines prepared under cold-grinding technologies.</p>
+                <div class="card-footer" style="width: 100%;">
+                    <a href="contact.html" class="btn btn-secondary" style="width: 100%; text-align: center; display: inline-flex; justify-content: center; align-items: center; height: 45px; text-decoration: none;">Pre-Book Bulk Orders</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
 
   <!-- Corporate Unified Footer -->
   <footer class="footer">
