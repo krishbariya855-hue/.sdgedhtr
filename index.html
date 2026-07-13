@@ -7,9 +7,9 @@
   <title>MAHIVERSE GLOBLE | Premium Spices & Agricultural Exports</title>
   
   <link rel="icon" type="image/jpeg" href="logo.png.jpeg">
- <meta name="description" content="MAHIVERSE GLOBLE - Global exporter of premium dehydrated garlic powder, red onion powder, organic manure, and high-grade cow dung powder. Sourced from India for UK, UAE, and global markets.">
-<meta name="keywords" content="Garlic Powder Exporter, Dehydrated Onion Powder, Indian Spices Wholesale, Organic Manure Export, Cow Dung Powder Bulk Supply, Agro Commodities India, Mahiverse Globle, Export to UAE, Export to UK">
-<meta name="author" content="MAHIVERSE GLOBLE">
+  <meta name="description" content="MAHIVERSE GLOBLE - Global exporter of premium dehydrated garlic powder, red onion powder, organic manure, and high-grade cow dung powder. Sourced from India for UK, UAE, and global markets.">
+  <meta name="keywords" content="Garlic Powder Exporter, Dehydrated Onion Powder, Indian Spices Wholesale, Organic Manure Export, Cow Dung Powder Bulk Supply, Agro Commodities India, Mahiverse Globle, Export to UAE, Export to UK">
+  <meta name="author" content="MAHIVERSE GLOBLE">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://www.mahiversegloble.com/">
 
@@ -22,7 +22,7 @@
     gtag('config', 'G-J3L6NB28Y2');
   </script>
 
-  <!-- Google Fonts - Premium Typography -->
+  <!-- Google Fonts - Premium Typography Preconnected for Instant Delivery -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
@@ -40,14 +40,15 @@
 </head>
 
 <body>
-<!-- Premium Classic Logo Intro Preloader -->
-<!-- Premium Classic Logo Intro Preloader -->
-<div id="loader">
-    <div class="loader-wrapper">
-        <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE" class="loader-logo">
-        <div class="loader-line"></div>
-    </div>
-</div>
+  <!-- OPTIMIZATION NOTE: If you notice a white screen delay on mobile devices, 
+       delete this entire <div id="loader"> container completely. -->
+  <div id="loader">
+      <div class="loader-wrapper">
+          <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE" class="loader-logo" width="120" height="120">
+          <div class="loader-line"></div>
+      </div>
+  </div>
+
   <div class="cart-overlay" id="cart-overlay"></div>
 
   <!-- Premium Cart Sidebar Interface -->
@@ -70,16 +71,15 @@
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
-          <!-- Checkout button injections handled automatically by system script -->
       </div>
   </div>
 
- <!-- Header & Navigation -->
-      <header class="header">
-          <div class="container nav-container">
-              <a href="index.html" class="logo" style="display: flex; align-items: center;">
-                  <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;">
-              </a>
+  <!-- Header & Navigation -->
+  <header class="header">
+      <div class="container nav-container">
+          <a href="index.html" class="logo" style="display: flex; align-items: center;">
+              <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;" width="50" height="50">
+          </a>
           <div class="menu-toggle" id="menu-toggle">☰</div>
           <nav class="navbar" id="navbar">
               <a href="index.html" class="active">Home</a>
@@ -107,7 +107,8 @@
               </div>
           </div>
           <div class="hero-image-wrapper">
-              <img src="garlic-powder-closeup.webp.jpg" alt="Premium Quality Garlic Powder Close Up" class="floating-img">
+              <!-- ABOVE THE FOLD IMAGE OPTIMIZED: Instructs the browser to load this asset dynamically with maximum priority -->
+              <img src="garlic-powder-closeup.webp.jpg" alt="Premium Quality Garlic Powder Close Up" class="floating-img" fetchpriority="high" loading="eager" width="500" height="400">
           </div>
       </div>
   </section>
@@ -171,7 +172,8 @@
           <!-- Interactive Garlic Product Card -->
           <div class="card" data-id="garlic-powder-premium" data-name="Premium Dehydrated Garlic Powder">
               <div class="product-img-container">
-                  <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase">
+                  <!-- BELOW THE FOLD IMAGES: Lazy loaded to save data bandwidth on mobile load paths -->
+                  <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase" loading="lazy" width="300" height="280">
               </div>
               <h3>Dehydrated Premium Garlic Powder</h3>
               <p>Deeply aromatic, rich consistency, ideal for gourmet and restaurant spice bases.</p>
@@ -187,15 +189,16 @@
               </div>
 
               <div class="card-footer" style="width: 100%;">
-    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
-    <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
-</div>
+                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
+                  <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
+              </div>
           </div>
           
           <!-- Interactive Onion Product Card -->
           <div class="card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
               <div class="product-img-container">
-                  <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase">
+                  <!-- BELOW THE FOLD IMAGES: Lazy loaded to save data bandwidth on mobile load paths -->
+                  <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase" loading="lazy" width="300" height="280">
               </div>
               <h3>Dehydrated Premium Red Onion Powder</h3>
               <p>Sweet pungent aroma notes, perfect distribution profile for large manufacturing operations.</p>
@@ -210,10 +213,10 @@
                   </select>
               </div>
 
-            <div class="card-footer" style="width: 100%;">
-    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
-    <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
-</div>
+              <div class="card-footer" style="width: 100%;">
+                  <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
+                  <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">View Full Specifications →</a>
+              </div>
           </div>
 
       </div>
@@ -258,6 +261,6 @@
   <button id="backToTop" title="Back to Top">↑</button>
 
   <!-- Enforced Caching Protection script tag -->
-<script src="script.js?v=5.0"></script>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>
