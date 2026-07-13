@@ -1301,3 +1301,67 @@ section {
         padding: 0 10px;
     }
 }
+/* ==========================================================================
+   MAHIVERSE GLOBLE - ABOUT & CONTACT MOBILE PAGES PATCH
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Contact Page Grid & Form Fix */
+    .contact-container, 
+    .contact-wrapper, 
+    .contact-section .container {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+        padding: 0 15px;
+    }
+
+    .contact-info, 
+    .contact-form-box, 
+    .contact-map {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Make input fields and textareas easy to tap on phones */
+    .contact-form input, 
+    .contact-form textarea {
+        width: 100% !important;
+        font-size: 16px !important; /* Prevents iOS from auto-zooming on text inputs */
+        padding: 14px !important;
+    }
+
+    /* 2. About Us Page Responsive Framework */
+    .about-container, 
+    .about-wrapper, 
+    .story-section {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 30px !important;
+        text-align: center;
+        padding: 0 15px;
+    }
+
+    .about-text, 
+    .about-image {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Center images on about page */
+    .about-image img {
+        margin: 0 auto;
+        border-radius: 15px;
+    }
+
+    /* 3. Global Spacing adjustments for Inner Content pages */
+    .inner-banner, 
+    .page-title-section {
+        padding: 40px 15px !important;
+        text-align: center;
+    }
+
+    .page-title-section h1 {
+        font-size: 32px !important;
+    }
+}
