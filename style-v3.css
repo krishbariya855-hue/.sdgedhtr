@@ -1225,3 +1225,79 @@ section {
         transform: translate(0, 0); /* Snaps perfectly into its true place */
     }
 }
+/* ==========================================================================
+   MAHIVERSE GLOBLE MOBILE RESPONSIVE PATCH
+   ========================================================================== */
+
+@media (max-width: 768px) {
+    /* 1. Navigation & Header adjustments */
+    .nav-container {
+        height: 70px;
+        padding: 0 15px;
+    }
+    .navbar {
+        display: none; /* Hide standard inline desktop links */
+        /* Note: If you have a JavaScript toggle, it will turn this to block/flex */
+    }
+    /* Simple fall-back if JS menu toggle isn't fully active yet */
+    .menu-toggle {
+        display: block;
+        font-size: 28px;
+        cursor: pointer;
+    }
+
+    /* 2. Trust Matrix Section (Stack them vertically) */
+    .trust-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 10px;
+    }
+    .trust-box {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    /* 3. Metrics Count Section (Stack them cleanly) */
+    .stats-container {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        text-align: center;
+    }
+
+    /* 4. Product Grid Layout (1 card per row on mobile instead of desktop columns) */
+    .product-grid {
+        display: grid;
+        grid-template-columns: 1fr !important; 
+        gap: 30px;
+        padding: 0 10px;
+    }
+    .card {
+        width: 100% !important;
+        max-width: 400px;
+        margin: 0 auto; /* Center the card on mobile screen */
+    }
+
+    /* 5. Unified Corporate Footer (Stack sections logically) */
+    .footer-container {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        text-align: left;
+        padding: 20px;
+    }
+    .footer-box {
+        width: 100% !important;
+    }
+    
+    /* 6. Typography optimizations for small screens */
+    h2 {
+        font-size: 28px !important;
+        line-height: 1.3;
+    }
+    .section-header p {
+        font-size: 15px;
+        padding: 0 10px;
+    }
+}
