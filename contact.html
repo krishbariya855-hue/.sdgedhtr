@@ -66,7 +66,70 @@
           </p>
       </div>
   </section>
+<!-- High-Converting B2B Contact & Export Inquiry Layout Container -->
+<div class="container" style="padding: 40px 0; max-width: 800px; margin: 0 auto; font-family: 'DM Sans', sans-serif;">
+    <div style="text-align: center; margin-bottom: 40px;">
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #2c1a04; margin-bottom: 12px;">Commercial RFQ & Export Inquiry Portal</h2>
+        <p style="color: #666; font-size: 16px;">Submit your detailed shipping requirements below. Our commercial trading desk will prepare a formal quote within 24 business hours.</p>
+    </div>
 
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" style="background: #ffffff; padding: 40px; border-radius: 16px; border: 1px solid #ebdcb9; box-shadow: 0 4px 25px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 20px;">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-wrap: wrap;" class="contact-grid-row">
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Your Name / Representative</label>
+                <input type="text" name="name" required placeholder="e.g. Krish Baria" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px;">
+            </div>
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Company Name</label>
+                <input type="text" name="company" placeholder="e.g. MAHIVERSE GLOBLE" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px;">
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-wrap: wrap;" class="contact-grid-row">
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Corporate Email</label>
+                <input type="email" name="email" required placeholder="mahiversegloble@gmail.com" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px;">
+            </div>
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">WhatsApp / Phone Number</label>
+                <input type="tel" name="phone" required placeholder="+91 6354179230" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px;">
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; flex-wrap: wrap;" class="contact-grid-row">
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Core Product Focus</label>
+                <select name="product_interest" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 16px; font-weight: 500; height: 50px;">
+                    <option value="Garlic Powder">Premium Dehydrated Garlic Powder</option>
+                    <option value="Red Onion Powder">Premium Dehydrated Red Onion Powder</option>
+                    <option value="Cow Dung Powder">Export Grade Cow Dung Powder</option>
+                    <option value="Mixed Spices Cargo">Mixed Commodities Cargo Container</option>
+                </select>
+            </div>
+            <div>
+                <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Target Order Volume</label>
+                <select name="order_volume" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 16px; font-weight: 500; height: 50px;">
+                    <option value="Retail Packets (200g - 1kg)">Retail Packs / Sample Consignments</option>
+                    <option value="Wholesale Bulk (50kg - 500kg)">Wholesale Bulk Bags (50kg - 500kg)</option>
+                    <option value="Commercial Cargo (1 Tonne - FCL)">Commercial Bulk Cargo (1 Tonne+ / FCL)</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Target Destination Port / Country</label>
+            <input type="text" name="destination" required placeholder="e.g. Jebel Ali Port (UAE), Port of London (UK), or Domestic Delivery Hub" style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px;">
+        </div>
+
+        <div>
+            <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #14532d; font-size: 14px;">Detailed Custom Trade Specifications</label>
+            <textarea name="message" rows="5" required placeholder="Specify your desired custom packaging dimensions, private labeling requests, custom moisture parameters, or target entry metric guidelines here..." style="width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ddd; outline: none; font-size: 16px; font-family: 'DM Sans', sans-serif; resize: vertical;"></textarea>
+        </div>
+
+        <button type="submit" style="width: 100%; height: 55px; background: #14532d; color: #fff; border: none; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background 0.3s;">🚀 Submit Commercial RFQ / Quote Request</button>
+    </form>
+</div>
   <!-- High-End Communications Interface Matrix -->
   <section class="contact-section" style="background: #faf8f4; padding: 90px 0;">
       <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch;">
