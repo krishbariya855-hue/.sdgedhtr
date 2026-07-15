@@ -484,3 +484,37 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// ==========================================================================
+// MAHIVERSE GLOBLE - INTERACTIVE HIGH-PERFORMANCE FAQ ENGINE
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const faqTriggers = document.querySelectorAll('.faq-trigger');
+
+    faqTriggers.forEach(trigger => {
+        trigger.addEventListener('click', function() {
+            const currentItem = this.parentElement;
+            const contentBlock = this.nextElementSibling;
+            const iconElement = this.querySelector('.faq-icon');
+
+            // Close all other open accordion panels for clean user experience
+            document.querySelectorAll('.faq-item').forEach(item => {
+                if (item !== currentItem) {
+                    item.querySelector('.faq-content').style.maxHeight = null;
+                    item.querySelector('.faq-icon').style.transform = 'rotate(0deg)';
+                    item.querySelector('.faq-icon').textContent = '+';
+                }
+            });
+
+            // Toggle active slide dynamics
+            if (contentBlock.style.maxHeight) {
+                contentBlock.style.maxHeight = null;
+                iconElement.style.transform = 'rotate(0deg)';
+                iconElement.textContent = '+';
+            } else {
+                contentBlock.style.maxHeight = contentBlock.scrollHeight + "px";
+                iconElement.style.transform = 'rotate(45deg)';
+                iconElement.textContent = '×';
+            }
+        });
+    });
+});
