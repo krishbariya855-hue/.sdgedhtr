@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# Sitemap Location Declaration
 Sitemap: https://www.mahiversegloble.com/sitemap.xml
