@@ -120,26 +120,31 @@
                 </div>
             </div>
 
-            <!-- 3. Premium Natural Cow Dung Powder Card -->
-            <div class="card" data-id="cow-dung-powder-premium" data-name="Export Grade Premium Cow Dung Powder">
-                <div class="product-img-container" style="background: #f2efe9; display: flex; justify-content: center; align-items: center; min-height: 260px;">
-                    <span class="coming-soon-tag" style="position: absolute; top: 15px; left: 15px; background: #14532d; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">100% Organic</span>
-                    <div style="font-size: 72px;">🌱</div>
-                </div>
-                <span class="product-badge">Bulk Ready</span>
-                <h3>Export Grade Cow Dung Powder</h3>
-                <p>Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory standards.</p>
-                <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
-                        <option value="1kg Trial Pack" data-price="250">1kg Pack — ₹250</option>
-                        <option value="5kg Garden Pack" data-price="950">5kg Pack — ₹950</option>
-                        <option value="Commercial Bulk Cargo" data-price="0">Full Container Load — Inquire Price</option>
-                    </select>
-                </div>
-                <div class="card-footer" style="width: 100%;">
-                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('cow-dung-powder-premium', 'Export Grade Premium Cow Dung Powder')">🛒 Add to Cart</button>
-                </div>
-            </div>
+<!-- 3. Export Grade Cow Dung Powder Card (Out of Stock Variant) -->
+<div class="card" data-category="organic" data-id="cow-dung-powder-premium" data-name="Export Grade Premium Cow Dung Powder" style="opacity: 0.75;">
+    <div class="product-img-container" style="background: #f2efe9; display: flex; justify-content: center; align-items: center; min-height: 260px; position: relative;">
+        <!-- Clean Out of Stock Alert Tag Overlay -->
+        <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #dc2626; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">Sold Out</span>
+        <span class="coming-soon-tag" style="position: absolute; top: 15px; left: 15px; background: #737373; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">100% Organic</span>
+        <div style="font-size: 72px; filter: grayscale(80%);">🌱</div>
+    </div>
+    <span class="product-badge" style="background: #737373;">Temporarily Unavailable</span>
+    <h3>Export Grade Cow Dung Powder</h3>
+    <p>Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory standards.</p>
+    
+    <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+        <!-- Disabled dropdown options since inventory is empty -->
+        <select class="weight-select" disabled style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #f5f5f5; font-size: 14px; font-weight: 600; color: #888; cursor: not-allowed;">
+            <option>Direct Volume Restocking in Progress...</option>
+        </select>
+    </div>
+    
+    <div class="card-footer" style="width: 100%;">
+        <!-- Disabled Add to Cart Button linked with fallback warning style changes -->
+        <button class="btn" disabled style="width: 100%; margin-bottom: 10px; background: #e5e5e5; color: #a3a3a3; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: not-allowed;">❌ Out of Stock</button>
+        <a href="contact.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">Inquire Next Fresh Batch Arrival →</a>
+    </div>
+</div>
 
             <!-- 4. Expansion Pipeline Elements Group: Turmeric -->
             <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
