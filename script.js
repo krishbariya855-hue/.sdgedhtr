@@ -431,3 +431,56 @@ const loader = document.getElementById("loader");
 if (loader) {
     loader.style.opacity = "0"; loader.style.visibility = "hidden"; loader.style.display = "none";
 }
+// ==========================================================================
+// MAHIVERSE GLOBLE - REAL-TIME SEARCH & PORTFOLIO FILTER ENGINE
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('product-search-input');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const productCards = document.querySelectorAll('.product-grid .card');
+
+    function filterProducts() {
+        const searchWord = searchInput.value.toLowerCase().trim();
+        const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+
+        productCards.forEach(card => {
+            const productName = card.querySelector('h3').textContent.toLowerCase();
+            const productDesc = card.querySelector('p').textContent.toLowerCase();
+            const cardCategory = card.getAttribute('data-category') || 'all';
+
+            const matchesSearch = productName.includes(searchWord) || productDesc.includes(searchWord);
+            const matchesCategory = (activeFilter === 'all') || (cardCategory === activeFilter);
+
+            if (matchesSearch && matchesCategory) {
+                card.style.display = 'flex'; // Keeps cards matching layout framework structures
+                card.style.opacity = '1';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+
+    // Input listening events for instant keystroke searches
+    if (searchInput) {
+        searchInput.addEventListener('input', filterProducts);
+    }
+
+    // Category toggle button selection controls
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                btn.style.background = '#fff';
+                btn.style.color = '#444';
+                btn.style.borderColor = '#ebdcb9';
+            });
+
+            this.classList.add('active');
+            this.style.background = '#14532d';
+            this.style.color = '#fff';
+            this.style.borderColor = '#14532d';
+
+            filterProducts();
+        });
+    });
+});
