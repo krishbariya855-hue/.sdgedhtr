@@ -6,19 +6,25 @@
   <title>Dehydrated Premium Red Onion Powder | MAHIVERSE GLOBLE</title>
   <link rel="icon" type="image/jpeg" href="logo.png.jpeg">
   <meta name="description" content="Pure, high-aroma dehydrated premium red onion powder processed specifically for global food supply chains and domestic retail markets.">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style-v3.css">
+  
+  <!-- Global AdSense Verification Code Snippet Injection -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1908819484012080" crossorigin="anonymous"></script>
+
   <script type="application/ld+json">
 {
   "@context":"https://schema.org",
   "@type":"Product",
   "name":"Red Onion Powder",
   "image":[
-    "https://www.mahiversegloble.com/images/onion.png.jpg"
+    "https://www.mahiversegloble.com/images/onion-packaging.webp.jpg"
   ],
-  "description":"Premium red onion powder made from carefully selected onions. Ideal for seasoning, marinades, soups, and everyday cooking.",
+  "description":"Premium quality red onion powder made from fresh onions. Perfect for industrial cooking, savory seasoning, and commercial food manufacturing.",
   "brand":{
     "@type":"Brand",
     "name":"MAHIVERSE GLOBLE"
@@ -30,14 +36,36 @@
   "offers":{
     "@type":"Offer",
     "priceCurrency":"INR",
-    "price":"199",
+    "price":"160",
     "availability":"https://schema.org/InStock",
     "url":"https://www.mahiversegloble.com/onion-powder.html",
     "itemCondition":"https://schema.org/NewCondition"
   }
 }
 </script>
-
+  <!-- Red Onion Powder Product Schema -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Product",
+  "name":"Red Onion Powder 250g",
+  "image":"https://www.mahiversegloble.com/onion-packaging.webp.jpg",
+  "description":"Premium dehydrated red onion powder from India. Perfect for cooking, seasoning and food manufacturing.",
+  "brand":{
+    "@type":"Brand",
+    "name":"MAHIVERSE GLOBLE"
+  },
+  "sku":"OP250",
+  "offers":{
+    "@type":"Offer",
+    "url":"https://www.mahiversegloble.com/onion-powder.html",
+    "priceCurrency":"INR",
+    "price":"160",
+    "availability":"https://schema.org/InStock",
+    "itemCondition":"https://schema.org/NewCondition"
+  }
+}
+</script>
   <!-- Breadcrumb Schema -->
 <script type="application/ld+json">
 {
@@ -64,19 +92,55 @@
   ]
 }
 </script>
+  <script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"FAQPage",
+  "mainEntity":[
+    {
+      "@type":"Question",
+      "name":"What is Red Onion Powder?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Red Onion Powder is made from dehydrated red onions and is widely used for industrial food flavoring and home seasoning."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"Do you supply in bulk?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Yes. MAHIVERSE GLOBLE supplies high-volume global export volumes and retail batches."
+      }
+    },
+    {
+      "@type":"Question",
+      "name":"How should I store onion powder?",
+      "acceptedAnswer":{
+        "@type":"Answer",
+        "text":"Store inside a cool, dry warehouse location and keep the moisture-barrier pouch tightly locked."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
-  <div class="cart-overlay" id="cart-overlay" onclick="closeCartPanel()"></div>
+  <!-- Premium Cart Sidebar Interface -->
+  <div class="cart-overlay" id="cart-overlay"></div>
   <div class="cart-sidebar" id="cart-sidebar">
       <div class="cart-header">
           <h2>Your Selection</h2>
-          <button id="close-cart" class="close-cart-btn" onclick="closeCartPanel()">✕</button>
+          <button id="close-cart" class="close-cart-btn">✕</button>
       </div>
       <div id="cart-items-container" class="cart-items-body">
           <p class="empty-msg">Your cart is currently empty.</p>
       </div>
+      
+      <!-- Live Interactive Delivery Form Node Target -->
       <div id="cart-shipping-form-container"></div>
+      
       <div class="cart-footer">
           <div class="cart-total-row">
               <span>Estimated Total:</span>
@@ -88,13 +152,14 @@
   <header class="header">
       <div class="container nav-container">
           <a href="index.html" class="logo">MAHIVERSE <span>GLOBLE</span></a>
-          <div class="menu-toggle" id="menu-toggle" onclick="toggleNavbar()">☰</div>
+          <div class="menu-toggle" id="menu-toggle">☰</div>
           <nav class="navbar" id="navbar">
               <a href="index.html">Home</a>
               <a href="products.html" class="active">Products</a>
               <a href="about.html">About Us</a>
               <a href="contact.html">Contact</a>
-              <a href="#" id="cart-icon-nav" class="nav-cart-trigger" onclick="openCartPanel(event)">
+              <a href="blog.html">Blog</a>
+              <a href="#" id="cart-icon-nav" class="nav-cart-trigger">
                   🛒 Cart (<span id="cart-count">0</span>)
               </a>
               <a href="https://wa.me/916354179230" target="_blank" class="order-btn">Order Now</a>
@@ -102,23 +167,27 @@
       </div>
   </header>
 
+  <!-- Single Product Display Section -->
   <section class="single-product container">
       <div class="single-image">
-          <img src="onion-packaging.webp.jpg" alt="MAHIVERSE GLOBLE Premium Red Onion Powder">
+          <img src="onion-packaging.webp.jpg" alt="MAHIVERSE GLOBLE Premium Red Onion Powder" id="mainProductImg" width="450" height="400" style="aspect-ratio: 450/400; object-fit: cover; border-radius: 12px;">
       </div>
       
-      <div class="single-details card">
+      <!-- Interactive Pricing Card -->
+      <div class="single-details card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
           <span class="product-badge">Premium Quality</span>
           <h1>Premium Red Onion Powder</h1>
-          <div class="rating">⭐⭐⭐⭐⭐ <span>(4.8/5 Client Rating)</span></div>
-          <p>Our premium dehydrated red onion powder delivers a deep, sweet, and localized pungent aroma profile. Perfect distribution profile milled precisely to ensure absolute consistency across gourmet kitchen batches and large food manufacturing lines.</p>
+          <div class="rating">⭐⭐⭐⭐• <span>(4.8/5 Client Rating)</span></div>
+          
+          <p>Our micro-pulverized dehydrated red onion powder delivers sweet, pungent, full-bodied aromatic notes. Sourced from choice regional crops and dehydrated at low temperatures to lock in maximum flavor profile depth while preserving a free-flowing consistency.</p>
           
           <div class="product-features">
-              <span>🧅 100% Selected Red Onions</span>
-              <span>🛡️ Moisture-Locked Packaging</span>
-              <span>🔬 Export Certified</span>
+              <span>🌱 Direct Farm Sourcing</span>
+              <span>🛡️ Moisture-Isolated Sealing</span>
+              <span>🔬 Export Quality Standardized</span>
           </div>
 
+          <!-- Interactive Weight Selector Loop -->
           <div class="purchase-controls" style="margin: 25px 0; width: 100%; text-align: left;">
               <label for="weightSelect" style="display: block; font-weight: 700; margin-bottom: 8px; color: #14532d;">Select Packaging Profile:</label>
               <select id="weightSelect" class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 15px; font-weight: 600; color: #333;">
@@ -130,22 +199,116 @@
           </div>
 
           <div class="card-footer" style="width: 100%;">
-              <button class="btn btn-primary add-to-cart-btn" onclick="handleAddToCartClick()" style="width: 100%; border: none; cursor: pointer; padding: 16px;">
+              <button class="btn btn-primary add-to-cart-btn" style="width: 100%; border: none; cursor: pointer; padding: 16px; font-weight: 700;">
                   🛒 Add Selected Pack to Cart
               </button>
           </div>
       </div>
   </section>
 
-  <section class="product-specs container" style="padding-top: 0;">
+  <!-- Expanded Comprehensive Deep Content Section -->
+  <section class="product-deep-info container" style="padding: 20px 0; max-width: 1200px; margin: 0 auto;">
+      <div style="background: #ffffff; padding: 40px; border-radius: 16px; border: 1px solid #ebdcb9;">
+          <h2 style="font-family: 'Playfair Display', serif; color: #14532d; margin-bottom: 15px; font-size: 26px;">Premium Red Onion Specifications</h2>
+          <p style="color: #444; font-size: 15px; line-height: 1.8; margin-bottom: 20px; text-align: justify;">
+              MAHIVERSE GLOBLE’s Dehydrated Premium Red Onion Powder is precisely engineered to solve the texturing and shelf instability issues that disrupt high-velocity culinary lines. By bypassing heavy thermal roasting steps, our advanced multi-stage moisture extraction framework protects the natural fibers, keeping the underlying pungent flavor and sweet notes vibrant.
+          </p>
+          <p style="color: #444; font-size: 15px; line-height: 1.8; margin-bottom: 25px; text-align: justify;">
+              With raw fresh onions carrying up to 89% structural water molecules, utilizing our micro-milled powder reduces shipping cargo weights by up to 80% without lowering spice potency. This offers massive cost reductions for bulk food processors, international sourcing networks, and ready-to-eat meal manufacturers routing shipping cargo through global custom ports.
+          </p>
+          
+          <!-- Integrated Nutrition Data Matrix -->
+          <h3 style="font-family: 'Playfair Display', serif; color: #2c1a04; margin-bottom: 12px; font-size: 20px;">Nutritional Value Metrics (Per 100g Target)</h3>
+          <table class="spec-table" style="width: 100%; border-collapse: collapse; margin-bottom: 30px; border: 1px solid #ebdcb9;">
+              <tr style="background: #14532d; color: white;"><th style="padding: 12px;">Nutritional Framework</th><th style="padding: 12px;">Analytical Yield Value</th></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Energy Yield</td><td style="padding: 12px; border-bottom: 1px solid #eee;">345 kcal</td></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Protein Profile</td><td style="padding: 12px; border-bottom: 1px solid #eee;">10.0 g</td></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Total Carbohydrates</td><td style="padding: 12px; border-bottom: 1px solid #eee;">80.5 g</td></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Dietary Plant Fibers</td><td style="padding: 12px; border-bottom: 1px solid #eee;">6.5 g</td></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Natural Fats allocation</td><td style="padding: 12px; border-bottom: 1px solid #eee;">0.5 g</td></tr>
+              <tr><td style="padding: 12px; border-bottom: 1px solid #eee;">Sodium Content</td><td style="padding: 12px; border-bottom: 1px solid #eee;">20 mg</td></tr>
+          </table>
+      </div>
+  </section>
+
+  <!-- Technical Specifications Matrix Section -->
+  <section class="product-specs container" style="padding-top: 20px;">
       <h2>Technical Grading Matrix</h2>
       <table class="spec-table">
-          <tr><td><strong>Product Classification</strong></td><td>Dehydrated Allium Cepa (Red Onion Powder Grade A)</td></tr>
-          <tr><td><strong>Form / Mesh Particle Size</strong></td><td>Fine Pulverized Powder Profile (40-60 Mesh)</td></tr>
-          <tr><td><strong>Moisture Threshold</strong></td><td>Strictly under 5.0% Max allocation profiles</td></tr>
-          <tr><td><strong>Additive Additions</strong></td><td>0% - Completely Clean of Artificial Flow Agents or Fillers</td></tr>
-          <tr><td><strong>Origin</strong></td><td>100% Premium Cultivated Agricultural Belts, India</td></tr>
+          <tr>
+              <td><strong>Product Classification</strong></td>
+              <td>Dehydrated Allium Cepa (Red Onion Powder Grade A)</td>
+          </tr>
+          <tr>
+              <td><strong>Form / Mesh Particle Size</strong></td>
+              <td>Ultra-Fine Pulverized Powder Profile (50-70 Mesh Grid Consistency)</td>
+          </tr>
+          <tr>
+              <td><strong>Moisture Threshold</strong></td>
+              <td>Maintained strictly below 4.5% to ensure free-flowing properties</td>
+          </tr>
+          <tr>
+              <td><strong>Purity Index</strong></td>
+              <td>100% Pure — Zero starches, artificial flow modifiers, or fillers added</td>
+          </tr>
+          <tr>
+              <td><strong>Origin</strong></td>
+              <td>Sourced and processed natively inside premier micro-agricultural centers, India</td>
+          </tr>
+          <tr>
+              <td><strong>Storage Guidelines</strong></td>
+              <td>Keep locked within original multi-layer barrier seals away from ambient dampness.</td>
+          </tr>
       </table>
+  </section>
+
+  <!-- Culinary & Industrial Use Section -->
+  <section class="product-uses" style="background: #ffffff; padding: 60px 0; border-top: 1px solid #ebdcb9; border-bottom: 1px solid #ebdcb9;">
+      <div class="container">
+          <h2 style="text-align: center; color: #14532d; margin-bottom: 40px;">Industrial & Culinary Usages</h2>
+          <div class="uses-grid">
+              <div class="use-card">
+                  <div class="use-icon">🍲</div>
+                  <h3 style="color:#14532d; margin-bottom:10px;">Gravies & Ready Meals</h3>
+                  <p style="color:#666; font-size:14px;">Integrates instantly across processing fluids, delivering even savory depth without water-reduction delays.</p>
+              </div>
+              <div class="use-card">
+                  <div class="use-icon">🍟</div>
+                  <h3 style="color:#14532d; margin-bottom:10px;">Gourmet Snack Coatings</h3>
+                  <p style="color:#666; font-size:14px;">Flawless micron adhesion qualities designed for high-velocity commercial dusting machinery lines.</p>
+              </div>
+              <div class="use-card">
+                  <div class="use-icon">🧂</div>
+                  <h3 style="color:#14532d; margin-bottom:10px;">Spice Blend Production</h3>
+                  <p style="color:#666; font-size:14px;">Acts as a premium foundation flavor binder for wholesale dry spice rubs, seasoning packs, and salts.</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Comprehensive FAQ Section -->
+  <section class="faq-section">
+      <h2>Frequently Asked Questions</h2>
+
+      <div class="faq-item">
+          <h3>What is Red Onion Powder?</h3>
+          <p>Red Onion Powder is derived from clean, sorted red onions that undergo controlled low-temperature moisture removal before being pulverized into fine, kitchen-ready granulated spices.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>How should I store the product?</h3>
+          <p>Keep the product sealed inside its original moisture-proof pouch. Store in a cool, dark place away from ambient steam or direct environmental humidity to block clumping.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Do you supply in bulk container volumes?</h3>
+          <p>Yes. Equipped with all legal frameworks (including valid GST and active Import Export Codes), MAHIVERSE GLOBLE manages full maritime cargo container shipments seamlessly across international borders.</p>
+      </div>
+
+      <div class="faq-item">
+          <h3>Are there anti-caking elements added to the powder?</h3>
+          <p>No. We process our agricultural powders with zero artificial fillers, flow enhancements, chemical additions, or starches, locking in 100% product purity.</p>
+      </div>
   </section>
 
   <footer class="footer">
@@ -159,7 +322,7 @@
               <a href="index.html">Home</a>
               <a href="products.html">Products</a>
               <a href="about.html">About Us</a>
-              <a href="contact.html">Contact Us</a>
+              <a href="blog.html">Blog Hub</a>
           </div>
           <div class="footer-box contact-box">
               <h3>Corporate Info</h3>
@@ -168,157 +331,10 @@
           </div>
       </div>
       <div class="footer-bottom">
-          <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
+          <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved. Sourced Globally from India.</p>
       </div>
   </footer>
 
-  <script>
-    const WHATSAPP_NUMBER = "916354179230";
-    let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
-    let activeStep = 1;
-
-    function openCartPanel(e) {
-        if(e) e.preventDefault();
-        document.getElementById("cart-sidebar").classList.add("open");
-        document.getElementById("cart-overlay").classList.add("show");
-    }
-
-    function closeCartPanel() {
-        document.getElementById("cart-sidebar").classList.remove("open");
-        document.getElementById("cart-overlay").classList.remove("show");
-    }
-
-    function toggleNavbar() {
-        document.getElementById("navbar").classList.toggle("active");
-    }
-
-    function handleAddToCartClick() {
-        console.log("Add to cart clicked!");
-        const select = document.getElementById("weightSelect");
-        if (!select) return;
-
-        const weight = select.value;
-        const option = select.options[select.selectedIndex];
-        const price = Number(option.getAttribute("data-price") || 0);
-        const key = "onion-powder-premium-" + weight;
-
-        const existingItem = cart.find(item => item.key === key);
-        if (existingItem) {
-            existingItem.quantity++;
-        } else {
-            cart.push({
-                key: key,
-                id: "onion-powder-premium",
-                name: "Premium Dehydrated Red Onion Powder",
-                weight: weight,
-                price: price,
-                quantity: 1
-            });
-        }
-
-        localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
-        activeStep = 1;
-        updateCartUI();
-        openCartPanel();
-    }
-
-    function setCheckoutStep(stepNumber) {
-        if (stepNumber === 2) {
-            const name = document.getElementById("cust-name")?.value.trim();
-            const phone = document.getElementById("cust-phone")?.value.trim();
-            const email = document.getElementById("cust-email")?.value.trim();
-            const address = document.getElementById("cust-address")?.value.trim();
-
-            if (!name || !phone || !email || !address) {
-                alert("Please fill out all delivery information fields before moving to payment options!");
-                return;
-            }
-            
-            localStorage.setItem("temp_cust_name", name);
-            localStorage.setItem("temp_cust_phone", phone);
-            localStorage.setItem("temp_cust_email", email);
-            localStorage.setItem("temp_cust_address", address);
-        }
-        activeStep = stepNumber;
-        updateCartUI();
-    }
-
-    function updateCartUI() {
-        const itemsContainer = document.getElementById("cart-items-container");
-        const formContainer = document.getElementById("cart-shipping-form-container");
-        const cartSidebar = document.getElementById("cart-sidebar");
-        if (!itemsContainer) return;
-
-        itemsContainer.innerHTML = "";
-        let totalItems = 0;
-        let totalPrice = 0;
-
-        cart.forEach((item) => {
-            totalItems += item.quantity;
-            totalPrice += item.price * item.quantity;
-        });
-
-        document.getElementById("cart-count").textContent = totalItems;
-
-        if (cart.length === 0) {
-            itemsContainer.innerHTML = '<p class="empty-msg">Your cart is empty.</p>';
-            if (formContainer) formContainer.innerHTML = ""; 
-            const footer = cartSidebar.querySelector(".cart-footer");
-            if (footer) footer.innerHTML = '<div class="cart-total-row"><span>Estimated Total:</span><span>₹0</span></div>';
-            return;
-        }
-
-        if (activeStep === 1) {
-            cart.forEach((item, index) => {
-                const div = document.createElement("div");
-                div.className = "cart-item";
-                div.innerHTML = `
-                    <div class="cart-item-details">
-                        <h4>${item.name}</h4>
-                        <p>${item.weight} (Qty: ${item.quantity})</p>
-                        <p><strong>₹${item.price * item.quantity}</strong></p>
-                    </div>
-                    <button class="remove-item-btn" onclick="removeCartItem(${index})">Remove</button>
-                `;
-                itemsContainer.appendChild(div);
-            });
-
-            if (formContainer) {
-                const savedName = localStorage.getItem("temp_cust_name") || "";
-                const savedPhone = localStorage.getItem("temp_cust_phone") || "";
-                const savedEmail = localStorage.getItem("temp_cust_email") || "";
-                const savedAddress = localStorage.getItem("temp_cust_address") || "";
-
-                formContainer.innerHTML = `
-                    <div class="cart-shipping-form">
-                        <h3>📋 Delivery Information</h3>
-                        <div class="form-group"><label>Full Name *</label><input type="text" id="cust-name" value="${savedName}" required></div>
-                        <div class="form-group"><label>Mobile Number *</label><input type="tel" id="cust-phone" value="${savedPhone}" required></div>
-                        <div class="form-group"><label>Email ID *</label><input type="email" id="cust-email" value="${savedEmail}" required></div>
-                        <div class="form-group"><label>Courier Shipping Address *</label><textarea id="cust-address" required>${savedAddress}</textarea></div>
-                    </div>
-                `;
-            }
-
-            const footer = cartSidebar.querySelector(".cart-footer");
-            if (footer) {
-                footer.innerHTML = `
-                    <div class="cart-total-row"><span>Subtotal:</span><span>₹${totalPrice}</span></div>
-                    <button class="btn-step-advance" onclick="setCheckoutStep(2)">Proceed to Payment Options Details →</button>
-                `;
-            }
-        } else if (activeStep === 2) {
-            const name = localStorage.getItem("temp_cust_name") || "";
-            const phone = localStorage.getItem("temp_cust_phone") || "";
-            const address = localStorage.getItem("temp_cust_address") || "";
-
-            itemsContainer.innerHTML = `
-                <div class="shipping-summary-profile">
-                    <h4>📍 Shipping Summary Profile</h4>
-                    <p><strong>Deliver To:</strong> ${name}</p>
-                    <p><strong>Contact Tel:</strong> ${phone}</p>
-                    <p><strong>Address:</strong> ${address}</p>
-                    <button class="btn-edit-profile-back" onclick="setCheckoutStep(1)">✏️ Modify Delivery Details</button>
-                </div>
-            `;
-            if (formContainer) form
+<script src="script.js?v=5.0"></script>
+</body>
+</html>
