@@ -1419,3 +1419,16 @@ section {
         transform: translateY(0);
     }
 }
+/* ==========================================================================
+   MAHIVERSE GLOBLE - COMPLIANCE MATRIX MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media (max-width: 768px) {
+    .compliance-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px;
+        gap: 20px;
+    }
+    .compliance-box {
+        text-align: center !important;
+    }
+}
