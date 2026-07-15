@@ -11,14 +11,18 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'DM Sans', sans-serif;
-    background: #faf8f4;
-    color: #2b2b2b;
-    line-height: 1.6;
-    overflow-x: hidden;
-}
-
+body { 
+      font-family: 'DM Sans', sans-serif; 
+      background: #faf8f4; 
+      color: #2b2b2b; 
+      overflow-x: hidden; 
+      -webkit-font-smoothing: antialiased;
+      font-display: swap; /* Enforces instant text visibility */
+    }
+    h1, h2, h3, .logo { 
+      font-family: 'Playfair Display', serif;
+      font-display: swap; 
+    }
 a {
     text-decoration: none;
     transition: all 0.3s ease;
