@@ -1390,11 +1390,11 @@ section {
     }
 
     /* Active State triggered via JavaScript */
-    .navbar.mobile-active {
-        display: flex !important;
-        animation: slideDownMenu 0.3s ease-out forwards;
-    }
-
+   /* Active State triggered via JavaScript */
+.navbar.active {
+    display: flex !important;
+    animation: slideDownMenu 0.3s ease-out forwards;
+}
     .navbar a {
         width: 100%;
         padding: 12px 15px;
