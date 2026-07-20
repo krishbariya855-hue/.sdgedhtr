@@ -596,3 +596,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+// Razorpay Payment Links for Red Onion Powder
+function buyNow(productId, selectId) {
+    const selectedValue = document.getElementById(selectId).value;
+
+    // Your Live/Test Razorpay Short Links
+    const paymentLinks = {
+        'onion_200g': 'https://rzp.io/rzp/eg5bisxW', // ₹160
+        'onion_500g': 'https://rzp.io/rzp/KS9Lfgbv', // ₹380
+        'onion_1kg':  'https://rzp.io/rzp/JCS6EVv', // ₹690
+        'onion_bulk': 'https://rzp.io/l/YOUR_BULK_ADVANCE_LINK' // Add when created
+    };
+
+    const linkKey = productId + '_' + selectedValue;
+
+    if (paymentLinks[linkKey]) {
+        // Redirects directly to Razorpay Checkout
+        window.location.href = paymentLinks[linkKey];
+    } else {
+        alert('Please select a valid option.');
+    }
+}
