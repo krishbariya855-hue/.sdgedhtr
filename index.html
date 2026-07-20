@@ -160,11 +160,40 @@
       .hero-text h1 { font-size: 38px; }
       .footer-container { grid-template-columns: 1fr 1fr; gap: 30px; }
     }
-    
-    @media (max-width: 768px) {
-      .nav-container { height: 75px; padding: 0 5px; }
-      .navbar { display: none; /* Controlled via script menu assignments toggles */ }
-      .menu-toggle { display: block; }
+   @media (max-width: 768px) {
+      .nav-container { height: 75px; padding: 0 15px; position: relative; }
+      
+      /* Mobile Menu Drawer Styling */
+      .navbar { 
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 75px;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-top: 1px solid #eee;
+        z-index: 99999;
+      }
+
+      /* THIS WAS MISSING: Opens the menu when clicked */
+      .navbar.active { 
+        display: flex !important; 
+      }
+
+      .navbar a {
+        padding: 12px 0;
+        width: 100%;
+        border-bottom: 1px solid #fafafa;
+      }
+
+      .menu-toggle { 
+        display: block; 
+        z-index: 100000;
+        cursor: pointer;
+      }
       
       .trust-container { grid-template-columns: 1fr; gap: 20px; }
       .stats-container { grid-template-columns: 1fr; gap: 25px; }
