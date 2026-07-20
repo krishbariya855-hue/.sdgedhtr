@@ -3,7 +3,41 @@
 // =========================================================================
 
 console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
+// Quick Toast Notification Function
+function showToast(message) {
+    let toast = document.getElementById("cart-toast");
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "cart-toast";
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #14532d;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 100000;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        `;
+        document.body.appendChild(toast);
+    }
 
+    toast.textContent = message;
+    toast.style.opacity = "1";
+    toast.style.transform = "translateX(-50%) translateY(-10px)";
+
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(-50%) translateY(0)";
+    }, 2500);
+}
 const WHATSAPP_NUMBER = "916354179230";
 let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
 let activeStep = 1; 
@@ -16,7 +50,41 @@ const SPICE_REVIEWS = [
     { name: "Ananya Patel (Home Chef)", text: "Switched to Mahiverse for onion powder. 100% natural flavor, no artificial clumping at all. Highly recommend!", stars: "⭐⭐⭐⭐⭐" },
     { name: "Marcus T. (Global Imports Ltd)", text: "Excellent industrial packaging parameters. Kept moisture at 0% during bulk ocean freight transit.", stars: "⭐⭐⭐⭐⭐" }
 ];
+// Quick Toast Notification for Cart Actions
+function showToast(message) {
+    let toast = document.getElementById("cart-toast");
+    if (!toast) {
+        toast = document.createElement("div");
+        toast.id = "cart-toast";
+        toast.style.cssText = `
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #14532d;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 100000;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        `;
+        document.body.appendChild(toast);
+    }
 
+    toast.textContent = message;
+    toast.style.opacity = "1";
+    toast.style.transform = "translateX(-50%) translateY(-10px)";
+
+    setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.style.transform = "translateX(-50%) translateY(0)";
+    }, 2500);
+}
 // 1. ADD TO CART DIRECT CALL
 window.addToCartDirect = function(productId, productName) {
     const select = document.querySelector(".weight-select") || 
@@ -46,6 +114,10 @@ window.addToCartDirect = function(productId, productName) {
     activeStep = 1; 
     updateCartUI();
 
+    // SHOW POPUP NOTIFICATION
+    showToast(`✓ ${productName} added to cart!`);
+
+    // OPEN CART SIDEBAR
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
     if (cartSidebar && cartOverlay) {
@@ -56,6 +128,7 @@ window.addToCartDirect = function(productId, productName) {
     // Lazy element generation call decoupled from main UI thread
     setTimeout(runAddonInjections, 50);
 };
+   
 
 // 2. STEP SWITCHER CONTROL
 window.setCheckoutStep = function(stepNumber) {
