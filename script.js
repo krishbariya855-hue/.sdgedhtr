@@ -233,9 +233,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
-    if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => { navbar.classList.toggle("active"); });
-    }
+  // Enhanced Mobile Menu Toggle Logic
+if (menuToggle && navbar) {
+    menuToggle.addEventListener("click", (e) => {
+        e.preventDefault();
+        navbar.classList.toggle("active");
+        menuToggle.classList.toggle("active");
+    });
+}
 
     if (backToTop) {
         window.addEventListener("scroll", () => {
