@@ -19,37 +19,6 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J3L6NB28Y2"></script>
   <script>
-    // Complete Razorpay Redirect Function for Mahiverse Globle
-function buyNow(productId, selectId) {
-    const selectElement = document.getElementById(selectId);
-    if (!selectElement) return;
-
-    const selectedValue = selectElement.value;
-
-    // Direct mapping to your 6 active Razorpay Links
-    const paymentLinks = {
-        // --- DEHYDRATED GARLIC POWDER ---
-        'garlic_200g': 'https://rzp.io/rzp/ETXHz31H', // ₹180
-        'garlic_500g': 'https://rzp.io/rzp/Givlc2EY', // ₹420
-        'garlic_1kg':  'https://rzp.io/rzp/w3np7334', // ₹780
-
-        // --- DEHYDRATED RED ONION POWDER ---
-        'onion_200g':  'https://rzp.io/rzp/eg5bisxW', // ₹160
-        'onion_500g':  'https://rzp.io/rzp/KS9Lfgbv', // ₹380
-        'onion_1kg':   'https://rzp.io/rzp/JCS6EVv'   // ₹690
-    };
-
-    const linkKey = productId + '_' + selectedValue;
-
-    if (paymentLinks[linkKey]) {
-        // Redirect customer straight to Razorpay Payment Page
-        window.location.href = paymentLinks[linkKey];
-    } else if (selectedValue === 'bulk') {
-        alert('For bulk cargo orders, please contact us directly or request an advance payment link.');
-    } else {
-        alert('Please select a valid pack size.');
-    }
-}
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -63,7 +32,8 @@ function buyNow(productId, selectId) {
   
   <!-- Optimized Google Fonts payload featuring display swap guidelines -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-  <!-- Consolidated Premium Styling Engine (Minified Architecture & Full Mobile Overrides) -->
+  
+  <!-- Consolidated Premium Styling Engine -->
   <style>
     /* Reset & Core Basics */
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -81,7 +51,7 @@ function buyNow(productId, selectId) {
     .menu-toggle { display: none; font-size: 28px; cursor: pointer; background: none; border: none; }
     .order-btn { background: #14532d; color: #fff !important; padding: 10px 20px; border-radius: 20px; }
     
-    /* Hero Layout (CLS Shifting Safeguards) */
+    /* Hero Layout */
     .hero-section { min-height: 80vh; display: flex; align-items: center; padding: 60px 0; background: linear-gradient(to right, #faf8f4 60%, #f4f0e6); }
     .hero-container { width: 90%; max-width: 1200px; margin: auto; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center; }
     .hero-text h1 { font-size: 54px; line-height: 1.15; color: #2c1a04; margin-bottom: 20px; }
@@ -94,7 +64,7 @@ function buyNow(productId, selectId) {
     .btn-primary:hover { background: #166534; }
     .btn-secondary { background: transparent; color: #14532d; border: 2px solid #14532d; }
     .btn-secondary:hover { background: #14532d; color: #fff; }
-    .btn-card { background: #14532d; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; }
+    .btn-card { background: #14532d; color: #fff; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: pointer; }
     
     /* Media/Graphics Wrappers */
     .hero-image-wrapper { position: relative; display: flex; justify-content: center; min-height: 400px; }
@@ -182,9 +152,6 @@ function buyNow(productId, selectId) {
     .floating-whatsapp:hover { transform: scale(1.08); }
     #backToTop { position: fixed; bottom: 95px; right: 25px; background: #14532d; color: #fff; border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: none; font-size: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.15); z-index: 999; }
 
-    /* ==========================================================================
-       ROBUST MOBILE Breakpoint Rules (Ensures 100% Fluid Scaling Across Screens)
-       ========================================================================== */
     @media (max-width: 992px) {
       .hero-container { grid-template-columns: 1fr; text-align: center; gap: 40px; }
       .hero-actions { justify-content: center; }
@@ -194,7 +161,6 @@ function buyNow(productId, selectId) {
    @media (max-width: 768px) {
       .nav-container { height: 75px; padding: 0 15px; position: relative; }
       
-      /* Mobile Menu Drawer Styling */
       .navbar { 
         display: none; 
         flex-direction: column;
@@ -209,7 +175,6 @@ function buyNow(productId, selectId) {
         z-index: 99999;
       }
 
-      /* THIS WAS MISSING: Opens the menu when clicked */
       .navbar.active { 
         display: flex !important; 
       }
@@ -242,7 +207,7 @@ function buyNow(productId, selectId) {
     }
   </style>
 
-  <!-- Open Graph / Meta Protocol Structure -->
+  <!-- Open Graph Meta -->
   <meta property="og:title" content="MAHIVERSE GLOBLE">
   <meta property="og:description" content="Premium Garlic Powder & Red Onion Powder">
   <meta property="og:image" content="https://www.mahiversegloble.com/favicon.png.jpeg.png">
@@ -313,15 +278,14 @@ function buyNow(productId, selectId) {
           </a>
           <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">☰</button>
          <nav class="navbar" id="navbar">
-    <a href="index.html" class="active">Home</a>
-    <a href="products.html">Products</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact</a>
-    <!-- CHANGED FROM '#' TO 'blog.html' -->
-    <a href="blog.html">Blog</a> 
-    <a href="#" id="cart-icon-nav" class="nav-cart-trigger">🛒 Cart (<span id="cart-count">0</span>)</a>
-    <a href="products.html" class="order-btn">Order Now</a>
-</nav>
+            <a href="index.html" class="active">Home</a>
+            <a href="products.html">Products</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+            <a href="blog.html">Blog</a> 
+            <a href="#" id="cart-icon-nav" class="nav-cart-trigger">🛒 Cart (<span id="cart-count">0</span>)</a>
+            <a href="products.html" class="order-btn">Order Now</a>
+        </nav>
       </div>
   </header>
 
@@ -338,7 +302,6 @@ function buyNow(productId, selectId) {
               </div>
           </div>
           <div class="hero-image-wrapper">
-              <!-- Optimized Image Asset Elements with Dimensions to Prevent Cumulative Layout Shifts -->
               <img src="garlic-powder-closeup.webp.jpg" alt="Premium Quality Garlic Powder Close Up" class="floating-img" width="500" height="400">
           </div>
       </div>
@@ -351,10 +314,7 @@ function buyNow(productId, selectId) {
           <p>Processed natively inside premier micro-agricultural centers. We ensure international tier sanitation protocols, clean environmental tracing, and fully standardized processing pipelines without artificial additions.</p>
       </div>
   </section>
-<!-- ==========================================
-       ADDED: DEEP RICH SEO TEXT EXPANSION BLOCKS 
-       ========================================== -->
-       
+
   <!-- Deep Brand Positioning & Core Strengths -->
   <section class="brand-positioning-section" style="padding: 70px 0 30px; background: #ffffff;">
       <div class="container" style="max-width: 1000px; margin: 0 auto; text-align: justify;">
@@ -380,68 +340,57 @@ function buyNow(productId, selectId) {
           </div>
           
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;">
-              
-              <!-- Phase 1 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 01</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 01</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Rigorous Field Sourcing & Sorting</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       Raw agricultural crops undergo precise, multi-tier manual sorting protocols directly upon warehouse intake. Our quality assurance inspectors isolate and extract inferior crops, allowing only perfectly matured, non-bruised raw material to transition toward standard wash treatments.
                   </p>
               </div>
 
-              <!-- Phase 2 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 02</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 02</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Sanitized Multi-Stage Cleansing</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       To neutralize micro-impurities and field sediments, products pass through automated, high-velocity counter-current water wash reservoirs. This process ensures pristine outward purity without disrupting internal membrane cells or leaching valuable natural elements.
                   </p>
               </div>
 
-              <!-- Phase 3 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 03</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 03</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Low-Temp Controlled Dehydration</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       Moisture removal is executed inside multi-tiered, climate-controlled forced convection dehydration zones. By keeping thermal output strictly minimized, we protect unstable flavor notes and completely avoid caramelizing natural crop sugars.
                   </p>
               </div>
 
-              <!-- Phase 4 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 04</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 04</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Cool-Milling & Micro-Pulverization</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       Dehydrated crops transition to state-of-the-art multi-stage cool-milling units. The structural friction is closely regulated to avoid heat production, transforming flakes into ultra-fine, free-flowing premium agricultural powders that stay non-clumping.
                   </p>
               </div>
 
-              <!-- Phase 5 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 05</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 05</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Industrial Safety Metal Detection</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       Prior to moving toward final shipping zones, bulk powder feeds migrate through high-frequency industrial metal detection gates. This strict step clears the product of any fine foreign particles, locking in 100% processing security.
                   </p>
               </div>
 
-              <!-- Phase 6 -->
               <div style="background: #ffffff; padding: 30px; border-radius: 12px; border: 1px solid #f0eada; box-shadow: 0 4px 10px rgba(0,0,0,0.01);">
-                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; uppercase; tracking-spacing: 1px; display: block; margin-bottom: 5px;">Phase 06</span>
+                  <span style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 12px; color: #14532d; display: block; margin-bottom: 5px;">Phase 06</span>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 20px; color: #2c1a04; margin-bottom: 10px;">Moisture-Barrier Custom Sealing</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">
                       Final spice batches are sealed in food-grade, multi-layer laminated moisture-proof packaging blocks. This shields our premium cargo from temperature spikes and marine air moisture during long sea-freight transit across global oceans.
                   </p>
               </div>
-
           </div>
       </div>
   </section>
-  
-  <!-- ==========================================
-       END OF ADDED TEXT EXPANSION BLOCKS
-       ========================================== -->
+
   <!-- Trust Matrix Block Elements -->
   <section class="trust-section">
       <div class="container">
@@ -492,66 +441,63 @@ function buyNow(productId, selectId) {
       </div>
   </section>
 
-  <!-- Premium Main Featured Products Showcase & Growth Pipeline Row -->
+  <!-- Premium Main Featured Products Showcase -->
   <section class="products-showcase">
       <div class="container">
           <div class="section-header">
               <h2>Our Core Signature Portfolio</h2>
               <p>Finely pulverized, high-aroma dehydrated options and emerging spice expansions.</p>
           </div>
+          
           <div class="product-grid">
               
-             <div class="product-grid">
-              
-              <!-- Garlic Product Card Elements Node -->
+              <!-- Garlic Product Card -->
               <div class="card" data-id="garlic-powder-premium" data-name="Premium Dehydrated Garlic Powder">
-                  <!-- UPDATED WITH ASPECT-RATIO STYLE -->
-                  <div class="product-img-container" style="width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; background: #fafafa; border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 300 / 260;">
+                  <div class="product-img-container" style="aspect-ratio: 300 / 260;">
                       <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase" loading="lazy" width="300" height="260">
                   </div>
                   <h3>Dehydrated Premium Garlic Powder</h3>
                   <p>Deeply aromatic, rich consistency, ideal for gourmet and restaurant spice bases.</p>
                   
                   <div class="variant-selector">
-                   
-                        <select id="garlic-select" class="weight-select">
+                      <select id="garlic-select" class="weight-select">
                           <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
                           <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
                           <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
                           <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-<button class="btn btn-card add-to-cart-btn" onclick="buyNow('garlic', 'garlic-select')">Add to Cart</button>
+
                   <div class="card-footer">
-                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
+                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="buyNow('garlic', 'garlic-select')">Add to Cart</button>
                       <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
                   </div>
               </div>
               
-              <!-- Onion Product Card Elements Node -->
+              <!-- Onion Product Card -->
               <div class="card" data-id="onion-powder-premium" data-name="Premium Dehydrated Red Onion Powder">
-                  <!-- UPDATED WITH ASPECT-RATIO STYLE -->
-                  <div class="product-img-container" style="width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; margin-bottom: 20px; background: #fafafa; border-radius: 12px; overflow: hidden; position: relative; aspect-ratio: 300 / 260;">
+                  <div class="product-img-container" style="aspect-ratio: 300 / 260;">
                       <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase" loading="lazy" width="300" height="260">
                   </div>
                   <h3>Dehydrated Premium Red Onion Powder</h3>
                   <p>Sweet pungent aroma notes, perfect distribution profile for large manufacturing operations.</p>
                   
                   <div class="variant-selector">
-                   <select id="onion-select" class="weight-select">
+                      <select id="onion-select" class="weight-select">
                           <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
                           <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
                           <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
                           <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-<button class="btn btn-card add-to-cart-btn" onclick="buyNow('onion', 'onion-select')">Add to Cart</button>
+
                   <div class="card-footer">
-                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
+                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="buyNow('onion', 'onion-select')">Add to Cart</button>
                       <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
                   </div>
               </div>
-              <!-- Product Portfolio Expansion Item: Turmeric Powder Pipeline -->
+
+              <!-- Turmeric Powder Pipeline -->
               <div class="card pipeline-card">
                   <div class="grey-scale-bg">
                       <span class="coming-soon-tag">Coming Soon</span>
@@ -589,7 +535,8 @@ function buyNow(productId, selectId) {
           </div>
       </div>
   </section>
-<!-- Enterprise Trade & Regulatory Compliance Matrix -->
+
+  <!-- Enterprise Trade & Regulatory Compliance Matrix -->
   <section class="compliance-section" style="padding: 50px 0; background: #ffffff; border-top: 1px solid #f0eada;">
       <div class="container">
           <div class="section-header" style="text-align: center; margin-bottom: 40px;">
@@ -598,33 +545,29 @@ function buyNow(productId, selectId) {
           </div>
           
           <div class="compliance-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
-              
-              <!-- Certification Box 1 -->
               <div class="compliance-box" style="background: #faf8f4; padding: 25px; border-radius: 12px; border: 1px solid #ebdcb9; text-align: left;">
                   <div style="font-size: 24px; margin-bottom: 10px;">📋</div>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; color: #14532d; margin-bottom: 8px;">Import Export Code (IEC)</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">Official registration cleared with the Directorate General of Foreign Trade (DGFT) for seamless cross-border maritime and air freight cargo movement.</p>
               </div>
 
-              <!-- Certification Box 2 -->
               <div class="compliance-box" style="background: #faf8f4; padding: 25px; border-radius: 12px; border: 1px solid #ebdcb9; text-align: left;">
                   <div style="font-size: 24px; margin-bottom: 10px;">💼</div>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; color: #14532d; margin-bottom: 8px;">GST & Fiscal Compliance</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">Fully registered Goods and Services Tax structure enabling clean commercial invoicing, tax compliance, and structured corporate ordering systems.</p>
               </div>
 
-              <!-- Certification Box 3 -->
               <div class="compliance-box" style="background: #faf8f4; padding: 25px; border-radius: 12px; border: 1px solid #ebdcb9; text-align: left;">
                   <div style="font-size: 24px; margin-bottom: 10px;">🏦</div>
                   <h3 style="font-family: 'Playfair Display', serif; font-size: 18px; color: #14532d; margin-bottom: 8px;">Authorized Dealer (AD) Code</h3>
                   <p style="font-family: 'DM Sans', sans-serif; font-size: 14px; color: #555; line-height: 1.6;">Bank-integrated AD custom coding established across dedicated commercial banking channels to process high-volume international trade transactions securely.</p>
               </div>
-
           </div>
       </div>
   </section>
+
   <!-- High-Authority SEO FAQ Schema Accordion Block -->
-<section class="faq-section" style="padding: 60px 0; background: #faf8f4; border-top: 1px solid #ebdcb9;">
+  <section class="faq-section" style="padding: 60px 0; background: #faf8f4; border-top: 1px solid #ebdcb9;">
     <div class="container" style="max-width: 900px; margin: 0 auto;">
         <div class="section-header" style="text-align: center; margin-bottom: 45px;">
             <h2 style="font-family: 'Playfair Display', serif; font-size: 32px; color: #2c1a04; margin-bottom: 12px;">Frequently Asked Export Questions</h2>
@@ -632,8 +575,6 @@ function buyNow(productId, selectId) {
         </div>
 
         <div class="faq-accordion-container" style="display: flex; flex-direction: column; gap: 15px;">
-            
-            <!-- FAQ Item 1 -->
             <div class="faq-item" style="background: #ffffff; border: 1px solid #ebdcb9; border-radius: 12px; overflow: hidden; transition: all 0.3s;">
                 <button class="faq-trigger" style="width: 100%; padding: 20px 25px; background: none; border: none; text-align: left; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #14532d; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
                     <span>What strict quality assurance standards do your dehydrated powders follow?</span>
@@ -646,7 +587,6 @@ function buyNow(productId, selectId) {
                 </div>
             </div>
 
-            <!-- FAQ Item 2 -->
             <div class="faq-item" style="background: #ffffff; border: 1px solid #ebdcb9; border-radius: 12px; overflow: hidden; transition: all 0.3s;">
                 <button class="faq-trigger" style="width: 100%; padding: 20px 25px; background: none; border: none; text-align: left; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #14532d; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
                     <span>Do you possess full regulatory clearance for container exports to the UAE or UK?</span>
@@ -659,7 +599,6 @@ function buyNow(productId, selectId) {
                 </div>
             </div>
 
-            <!-- FAQ Item 3 -->
             <div class="faq-item" style="background: #ffffff; border: 1px solid #ebdcb9; border-radius: 12px; overflow: hidden; transition: all 0.3s;">
                 <button class="faq-trigger" style="width: 100%; padding: 20px 25px; background: none; border: none; text-align: left; font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: #14532d; cursor: pointer; display: flex; justify-content: space-between; align-items: center; outline: none;">
                     <span>What minimum order volumes apply to bulk agricultural cargo?</span>
@@ -671,11 +610,11 @@ function buyNow(productId, selectId) {
                     </p>
                 </div>
             </div>
-
         </div>
     </div>
-</section>
-  <!-- Corporate Unified Enterprise Footer Layout Layout -->
+  </section>
+
+  <!-- Corporate Unified Enterprise Footer Layout -->
   <footer class="footer">
       <div class="footer-container">
           <div class="footer-box brand-box">
@@ -687,17 +626,13 @@ function buyNow(productId, selectId) {
               </div>
           </div>
          <div class="footer-box links-box">
-    <h3>Navigation</h3>
-    <a href="index.html">Home</a>
-    <a href="products.html">Products</a>
-    <a href="about.html">About Us</a>
-    <a href="contact.html">Contact Us</a>
-    <!-- CHANGED FROM '#' TO 'blog.html' -->
-    <a href="blog.html">Blog</a>
-</div>
-        <div style="text-align: center; margin-top: 40px;">
-    <a href="blog.html" class="btn btn-secondary">Visit Our Export Blog Hub</a>
-</div>
+            <h3>Navigation</h3>
+            <a href="index.html">Home</a>
+            <a href="products.html">Products</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact Us</a>
+            <a href="blog.html">Blog</a>
+        </div>
           <div class="footer-box legal-box">
               <h3>Legal & Policy Info</h3>
               <a href="privacy-policy.html">Privacy Policy</a>
@@ -731,7 +666,6 @@ function buyNow(productId, selectId) {
 
   <button id="backToTop" title="Back to Top">↑</button>
 
-  <!-- Enforced Caching Protection script tag link -->
   <script src="script.js?v=5.0" defer></script>
 </body>
 </html>
