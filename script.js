@@ -3,6 +3,7 @@
 // =========================================================================
 
 console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
+
 // Quick Toast Notification Function
 function showToast(message) {
     let toast = document.getElementById("cart-toast");
@@ -38,6 +39,7 @@ function showToast(message) {
         toast.style.transform = "translateX(-50%) translateY(0)";
     }, 2500);
 }
+
 const WHATSAPP_NUMBER = "916354179230";
 let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
 let activeStep = 1; 
@@ -50,46 +52,22 @@ const SPICE_REVIEWS = [
     { name: "Ananya Patel (Home Chef)", text: "Switched to Mahiverse for onion powder. 100% natural flavor, no artificial clumping at all. Highly recommend!", stars: "⭐⭐⭐⭐⭐" },
     { name: "Marcus T. (Global Imports Ltd)", text: "Excellent industrial packaging parameters. Kept moisture at 0% during bulk ocean freight transit.", stars: "⭐⭐⭐⭐⭐" }
 ];
-// Quick Toast Notification for Cart Actions
-function showToast(message) {
-    let toast = document.getElementById("cart-toast");
-    if (!toast) {
-        toast = document.createElement("div");
-        toast.id = "cart-toast";
-        toast.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #14532d;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 600;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            z-index: 100000;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-        `;
-        document.body.appendChild(toast);
+
+// 1. ADD TO CART DIRECT CALL (UPDATED WITH DIRECT PAYMENT REDIRECT SUPPOR)
+window.addToCartDirect = function(productId, productName) {
+    let cardElement = null;
+    let select = null;
+
+    // Locate the select dropdown based on product ID or closest parent card
+    if (productId.includes("garlic")) {
+        select = document.getElementById("garlic-select") || document.querySelector(".card[data-id*='garlic'] select");
+    } else if (productId.includes("onion")) {
+        select = document.getElementById("onion-select") || document.querySelector(".card[data-id*='onion'] select");
     }
 
-    toast.textContent = message;
-    toast.style.opacity = "1";
-    toast.style.transform = "translateX(-50%) translateY(-10px)";
-
-    setTimeout(() => {
-        toast.style.opacity = "0";
-        toast.style.transform = "translateX(-50%) translateY(0)";
-    }, 2500);
-}
-// 1. ADD TO CART DIRECT CALL
-window.addToCartDirect = function(productId, productName) {
-    const select = document.querySelector(".weight-select") || 
-                   document.getElementById("weightSelect") || 
-                   document.querySelector("select");
+    if (!select) {
+        select = document.querySelector(".weight-select") || document.getElementById("weightSelect") || document.querySelector("select");
+    }
     
     if (!select) {
         alert("Error: Packaging selector dropdown menu not found!");
@@ -97,6 +75,38 @@ window.addToCartDirect = function(productId, productName) {
     }
 
     const weight = select.value;
+
+    // Check if user selected Bulk Inquiry
+    if (weight === "Commercial Bulk Order") {
+        alert("For commercial bulk cargo orders, please contact us directly or request an export invoice.");
+        return;
+    }
+
+    // Determine Product Key for Razorpay Lookup
+    let cleanProd = productId.includes("garlic") ? "garlic" : (productId.includes("onion") ? "onion" : productId);
+    
+    // Check if direct Razorpay checkout exists for this selection
+    const paymentLinks = {
+        // --- DEHYDRATED GARLIC POWDER ---
+        'garlic_200g Standard Pack': 'https://rzp.io/rzp/ETXHz31H', // ₹180
+        'garlic_500g Value Pack':    'https://rzp.io/rzp/Givlc2EY', // ₹420
+        'garlic_1kg Chef Pack':      'https://rzp.io/rzp/w3np7334', // ₹780
+
+        // --- DEHYDRATED RED ONION POWDER ---
+        'onion_200g Standard Pack':  'https://rzp.io/rzp/eg5bisxW', // ₹160
+        'onion_500g Value Pack':     'https://rzp.io/rzp/KS9Lfgbv', // ₹380
+        'onion_1kg Chef Pack':       'https://rzp.io/rzp/JCS6EVv'   // ₹690
+    };
+
+    const linkKey = cleanProd + '_' + weight;
+
+    if (paymentLinks[linkKey]) {
+        // Redirect directly to Razorpay Link
+        window.location.href = paymentLinks[linkKey];
+        return;
+    }
+
+    // Fallback to local cart storage if no payment link matched
     const option = select.options[select.selectedIndex];
     const price = Number(option.getAttribute("data-price") || option.dataset.price || 0);
     const key = productId + "-" + weight;
@@ -114,10 +124,8 @@ window.addToCartDirect = function(productId, productName) {
     activeStep = 1; 
     updateCartUI();
 
-    // SHOW POPUP NOTIFICATION
     showToast(`✓ ${productName} added to cart!`);
 
-    // OPEN CART SIDEBAR
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
     if (cartSidebar && cartOverlay) {
@@ -125,10 +133,8 @@ window.addToCartDirect = function(productId, productName) {
         cartOverlay.classList.add("show");
     }
     
-    // Lazy element generation call decoupled from main UI thread
     setTimeout(runAddonInjections, 50);
 };
-   
 
 // 2. STEP SWITCHER CONTROL
 window.setCheckoutStep = function(stepNumber) {
@@ -306,14 +312,13 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeCart) closeCart.addEventListener("click", closeCartPanel);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartPanel);
 
-  // Enhanced Mobile Menu Toggle Logic
-if (menuToggle && navbar) {
-    menuToggle.addEventListener("click", (e) => {
-        e.preventDefault();
-        navbar.classList.toggle("active");
-        menuToggle.classList.toggle("active");
-    });
-}
+    if (menuToggle && navbar) {
+        menuToggle.addEventListener("click", (e) => {
+            e.preventDefault();
+            navbar.classList.toggle("active");
+            menuToggle.classList.toggle("active");
+        });
+    }
 
     if (backToTop) {
         window.addEventListener("scroll", () => {
@@ -384,7 +389,6 @@ if (menuToggle && navbar) {
             return;
         }
 
-        // Toggle Export Banner Display
         if (targetId === "whatsapp-checkout-btn") {
             const banner = document.getElementById("export-notice-banner");
             if (banner) banner.style.display = "block";
@@ -397,11 +401,10 @@ if (menuToggle && navbar) {
     updateCartUI();
 });
 
-// 5. ASYNC ADD-ON INJECTIONS ENGINE (Completely Non-Blocking)
+// 5. ASYNC ADD-ON INJECTIONS ENGINE
 function runAddonInjections() {
     if (cart.length === 0) return;
     
-    // Character Counter & Number Formatting Guard
     const addressField = document.getElementById("cust-address");
     const phoneField = document.getElementById("cust-phone");
     if (addressField && !document.getElementById("address-char-counter")) {
@@ -421,7 +424,6 @@ function runAddonInjections() {
         phoneField.addEventListener("input", () => { phoneField.value = phoneField.value.replace(/[^0-9]/g, ""); });
     }
 
-    // Coupon Module Frame Injection
     const totalRow = document.querySelector(".cart-total-row");
     if (totalRow && !document.getElementById("coupon-wrapper")) {
         const wrapper = document.createElement("div");
@@ -441,7 +443,6 @@ function runAddonInjections() {
         }
     }
 
-    // International Export Notice Injection
     const paymentWrapper = document.querySelector(".payment-selector-wrapper");
     if (paymentWrapper && !document.getElementById("export-notice-banner")) {
         const noticeDiv = document.createElement("div");
@@ -451,7 +452,6 @@ function runAddonInjections() {
         paymentWrapper.appendChild(noticeDiv);
     }
 
-    // Reviews Carousel Injection
     const itemsBody = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
     if (itemsBody && activeStep === 1 && !document.getElementById("review-carousel-wrapper")) {
         const reviewWrapper = document.createElement("div");
@@ -504,11 +504,11 @@ function backupOrderToClipboard(messageText) {
     }
 }
 
-// Preloader close fallback logic triggered immediately to clear thread execution lanes
 const loader = document.getElementById("loader");
 if (loader) {
     loader.style.opacity = "0"; loader.style.visibility = "hidden"; loader.style.display = "none";
 }
+
 // ==========================================================================
 // MAHIVERSE GLOBLE - REAL-TIME SEARCH & PORTFOLIO FILTER ENGINE
 // ==========================================================================
@@ -530,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const matchesCategory = (activeFilter === 'all') || (cardCategory === activeFilter);
 
             if (matchesSearch && matchesCategory) {
-                card.style.display = 'flex'; // Keeps cards matching layout framework structures
+                card.style.display = 'flex';
                 card.style.opacity = '1';
             } else {
                 card.style.display = 'none';
@@ -538,12 +538,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Input listening events for instant keystroke searches
     if (searchInput) {
         searchInput.addEventListener('input', filterProducts);
     }
 
-    // Category toggle button selection controls
     filterButtons.forEach(button => {
         button.addEventListener('click', function() {
             filterButtons.forEach(btn => {
@@ -562,6 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
 // ==========================================================================
 // MAHIVERSE GLOBLE - INTERACTIVE HIGH-PERFORMANCE FAQ ENGINE
 // ==========================================================================
@@ -574,7 +573,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const contentBlock = this.nextElementSibling;
             const iconElement = this.querySelector('.faq-icon');
 
-            // Close all other open accordion panels for clean user experience
             document.querySelectorAll('.faq-item').forEach(item => {
                 if (item !== currentItem) {
                     item.querySelector('.faq-content').style.maxHeight = null;
@@ -583,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // Toggle active slide dynamics
             if (contentBlock.style.maxHeight) {
                 contentBlock.style.maxHeight = null;
                 iconElement.style.transform = 'rotate(0deg)';
@@ -596,14 +593,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-// Complete Razorpay Redirect Function matched to your HTML
+
+// Direct standalone function backup
 function buyNow(productId, selectId) {
     const selectElement = document.getElementById(selectId);
     if (!selectElement) return;
 
     const selectedValue = selectElement.value;
 
-    // Direct mapping to your 6 active Razorpay Links
     const paymentLinks = {
         // --- DEHYDRATED GARLIC POWDER ---
         'garlic_200g Standard Pack': 'https://rzp.io/rzp/ETXHz31H', // ₹180
@@ -619,7 +616,6 @@ function buyNow(productId, selectId) {
     const linkKey = productId + '_' + selectedValue;
 
     if (paymentLinks[linkKey]) {
-        // Redirect customer directly to Razorpay
         window.location.href = paymentLinks[linkKey];
     } else if (selectedValue === 'Commercial Bulk Order') {
         alert('For commercial bulk cargo orders, please contact us directly.');
