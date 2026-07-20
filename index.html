@@ -19,6 +19,37 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J3L6NB28Y2"></script>
   <script>
+    // Complete Razorpay Redirect Function for Mahiverse Globle
+function buyNow(productId, selectId) {
+    const selectElement = document.getElementById(selectId);
+    if (!selectElement) return;
+
+    const selectedValue = selectElement.value;
+
+    // Direct mapping to your 6 active Razorpay Links
+    const paymentLinks = {
+        // --- DEHYDRATED GARLIC POWDER ---
+        'garlic_200g': 'https://rzp.io/rzp/ETXHz31H', // ₹180
+        'garlic_500g': 'https://rzp.io/rzp/Givlc2EY', // ₹420
+        'garlic_1kg':  'https://rzp.io/rzp/w3np7334', // ₹780
+
+        // --- DEHYDRATED RED ONION POWDER ---
+        'onion_200g':  'https://rzp.io/rzp/eg5bisxW', // ₹160
+        'onion_500g':  'https://rzp.io/rzp/KS9Lfgbv', // ₹380
+        'onion_1kg':   'https://rzp.io/rzp/JCS6EVv'   // ₹690
+    };
+
+    const linkKey = productId + '_' + selectedValue;
+
+    if (paymentLinks[linkKey]) {
+        // Redirect customer straight to Razorpay Payment Page
+        window.location.href = paymentLinks[linkKey];
+    } else if (selectedValue === 'bulk') {
+        alert('For bulk cargo orders, please contact us directly or request an advance payment link.');
+    } else {
+        alert('Please select a valid pack size.');
+    }
+}
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -482,14 +513,15 @@
                   <p>Deeply aromatic, rich consistency, ideal for gourmet and restaurant spice bases.</p>
                   
                   <div class="variant-selector">
-                      <select class="weight-select">
+                   
+                        <select id="garlic-select" class="weight-select">
                           <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
                           <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
                           <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
                           <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-
+<button class="btn btn-card add-to-cart-btn" onclick="buyNow('garlic', 'garlic-select')">Add to Cart</button>
                   <div class="card-footer">
                       <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
                       <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
@@ -506,14 +538,14 @@
                   <p>Sweet pungent aroma notes, perfect distribution profile for large manufacturing operations.</p>
                   
                   <div class="variant-selector">
-                      <select class="weight-select">
+                   <select id="onion-select" class="weight-select">
                           <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
                           <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
                           <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
                           <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-
+<button class="btn btn-card add-to-cart-btn" onclick="buyNow('onion', 'onion-select')">Add to Cart</button>
                   <div class="card-footer">
                       <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
                       <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
