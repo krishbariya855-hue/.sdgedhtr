@@ -623,3 +623,37 @@ function buyNow(productId, selectId) {
         alert('Please select a valid option.');
     }
 }
+function triggerRazorpayCheckout() {
+    const { orderDetails, total } = window.generateOrderString();
+
+    if (total <= 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+
+    var options = {
+        "key": "YOUR_RAZORPAY_KEY_ID", // Replace with your Razorpay Key ID
+        "amount": total * 100, // Amount in paise (e.g. ₹500 = 50000)
+        "currency": "INR",
+        "name": "MAHIVERSE GLOBLE",
+        "description": "Multi-item Spice Order",
+        "image": "favicon.png.jpeg.png",
+        "handler": function (response) {
+            alert("Payment Successful! Payment ID: " + response.razorpay_payment_id);
+            // Clear cart upon successful payment
+            localStorage.removeItem("mahiverse_cart");
+            location.reload();
+        },
+        "prefill": {
+            "name": document.getElementById("cust-name")?.value || "",
+            "email": document.getElementById("cust-email")?.value || "",
+            "contact": document.getElementById("cust-phone")?.value || ""
+        },
+        "theme": {
+            "color": "#14532d"
+        }
+    };
+
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+}
