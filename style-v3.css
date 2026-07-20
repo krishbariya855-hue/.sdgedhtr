@@ -1,5 +1,5 @@
 /* ===========================================
-   MAHIVERSE GLOBLE - PREMIUM STYLESHEET V3
+   MAHIVERSE GLOBLE - PREMIUM STYLESHEET V5
    Clean, Organized, High-End Global Export Brand
 =========================================== */
 
@@ -12,17 +12,19 @@
 }
 
 body { 
-      font-family: 'DM Sans', sans-serif; 
-      background: #faf8f4; 
-      color: #2b2b2b; 
-      overflow-x: hidden; 
-      -webkit-font-smoothing: antialiased;
-      font-display: swap; /* Enforces instant text visibility */
-    }
-    h1, h2, h3, .logo { 
-      font-family: 'Playfair Display', serif;
-      font-display: swap; 
-    }
+    font-family: 'DM Sans', sans-serif; 
+    background: #faf8f4; 
+    color: #2b2b2b; 
+    overflow-x: hidden; 
+    -webkit-font-smoothing: antialiased;
+    font-display: swap; /* Enforces instant text visibility */
+}
+
+h1, h2, h3, .logo { 
+    font-family: 'Playfair Display', serif;
+    font-display: swap; 
+}
+
 a {
     text-decoration: none;
     transition: all 0.3s ease;
@@ -33,13 +35,8 @@ img {
     display: block;
 }
 
-/* Typography Utilities */
-h1, h2, h3, .logo {
-    font-family: 'Playfair Display', serif;
-}
-
 /* ===========================================
-   PREMIUM PRELOADER FIXED
+   PREMIUM PRELOADER
 =========================================== */
 #loader {
     position: fixed;
@@ -137,6 +134,23 @@ h1, h2, h3, .logo {
     font-style: italic;
 }
 
+.logo img {
+    opacity: 0;
+    transform: translate(15px, 15px); 
+    animation: quickDiagonalEntrance 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes quickDiagonalEntrance {
+    0% {
+        opacity: 0;
+        transform: translate(15px, 15px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(0, 0);
+    }
+}
+
 .navbar {
     display: flex;
     align-items: center;
@@ -174,10 +188,17 @@ h1, h2, h3, .logo {
     font-size: 28px;
     cursor: pointer;
     color: #14532d;
+    background: none;
+    border: none;
+}
+
+.nav-cart-trigger {
+    position: relative;
+    font-weight: 600 !important;
 }
 
 /* ===========================================
-   NEW HERO SECTION
+   HERO SECTION
 =========================================== */
 .hero-section {
     min-height: 80vh;
@@ -221,31 +242,32 @@ h1, h2, h3, .logo {
     max-width: 540px;
 }
 
-/* Update just this class to perfectly center the child buttons vertically */
 .hero-actions {
     display: flex;
     align-items: center; 
     gap: 20px;
 }
 
-/* Update this class to fix the vertical clipping/weirdness */
 .btn {
-    display: inline-flex;  /* Keeps them side-by-side but allows vertical centering */
-    align-items: center;   /* Perfectly centers text inside the button vertically */
-    justify-content: center; /* Perfectly centers text horizontally */
-    padding: 0 35px;       /* Remove vertical padding, let height do the work */
-    height: 54px;          /* Clean structural height so it never cuts off */
+    display: inline-flex; 
+    align-items: center;   
+    justify-content: center; 
+    padding: 0 35px;       
+    height: 54px;          
     border-radius: 30px;
     font-weight: 600;
     font-size: 15px;
     text-align: center;
-    box-sizing: border-box; /* Ensures borders stay inside the 54px height */
+    box-sizing: border-box; 
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .btn-primary {
     background: #14532d;
     color: #fff;
     box-shadow: 0 4px 15px rgba(20, 83, 45, 0.2);
+    border: none;
 }
 
 .btn-primary:hover {
@@ -466,6 +488,9 @@ section {
     color: #14532d;
     border: 1px solid rgba(20, 83, 45, 0.2);
     padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
 }
 
 .btn-card:hover {
@@ -474,7 +499,7 @@ section {
 }
 
 /* ===========================================
-   NEW PROCESS/VALUE GALLERY
+   PROCESS / VALUE GALLERY
 =========================================== */
 .process-gallery {
     background: #faf8f4;
@@ -626,7 +651,7 @@ section {
 }
 
 /* ===========================================
-   STREAMLINED CONTACT MODALITY
+   CONTACT MODALITY
 =========================================== */
 .contact-section {
     background: #faf8f4;
@@ -688,7 +713,7 @@ section {
 }
 
 /* ===========================================
-   CORPORATE FOOTER MODIFICATIONS
+   CORPORATE FOOTER
 =========================================== */
 .footer {
     background: #113f23;
@@ -767,7 +792,7 @@ section {
 }
 
 /* ===========================================
-   FLOATING INTERFACE MANAGEMENT
+   FLOATING UTILITIES
 =========================================== */
 .floating-whatsapp {
     position: fixed;
@@ -848,18 +873,10 @@ section {
     display: flex;
     flex-direction: column;
     transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    
-    /* ENFORCES SINGLE MASTER SCROLLBAR FOR EVERYTHING */
     overflow-y: auto; 
     max-height: 100vh;
 }
 
-.cart-items-body {
-    /* REMOVES INTERNAL RIVAL SCROLLBAR BOXES */
-    flex-grow: 0; 
-    padding: 25px 25px 10px 25px;
-    overflow-y: visible; 
-}
 .cart-sidebar.open {
     right: 0;
 }
@@ -891,7 +908,7 @@ section {
 }
 
 .cart-items-body {
-    flex-grow: 1;
+    flex: 1;
     padding: 25px;
     overflow-y: auto;
 }
@@ -938,7 +955,7 @@ section {
 }
 
 /* ===========================================
-   PREMIUM CART SHIPPING FORM STYLES
+   CART SHIPPING FORM
 =========================================== */
 .cart-shipping-form {
     padding: 20px 25px;
@@ -997,7 +1014,7 @@ section {
 }
 
 /* ===========================================
-   UPGRADED CHECKOUT & PAYMENT SELECTION SELECTORS
+   CHECKOUT & PAYMENT SELECTORS
 =========================================== */
 .cart-footer {
     padding: 25px;
@@ -1018,7 +1035,6 @@ section {
     color: #14532d;
 }
 
-/* Payment Gateway Selector Layout */
 .payment-selector-wrapper {
     display: flex;
     flex-direction: column;
@@ -1041,7 +1057,6 @@ section {
     transition: all 0.3s ease;
 }
 
-/* Domestic UPI Dynamic Intent Button */
 .btn-upi-checkout {
     background: #14532d;
     color: #ffffff;
@@ -1053,7 +1068,6 @@ section {
     transform: translateY(-2px);
 }
 
-/* International Corporate Invoice Button */
 .btn-intl-checkout {
     background: #ffffff;
     color: #14532d;
@@ -1065,79 +1079,6 @@ section {
     transform: translateY(-2px);
 }
 
-.nav-cart-trigger {
-    position: relative;
-    font-weight: 600 !important;
-}
-
-/* ===========================================
-   RESPONSIVE LAYOUT RESPONSIVENESS
-=========================================== */
-@media (max-width: 992px) {
-    .hero-container {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-    }
-    .hero-text p {
-        margin: 0 auto 35px;
-    }
-    .hero-actions {
-        justify-content: center;
-    }
-    .footer-container {
-        grid-template-columns: 1fr;
-        gap: 40px;
-    }
-}
-
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    .navbar {
-        display: none;
-        position: absolute;
-        top: 85px;
-        left: 0;
-        width: 100%;
-        background: #ffffff;
-        flex-direction: column;
-        padding: 25px 0;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        border-top: 1px solid #f3ede2;
-        gap: 0;
-    }
-    .navbar.active {
-        display: flex;
-    }
-    .navbar a {
-        width: 100%;
-        padding: 15px;
-        text-align: center;
-    }
-    .order-btn {
-        margin: 15px auto 0;
-        width: 80%;
-    }
-    .hero-text h1 {
-        font-size: 38px;
-    }
-    .section-header h2 {
-        font-size: 30px;
-    }
-}
-
-/* Adjust layout on tiny mobile displays */
-@media (max-width: 480px) {
-    .cart-sidebar {
-        max-width: 100%;
-        right: -100%;
-    }
-}
-/* ===========================================
-   TWO-STEP CHECKOUT SIDEBAR INTERFACE STYLES
-=========================================== */
 .btn-step-advance {
     width: 100%;
     background: #14532d;
@@ -1200,69 +1141,102 @@ section {
 .btn-edit-profile-back:hover {
     color: #D4AF37;
 }
-.cart-sidebar {
-    display: flex;
-    flex-direction: column;
-}
-.cart-items-body {
-    flex: 1;
-    overflow-y: auto; /* Lets the product listing scroll independently if long */
-}
-/* =========================================================================
-   FAST DIAGONSAL LOGO ENTRANCE (0.2 SECONDS)
-   ========================================================================= */
-.logo img {
-    opacity: 0;
-    /* Starts shifted slightly down and to the right */
-    transform: translate(15px, 15px); 
-    /* Executes the transition in exactly 0.2 seconds smoothly */
-    animation: quickDiagonalEntrance 0.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
 
-@keyframes quickDiagonalEntrance {
-    0% {
-        opacity: 0;
-        transform: translate(15px, 15px);
+/* ===========================================
+   RESPONSIVE BREAKPOINTS
+=========================================== */
+@media (max-width: 992px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
     }
-    100% {
-        opacity: 1;
-        transform: translate(0, 0); /* Snaps perfectly into its true place */
+    .hero-text p {
+        margin: 0 auto 35px;
+    }
+    .hero-actions {
+        justify-content: center;
+    }
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
     }
 }
-/* ==========================================================================
-   MAHIVERSE GLOBLE MOBILE RESPONSIVE PATCH
-   ========================================================================== */
 
 @media (max-width: 768px) {
-    /* 1. Navigation & Header adjustments */
     .nav-container {
         height: 70px;
         padding: 0 15px;
     }
-    .navbar {
-        display: none; /* Hide standard inline desktop links */
-        /* Note: If you have a JavaScript toggle, it will turn this to block/flex */
-    }
-    /* Simple fall-back if JS menu toggle isn't fully active yet */
+
     .menu-toggle {
         display: block;
         font-size: 28px;
         cursor: pointer;
     }
 
-    /* 2. Trust Matrix Section (Stack them vertically) */
+    .navbar {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: #ffffff;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        border-top: 2px solid #14532d;
+        gap: 15px !important;
+        z-index: 9998;
+    }
+
+    .navbar.active {
+        display: flex !important;
+        animation: slideDownMenu 0.3s ease-out forwards;
+    }
+
+    .navbar a {
+        width: 100%;
+        padding: 12px 15px;
+        background: #faf8f4;
+        border-radius: 8px;
+        text-align: left;
+        font-size: 16px;
+    }
+
+    .navbar a.order-btn {
+        text-align: center;
+        background: #14532d;
+        color: #fff !important;
+        margin-top: 5px;
+    }
+
+    .hero-text h1 {
+        font-size: 38px;
+    }
+
+    .section-header h2 {
+        font-size: 28px !important;
+        line-height: 1.3;
+    }
+
+    .section-header p {
+        font-size: 15px;
+        padding: 0 10px;
+    }
+
     .trust-container {
         display: flex;
         flex-direction: column;
         gap: 20px;
         padding: 0 10px;
     }
+
     .trust-box {
         width: 100% !important;
         margin-bottom: 10px;
     }
 
-    /* 3. Metrics Count Section (Stack them cleanly) */
     .stats-container {
         display: flex;
         flex-direction: column;
@@ -1270,20 +1244,19 @@ section {
         text-align: center;
     }
 
-    /* 4. Product Grid Layout (1 card per row on mobile instead of desktop columns) */
     .product-grid {
         display: grid;
         grid-template-columns: 1fr !important; 
         gap: 30px;
         padding: 0 10px;
     }
+
     .card {
         width: 100% !important;
         max-width: 400px;
-        margin: 0 auto; /* Center the card on mobile screen */
+        margin: 0 auto;
     }
 
-    /* 5. Unified Corporate Footer (Stack sections logically) */
     .footer-container {
         display: flex;
         flex-direction: column;
@@ -1291,26 +1264,11 @@ section {
         text-align: left;
         padding: 20px;
     }
+
     .footer-box {
         width: 100% !important;
     }
-    
-    /* 6. Typography optimizations for small screens */
-    h2 {
-        font-size: 28px !important;
-        line-height: 1.3;
-    }
-    .section-header p {
-        font-size: 15px;
-        padding: 0 10px;
-    }
-}
-/* ==========================================================================
-   MAHIVERSE GLOBLE - ABOUT & CONTACT MOBILE PAGES PATCH
-   ========================================================================== */
 
-@media (max-width: 768px) {
-    /* 1. Contact Page Grid & Form Fix */
     .contact-container, 
     .contact-wrapper, 
     .contact-section .container {
@@ -1327,15 +1285,13 @@ section {
         max-width: 100% !important;
     }
 
-    /* Make input fields and textareas easy to tap on phones */
     .contact-form input, 
     .contact-form textarea {
         width: 100% !important;
-        font-size: 16px !important; /* Prevents iOS from auto-zooming on text inputs */
+        font-size: 16px !important;
         padding: 14px !important;
     }
 
-    /* 2. About Us Page Responsive Framework */
     .about-container, 
     .about-wrapper, 
     .story-section {
@@ -1352,13 +1308,11 @@ section {
         max-width: 100% !important;
     }
 
-    /* Center images on about page */
     .about-image img {
         margin: 0 auto;
         border-radius: 15px;
     }
 
-    /* 3. Global Spacing adjustments for Inner Content pages */
     .inner-banner, 
     .page-title-section {
         padding: 40px 15px !important;
@@ -1368,51 +1322,26 @@ section {
     .page-title-section h1 {
         font-size: 32px !important;
     }
-}
-/* ==========================================================================
-   MAHIVERSE GLOBLE - MOBILE MENU ANIMATION STATES
-   ========================================================================== */
-@media (max-width: 768px) {
-    /* Style the navbar as a full-width dropdown when activated */
-    .navbar {
-        display: none; /* Hidden by default on mobile */
-        flex-direction: column;
-        width: 100%;
-        position: absolute;
-        top: 75px; /* Directly below header height */
-        left: 0;
-        background: #ffffff;
-        padding: 20px;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
-        border-top: 2px solid #14532d;
-        gap: 15px !important;
-        z-index: 9998;
+
+    .compliance-grid {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px;
+        gap: 20px;
     }
 
-    /* Active State triggered via JavaScript */
-   /* Active State triggered via JavaScript */
-.navbar.active {
-    display: flex !important;
-    animation: slideDownMenu 0.3s ease-out forwards;
-}
-    .navbar a {
-        width: 100%;
-        padding: 12px 15px;
-        background: #faf8f4;
-        border-radius: 8px;
-        text-align: left;
-        font-size: 16px;
-    }
-
-    .navbar a.order-btn {
-        text-align: center;
-        background: #14532d;
-        color: #fff !important;
-        margin-top: 5px;
+    .compliance-box {
+        text-align: center !important;
     }
 }
 
-/* Smooth dropdown entry animation */
+@media (max-width: 480px) {
+    .cart-sidebar {
+        max-width: 100%;
+        right: -100%;
+    }
+}
+
+/* Mobile Menu Animation */
 @keyframes slideDownMenu {
     from {
         opacity: 0;
@@ -1421,18 +1350,5 @@ section {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-/* ==========================================================================
-   MAHIVERSE GLOBLE - COMPLIANCE MATRIX MOBILE RESPONSIVENESS
-   ========================================================================== */
-@media (max-width: 768px) {
-    .compliance-grid {
-        grid-template-columns: 1fr !important;
-        padding: 0 15px;
-        gap: 20px;
-    }
-    .compliance-box {
-        text-align: center !important;
     }
 }
