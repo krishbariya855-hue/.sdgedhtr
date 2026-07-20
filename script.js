@@ -596,23 +596,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-// Razorpay Payment Links for Red Onion Powder
+// Complete Razorpay Redirect Function matched to your HTML
 function buyNow(productId, selectId) {
-    const selectedValue = document.getElementById(selectId).value;
+    const selectElement = document.getElementById(selectId);
+    if (!selectElement) return;
 
-    // Your Live/Test Razorpay Short Links
+    const selectedValue = selectElement.value;
+
+    // Direct mapping to your 6 active Razorpay Links
     const paymentLinks = {
-        'onion_200g': 'https://rzp.io/rzp/eg5bisxW', // ₹160
-        'onion_500g': 'https://rzp.io/rzp/KS9Lfgbv', // ₹380
-        'onion_1kg':  'https://rzp.io/rzp/JCS6EVv', // ₹690
-        'onion_bulk': 'https://rzp.io/l/YOUR_BULK_ADVANCE_LINK' // Add when created
+        // --- DEHYDRATED GARLIC POWDER ---
+        'garlic_200g Standard Pack': 'https://rzp.io/rzp/ETXHz31H', // ₹180
+        'garlic_500g Value Pack':    'https://rzp.io/rzp/Givlc2EY', // ₹420
+        'garlic_1kg Chef Pack':      'https://rzp.io/rzp/w3np7334', // ₹780
+
+        // --- DEHYDRATED RED ONION POWDER ---
+        'onion_200g Standard Pack':  'https://rzp.io/rzp/eg5bisxW', // ₹160
+        'onion_500g Value Pack':     'https://rzp.io/rzp/KS9Lfgbv', // ₹380
+        'onion_1kg Chef Pack':       'https://rzp.io/rzp/JCS6EVv'   // ₹690
     };
 
     const linkKey = productId + '_' + selectedValue;
 
     if (paymentLinks[linkKey]) {
-        // Redirects directly to Razorpay Checkout
+        // Redirect customer directly to Razorpay
         window.location.href = paymentLinks[linkKey];
+    } else if (selectedValue === 'Commercial Bulk Order') {
+        alert('For commercial bulk cargo orders, please contact us directly.');
     } else {
         alert('Please select a valid option.');
     }
