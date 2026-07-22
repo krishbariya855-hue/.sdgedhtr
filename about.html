@@ -4,19 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About Our Enterprise | MAHIVERSE GLOBLE</title>
- <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <meta name="description" content="Discover the story of MAHIVERSE GLOBLE. Sourcing premium agricultural derivatives and export-grade spices directly from India for global markets.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style-v3.css">
+  <!-- Corrected CSS Stylesheet Link -->
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
-  <!-- Premium Cart Sidebar Interface -->
+  <!-- Slide-Out Cart Overlay & Sidebar -->
   <div class="cart-overlay" id="cart-overlay"></div>
   <div class="cart-sidebar" id="cart-sidebar">
       <div class="cart-header">
@@ -31,28 +32,29 @@
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
-          <button id="whatsapp-checkout-btn" class="btn checkout-btn-premium">
-              Proceed to WhatsApp Verification
-          </button>
+          <div class="payment-selector-wrapper">
+              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-upi-checkout">📱 Submit Order via WhatsApp</button>
+          </div>
       </div>
   </div>
 
   <!-- Header Section -->
   <header class="header">
       <div class="container nav-container">
-      <a href="index.html" class="logo" style="display: flex; align-items: center;">
-    <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;">
-</a>
-          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <a href="index.html" class="logo" style="display: flex; align-items: center;">
+              <img src="favicon.png.jpeg.png" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;">
+          </a>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">☰</button>
           <nav class="navbar" id="navbar">
               <a href="index.html">Home</a>
               <a href="products.html">Products</a>
               <a href="about.html" class="active">About Us</a>
               <a href="contact.html">Contact</a>
+              <a href="blog.html">Blog</a>
               <a href="#" id="cart-icon-nav" class="nav-cart-trigger">
                   🛒 Cart (<span id="cart-count">0</span>)
               </a>
-<a href="products.html" class="order-btn">Order Now</a>
+              <a href="products.html" class="order-btn">Order Now</a>
           </nav>
       </div>
   </header>
@@ -67,7 +69,7 @@
       </div>
   </section>
 
-  <!-- Deep Corporate Profile Section -->
+  <!-- Corporate Profile Section -->
   <section class="about-brief" style="background: #ffffff; color: #2b2b2b; padding: 90px 0; text-align: left;">
       <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
           <div class="about-text-content">
@@ -86,7 +88,7 @@
       </div>
   </section>
 
-  <!-- Grid Sourcing Pillars Layout -->
+  <!-- Operational Pillars -->
   <section class="trust-section" style="background: #faf8f4;">
       <div class="section-header">
           <h2>Our Operational Pillars</h2>
@@ -111,7 +113,7 @@
       </div>
   </section>
 
-  <!-- Corporate Unified Footer -->
+  <!-- Corporate Footer -->
   <footer class="footer">
       <div class="container footer-container">
           <div class="footer-box brand-box">
@@ -124,10 +126,11 @@
               <a href="products.html">Products</a>
               <a href="about.html">About Us</a>
               <a href="contact.html">Contact Us</a>
+              <a href="blog.html">Blog</a>
           </div>
           <div class="footer-box contact-box">
               <h3>Corporate Info</h3>
-              <p>📞 +91 6354179230</p>
+              <p style="margin-bottom: 8px;">📞 +91 6354179230</p>
               <p>📧 mahiversegloble@gmail.com</p>
           </div>
       </div>
@@ -136,6 +139,6 @@
       </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=5.0" defer></script>
 </body>
 </html>
