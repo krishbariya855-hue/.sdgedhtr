@@ -6,19 +6,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Our Product Portfolio | MAHIVERSE GLOBLE</title>
-<link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
-<link rel="apple-touch-icon" href="favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
+  <link rel="apple-touch-icon" href="favicon.png">
   <meta name="description" content="Explore our premium collection of export-grade dehydrated garlic powder and red onion powder. Sourced naturally from India.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style-v3.css">
+  <!-- CORRECTED CSS LINK HERE -->
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
-  <!-- Premium Cart Sidebar Interface -->
+  <!-- Slide-Out Cart Overlay & Sidebar -->
   <div class="cart-overlay" id="cart-overlay"></div>
   <div class="cart-sidebar" id="cart-sidebar">
       <div class="cart-header">
@@ -29,30 +30,30 @@
           <p class="empty-msg">Your cart is currently empty.</p>
       </div>
       
-      <!-- Live Interactive Delivery Form Node Target -->
-      <div id="cart-shipping-form-container"></div>
-      
       <div class="cart-footer">
           <div class="cart-total-row">
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
-          <!-- Buttons dynamically controlled by updateCartUI in script.js -->
+          <div class="payment-selector-wrapper">
+              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-upi-checkout">📱 Submit Order via WhatsApp</button>
+          </div>
       </div>
   </div>
 
   <!-- Header Section -->
   <header class="header">
       <div class="container nav-container">
-   <a href="index.html" class="logo" style="display: flex; align-items: center;">
-    <img src="logo.png.jpeg" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;">
-</a>
-          <div class="menu-toggle" id="menu-toggle">☰</div>
+          <a href="index.html" class="logo" style="display: flex; align-items: center;">
+              <img src="favicon.png.jpeg.png" alt="MAHIVERSE GLOBLE Logo" style="height: 50px; width: auto;">
+          </a>
+          <button class="menu-toggle" id="menu-toggle" aria-label="Toggle Menu">☰</button>
           <nav class="navbar" id="navbar">
               <a href="index.html">Home</a>
               <a href="products.html" class="active">Products</a>
               <a href="about.html">About Us</a>
               <a href="contact.html">Contact</a>
+              <a href="blog.html">Blog</a>
               <a href="#" id="cart-icon-nav" class="nav-cart-trigger">
                   🛒 Cart (<span id="cart-count">0</span>)
               </a>
@@ -71,8 +72,8 @@
       </div>
   </section>
 
-  <!-- Grid Showcase Grid Layout -->
- <section class="products-showcase" style="background: #faf8f4; padding: 60px 0;">
+  <!-- Products Showcase Grid -->
+  <section class="products-showcase" style="background: #faf8f4; padding: 60px 0;">
     <div class="container">
         <div class="section-header" style="text-align: center; margin-bottom: 50px;">
             <h2>Our Core Signature Portfolio</h2>
@@ -86,11 +87,10 @@
                 <div class="product-img-container">
                     <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase" loading="lazy" width="300" height="260">
                 </div>
-                <span class="product-badge">Grade A Export</span>
                 <h3>Dehydrated Premium Garlic Powder</h3>
                 <p>Deeply aromatic, rich consistency, ideal for gourmet seasonings, commercial spice mixes, and restaurant bases.</p>
                 <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                    <select id="garlic-select" class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
                         <option value="200g Standard Pack" data-price="180">200g Pack — ₹180</option>
                         <option value="500g Value Pack" data-price="420">500g Pack — ₹420</option>
                         <option value="1kg Chef Pack" data-price="780">1kg Pack — ₹780</option>
@@ -98,7 +98,7 @@
                     </select>
                 </div>
                 <div class="card-footer" style="width: 100%;">
-                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder')">🛒 Add to Cart</button>
+                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Premium Dehydrated Garlic Powder', 'garlic-select')">🛒 Add to Cart</button>
                 </div>
             </div>
             
@@ -107,11 +107,10 @@
                 <div class="product-img-container">
                     <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase" loading="lazy" width="300" height="260">
                 </div>
-                <span class="product-badge">Grade A Export</span>
                 <h3>Dehydrated Premium Red Onion Powder</h3>
                 <p>Sweet pungent aroma notes, perfect distribution profile for large food manufacturing operations and retail supply.</p>
                 <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-                    <select class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
+                    <select id="onion-select" class="weight-select" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 14px; font-weight: 600; color: #333;">
                         <option value="200g Standard Pack" data-price="160">200g Pack — ₹160</option>
                         <option value="500g Value Pack" data-price="380">500g Pack — ₹380</option>
                         <option value="1kg Chef Pack" data-price="690">1kg Pack — ₹690</option>
@@ -119,37 +118,33 @@
                     </select>
                 </div>
                 <div class="card-footer" style="width: 100%;">
-                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder')">🛒 Add to Cart</button>
+                    <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 10px;" onclick="window.addToCartDirect('onion-powder-premium', 'Premium Dehydrated Red Onion Powder', 'onion-select')">🛒 Add to Cart</button>
                 </div>
             </div>
 
-<!-- 3. Export Grade Cow Dung Powder Card (Out of Stock Variant) -->
-<div class="card" data-category="organic" data-id="cow-dung-powder-premium" data-name="Export Grade Premium Cow Dung Powder" style="opacity: 0.75;">
-    <div class="product-img-container" style="background: #f2efe9; display: flex; justify-content: center; align-items: center; min-height: 260px; position: relative;">
-        <!-- Clean Out of Stock Alert Tag Overlay -->
-        <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #dc2626; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">Sold Out</span>
-        <span class="coming-soon-tag" style="position: absolute; top: 15px; left: 15px; background: #737373; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">100% Organic</span>
-        <div style="font-size: 72px; filter: grayscale(80%);">🌱</div>
-    </div>
-    <span class="product-badge" style="background: #737373;">Temporarily Unavailable</span>
-    <h3>Export Grade Cow Dung Powder</h3>
-    <p>Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory standards.</p>
-    
-    <div style="margin-bottom: 20px; width: 100%; text-align: left;">
-        <!-- Disabled dropdown options since inventory is empty -->
-        <select class="weight-select" disabled style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #f5f5f5; font-size: 14px; font-weight: 600; color: #888; cursor: not-allowed;">
-            <option>Direct Volume Restocking in Progress...</option>
-        </select>
-    </div>
-    
-    <div class="card-footer" style="width: 100%;">
-        <!-- Disabled Add to Cart Button linked with fallback warning style changes -->
-        <button class="btn" disabled style="width: 100%; margin-bottom: 10px; background: #e5e5e5; color: #a3a3a3; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: not-allowed;">❌ Out of Stock</button>
-        <a href="contact.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">Inquire Next Fresh Batch Arrival →</a>
-    </div>
-</div>
+            <!-- 3. Export Grade Cow Dung Powder Card (Sold Out) -->
+            <div class="card" data-category="organic" data-id="cow-dung-powder-premium" data-name="Export Grade Premium Cow Dung Powder" style="opacity: 0.75;">
+                <div class="product-img-container" style="background: #f2efe9; display: flex; justify-content: center; align-items: center; min-height: 260px; position: relative;">
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #dc2626; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px;">Sold Out</span>
+                    <span class="coming-soon-tag" style="position: absolute; top: 15px; left: 15px; background: #737373; color: #fff; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">100% Organic</span>
+                    <div style="font-size: 72px; filter: grayscale(80%);">🌱</div>
+                </div>
+                <h3>Export Grade Cow Dung Powder</h3>
+                <p>Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory standards.</p>
+                
+                <div style="margin-bottom: 20px; width: 100%; text-align: left;">
+                    <select class="weight-select" disabled style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; background: #f5f5f5; font-size: 14px; font-weight: 600; color: #888; cursor: not-allowed;">
+                        <option>Direct Volume Restocking in Progress...</option>
+                    </select>
+                </div>
+                
+                <div class="card-footer" style="width: 100%;">
+                    <button class="btn" disabled style="width: 100%; margin-bottom: 10px; background: #e5e5e5; color: #a3a3a3; border: none; padding: 12px; border-radius: 8px; font-weight: 600; font-size: 15px; cursor: not-allowed;">❌ Out of Stock</button>
+                    <a href="contact.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none; text-align: center;">Inquire Next Fresh Batch Arrival →</a>
+                </div>
+            </div>
 
-            <!-- 4. Expansion Pipeline Elements Group: Turmeric -->
+            <!-- 4. Expansion Pipeline: Turmeric -->
             <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
                 <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
                     <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
@@ -162,7 +157,7 @@
                 </div>
             </div>
 
-            <!-- 5. Expansion Pipeline Elements Group: Ginger -->
+            <!-- 5. Expansion Pipeline: Ginger -->
             <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
                 <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
                     <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
@@ -175,7 +170,7 @@
                 </div>
             </div>
 
-            <!-- 6. Expansion Pipeline Elements Group: Pure Ground Blends -->
+            <!-- 6. Expansion Pipeline: Blends -->
             <div class="card pipeline-card" style="opacity: 0.88; background: #fcfbfa; border: 2px dashed #ebdcb9;">
                 <div class="grey-scale-bg" style="background: #f2efe9; width: 100%; height: 260px; display: flex; justify-content: center; align-items: center; position: relative; border-radius: 12px;">
                     <span class="coming-soon-tag" style="position: absolute; top: 15px; right: 15px; background: #b45309; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 700;">Coming Soon</span>
@@ -216,109 +211,7 @@
           <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
       </div>
   </footer>
-<!-- High-Growth Structured Data Product Schema Matrix -->
-<script type="application/ld+json">
-[
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Premium Dehydrated Garlic Powder",
-    "image": "https://www.mahiversegloble.com/garlic-package.webp.jpg",
-    "description": "Deeply aromatic, rich consistency dehydrated premium garlic powder. Sourced from India for wholesale and retail commercial spice bases.",
-    "brand": {
-      "@type": "Brand",
-      "name": "MAHIVERSE GLOBLE"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "INR",
-      "lowPrice": "180",
-      "highPrice": "780",
-      "offerCount": "3",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "200g Standard Pack",
-          "price": "180",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "500g Value Pack",
-          "price": "420",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "1kg Chef Pack",
-          "price": "780",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        }
-      ]
-    }
-  },
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Premium Dehydrated Red Onion Powder",
-    "image": "https://www.mahiversegloble.com/onion-packaging.webp.jpg",
-    "description": "Sweet pungent aroma notes dehydrated red onion powder, perfect distribution profile for food manufacturing operations.",
-    "brand": {
-      "@type": "Brand",
-      "name": "MAHIVERSE GLOBLE"
-    },
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "INR",
-      "lowPrice": "160",
-      "highPrice": "690",
-      "offerCount": "3",
-      "offers": [
-        {
-          "@type": "Offer",
-          "name": "200g Standard Pack",
-          "price": "160",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "500g Value Pack",
-          "price": "380",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        },
-        {
-          "@type": "Offer",
-          "name": "1kg Chef Pack",
-          "price": "690",
-          "priceCurrency": "INR",
-          "availability": "https://schema.org/InStock"
-        }
-      ]
-    }
-  },
-  {
-    "@context": "https://schema.org/",
-    "@type": "Product",
-    "name": "Export Grade Premium Cow Dung Powder",
-    "description": "Finely pulverized, moisture-controlled, organic soil amendment processed to match premium regulatory export standards.",
-    "brand": {
-      "@type": "Brand",
-      "name": "MAHIVERSE GLOBLE"
-    },
-    "offers": {
-      "@type": "Offer",
-      "priceCurrency": "INR",
-      "price": "250",
-      "availability": "https://schema.org/OutOfStock"
-    }
-  }
-]
-</script>
-<script src="script.js?v=5.0"></script>
+
+  <script src="script.js?v=5.0" defer></script>
 </body>
 </html>
