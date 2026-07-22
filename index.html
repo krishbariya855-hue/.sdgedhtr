@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1908819484012080"
-     crossorigin="anonymous"></script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1908819484012080" crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
@@ -10,11 +9,10 @@
   
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="apple-touch-icon" href="favicon.png">
-  <meta name="description" content="MAHIVERSE GLOBLE - Global exporter of premium dehydrated garlic powder, red onion powder, organic manure, and high-grade cow dung powder. Sourced from India for UK, UAE, and global markets.">
-  <meta name="keywords" content="Garlic Powder Exporter, Dehydrated Onion Powder, Indian Spices Wholesale, Organic Manure Export, Cow Dung Powder Bulk Supply, Agro Commodities India, Mahiverse Globle, Export to UAE, Export to UK">
-  <meta name="author" content="MAHIVERSE GLOBLE">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://www.mahiversegloble.com/">
+  <meta name="description" content="MAHIVERSE GLOBLE - Global exporter of premium dehydrated garlic powder, red onion powder, organic manure, and high-grade cow dung powder. Sourced from India.">
+
+  <!-- Razorpay SDK Integration -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-J3L6NB28Y2"></script>
@@ -25,65 +23,36 @@
     gtag('config', 'G-J3L6NB28Y2');
   </script>
 
-  <!-- Preconnect to origins -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://www.googletagmanager.com">
-  
-  <!-- Optimized Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-  <!-- CSS Stylesheet Link -->
   <link rel="stylesheet" href="style.css?v=5.0">
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="MAHIVERSE GLOBLE">
-  <meta property="og:description" content="Premium Garlic Powder & Red Onion Powder">
-  <meta property="og:image" content="https://www.mahiversegloble.com/favicon.png.jpeg.png">
-  <meta property="og:url" content="https://www.mahiversegloble.com/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="MAHIVERSE GLOBLE">
-  
-  <!-- Schema Markup -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Organization",
-    "name":"MAHIVERSE GLOBLE",
-    "url":"https://www.mahiversegloble.com/",
-    "logo":"https://www.mahiversegloble.com/favicon.png.jpeg.png",
-    "description":"Exporter of premium dehydrated garlic powder, red onion powder and agricultural products from India.",
-    "email":"info@mahiversegloble.com",
-    "sameAs":[]
-  }
-  </script>
 </head>
 
 <body>
 
-  <!-- Cart Backdrop Overlay -->
   <div class="cart-overlay" id="cart-overlay"></div>
 
-  <!-- Slide-Out Right Cart Sidebar -->
+  <!-- Slide-Out Cart Sidebar -->
   <div class="cart-sidebar" id="cart-sidebar">
       <div class="cart-header">
-          <h2>Your Shopping Cart</h2>
+          <h2>Your Selection</h2>
           <button id="close-cart" class="close-cart-btn">✕</button>
       </div>
       
-      <!-- Dynamic Item Body -->
       <div id="cart-items-container" class="cart-items-body">
           <p class="empty-msg">Your cart is currently empty.</p>
       </div>
-
-      <!-- Cart Bottom Total & WhatsApp Button -->
+      
       <div class="cart-footer">
           <div class="cart-total-row">
               <span>Estimated Total:</span>
               <span id="cart-total-amount">₹0</span>
           </div>
           <div class="payment-selector-wrapper">
-              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-upi-checkout">📱 Submit Order via WhatsApp</button>
+              <button id="razorpay-checkout-btn" class="checkout-btn-premium btn-upi-checkout">💳 Pay Instant via UPI / Card</button>
+              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-intl-checkout">📱 Submit Order via WhatsApp</button>
           </div>
       </div>
   </div>
@@ -107,11 +76,11 @@
       </div>
   </header>
 
-  <!-- Hero Section Layout -->
+  <!-- Hero Section -->
   <section class="hero-section">
       <div class="hero-container">
           <div class="hero-text">
-              <span class="tagline" style="color: #14532d; font-weight: 700; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px;">Premium Exports & Food Ingredients</span>
+              <span class="tagline">Premium Exports & Food Ingredients</span>
               <h1>Pure Quality Spices For Global Kitchens</h1>
               <p>Experience rich aroma, natural purity, and premium quality crafted carefully for international trade markets and consumer tables.</p>
               <div class="hero-actions">
@@ -125,101 +94,59 @@
       </div>
   </section>
 
-  <!-- Origin Banner -->
-  <section class="origin-banner">
-      <div class="container">
-          <h2>🇮🇳 Proudly Sourced & Sown In India</h2>
-          <p>Processed natively inside premier micro-agricultural centers. We ensure international tier sanitation protocols, clean environmental tracing, and fully standardized processing pipelines without artificial additions.</p>
-      </div>
-  </section>
-
-  <!-- Brand Positioning -->
-  <section class="brand-positioning-section" style="padding: 70px 0 30px; background: #ffffff;">
-      <div class="container" style="max-width: 1000px; margin: 0 auto; text-align: justify;">
-          <div class="section-header" style="text-align: center; padding-top: 0;">
-              <h2>Bridging Purity & Global Trade Demands</h2>
-              <p style="margin-bottom: 25px;">How Mahiverse Globle redefines premium spice processing for international market corridors.</p>
-          </div>
-          <p style="font-family: 'DM Sans', sans-serif; font-size: 16px; color: #444; line-height: 1.8; margin-bottom: 15px;">
-              At <strong>MAHIVERSE GLOBLE</strong>, we address a foundational issue within global food supply infrastructures: the systematic loss of rich agricultural vitality through substandard dehydration processing, poor packaging barriers, and fragmented logistics channels.
-          </p>
-      </div>
-  </section>
-
-  <!-- Featured Products Showcase -->
+  <!-- Products Section -->
   <section class="products-showcase">
       <div class="container">
           <div class="section-header">
               <h2>Our Core Signature Portfolio</h2>
-              <p>Finely pulverized, high-aroma dehydrated options and emerging spice expansions.</p>
+              <p>Finely pulverized, high-aroma dehydrated options prepared for commercial and retail buyers.</p>
           </div>
           
           <div class="product-grid">
-              
-              <!-- Garlic Product Card -->
+              <!-- Garlic Card -->
               <div class="card" data-id="garlic-powder-premium">
-                  <div class="product-img-container" style="aspect-ratio: 300 / 260;">
+                  <div class="product-img-container">
                       <img src="garlic-package.webp.jpg" alt="Garlic Powder Packaging Showcase" loading="lazy" width="300" height="260">
                   </div>
                   <h3>Dehydrated Premium Garlic Powder</h3>
-                  <p>Deeply aromatic, rich consistency, ideal for gourmet and restaurant spice bases.</p>
-                  
+                  <p>Deeply aromatic, rich consistency, ideal for gourmet seasonings, commercial spice mixes, and restaurant bases.</p>
                   <div class="variant-selector">
                       <select id="garlic-select" class="weight-select">
                           <option value="200g Pack" data-price="180">200g Pack — ₹180</option>
                           <option value="500g Pack" data-price="420">500g Pack — ₹420</option>
                           <option value="1kg Pack" data-price="780">1kg Pack — ₹780</option>
-                          <option value="Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                          <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-
                   <div class="card-footer">
-                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('garlic-powder-premium', 'Dehydrated Premium Garlic Powder', 'garlic-select')">🛒 Add to Cart</button>
-                      <a href="garlic-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
+                      <button class="btn btn-card add-to-cart-btn" onclick="window.addToCartDirect('garlic-powder-premium', 'Dehydrated Premium Garlic Powder', 'garlic-select')">🛒 Add to Cart</button>
                   </div>
               </div>
-              
-              <!-- Onion Product Card -->
+
+              <!-- Onion Card -->
               <div class="card" data-id="onion-powder-premium">
-                  <div class="product-img-container" style="aspect-ratio: 300 / 260;">
+                  <div class="product-img-container">
                       <img src="onion-packaging.webp.jpg" alt="Red Onion Powder Packaging Showcase" loading="lazy" width="300" height="260">
                   </div>
                   <h3>Dehydrated Premium Red Onion Powder</h3>
-                  <p>Sweet pungent aroma notes, perfect distribution profile for large manufacturing operations.</p>
-                  
+                  <p>Sweet pungent aroma notes, perfect distribution profile for large food manufacturing operations and retail supply.</p>
                   <div class="variant-selector">
                       <select id="onion-select" class="weight-select">
                           <option value="200g Pack" data-price="160">200g Pack — ₹160</option>
                           <option value="500g Pack" data-price="380">500g Pack — ₹380</option>
                           <option value="1kg Pack" data-price="690">1kg Pack — ₹690</option>
-                          <option value="Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
+                          <option value="Commercial Bulk Order" data-price="0">Bulk Cargo Volume — Inquire Price</option>
                       </select>
                   </div>
-
                   <div class="card-footer">
-                      <button class="btn btn-card add-to-cart-btn" style="width: 100%; margin-bottom: 12px;" onclick="window.addToCartDirect('onion-powder-premium', 'Dehydrated Premium Red Onion Powder', 'onion-select')">🛒 Add to Cart</button>
-                      <a href="onion-powder.html" style="display: block; font-size: 14px; color: #14532d; font-weight: 700; text-decoration: none;">View Full Specifications →</a>
+                      <button class="btn btn-card add-to-cart-btn" onclick="window.addToCartDirect('onion-powder-premium', 'Dehydrated Premium Red Onion Powder', 'onion-select')">🛒 Add to Cart</button>
                   </div>
               </div>
-
-              <!-- Pipeline Item -->
-              <div class="card pipeline-card">
-                  <div class="grey-scale-bg">
-                      <span class="coming-soon-tag">Coming Soon</span>
-                      <div class="placeholder-icon">🍂</div>
-                  </div>
-                  <h3>Premium Pure Turmeric Powder</h3>
-                  <p>High curcumin yield properties. Sourced from optimal spice belts for international standards.</p>
-                  <div class="card-footer">
-                      <a href="contact.html" class="btn btn-secondary btn-full">Pre-Book Bulk Cargo</a>
-                  </div>
-              </div>
-
           </div>
       </div>
   </section>
 
-  <!-- Corporate Footer -->
+  <!-- Footer -->
   <footer class="footer">
       <div class="footer-container">
           <div class="footer-box brand-box">
@@ -232,27 +159,17 @@
               <a href="products.html">Products</a>
               <a href="about.html">About Us</a>
               <a href="contact.html">Contact Us</a>
-              <a href="blog.html">Blog</a>
           </div>
           <div class="footer-box contact-box">
               <h3>Corporate Info</h3>
-              <p style="margin-bottom: 8px;">📞 +91 6354179230</p>
-              <p style="margin-bottom: 15px;">📧 mahiversegloble@gmail.com</p>
+              <p>📞 +91 6354179230</p>
+              <p>📧 mahiversegloble@gmail.com</p>
           </div>
       </div>
       <div class="footer-bottom">
           <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
       </div>
   </footer>
-
-  <!-- Floating WhatsApp -->
-  <a href="https://wa.me/916354179230?text=Hello%20MAHIVERSE%20GLOBLE,%20I%20want%20to%20know%20more%20about%20your%20products." class="floating-whatsapp" target="_blank" aria-label="Chat on WhatsApp">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 32 32" fill="white">
-          <path d="M16 .4C7.4.4.4 7.3.4 15.9c0 3 0.8 5.8 2.4 8.3L0 32l7.9-2.8c2.3 1.2 5 1.9 7.7 1.9h.1c8.6 0 15.6-6.9 15.6-15.6C31.3 7.3 24.5.4 16 .4zm0 28.2c-2.4 0-4.7-.6-6.8-1.8l-.5-.3-4.7 1.7 1.6-4.8-.3-.5c-1.3-2.1-2-4.5-2-7 0-7 5.7-12.7 12.7-12.7s12.7 5.7 12.7 12.7S23 28.6 16 28.6zm7.1-9.4c-.4-.2-2.3-1.1-2.7-1.2-.4-.2-.6-.2-.9.2-.3.4-1 1.2-1.2 1.4-.2.2-.5.3-.9.1-.4-.2-1.8-.7-3.4-2.2-1.3-1.1-2.1-2.5-2.4-2.9-.2-.4 0-.6.2-.8.2-.2.4-.5.6-.7.2-.2.3-.4.4-.6.1-.2.1-.5 0-.7-.1-.2-.9-2.1-1.2-2.9-.3-.7-.6-.6-.9-.6h-.8c-.3 0-.7.1-1 .5-.3.4-1.3 1.3-1.3 3.2s1.3 3.7 1.5 3.9c.2.3 2.5 3.8 6 5.3.8.4 1.5.6 2 .8.8.2 1.6.2 2.2.1.7-.1 2.3-.9 2.6-1.8.3-.9.3-1.7.2-1.8-.1-.2-.4-.3-.8-.5z"/>
-      </svg>
-  </a>
-
-  <button id="backToTop" title="Back to Top">↑</button>
 
   <script src="script.js?v=5.0" defer></script>
 </body>
