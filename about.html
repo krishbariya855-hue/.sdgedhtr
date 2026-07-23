@@ -22,26 +22,28 @@
 <body>
 
   <!-- Slide-Out Cart Overlay & Sidebar -->
-  <div class="cart-overlay" id="cart-overlay"></div>
-  <div class="cart-sidebar" id="cart-sidebar">
-      <div class="cart-header">
-          <h2>Your Selection</h2>
-          <button id="close-cart" class="close-cart-btn">✕</button>
-      </div>
-      <div id="cart-items-container" class="cart-items-body">
-          <p class="empty-msg">Your cart is currently empty.</p>
-      </div>
-      <div class="cart-footer">
-          <div class="cart-total-row">
-              <span>Estimated Total:</span>
-              <span id="cart-total-amount">₹0</span>
-          </div>
-          <div class="payment-selector-wrapper">
-              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-upi-checkout">📱 Submit Order via WhatsApp</button>
-          </div>
-      </div>
-  </div>
-
+<div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-header">
+        <h2>Your Selection</h2>
+        <button id="close-cart" class="close-cart-btn">✕</button>
+    </div>
+    
+    <div id="cart-items-container" class="cart-items-body">
+        <p class="empty-msg">Your cart is currently empty.</p>
+    </div>
+    
+    <div class="cart-footer">
+        <div class="cart-total-row">
+            <span>Estimated Total:</span>
+            <span id="cart-total-amount">₹0</span>
+        </div>
+        <div class="payment-selector-wrapper">
+            <a href="checkout.html" class="checkout-btn-premium btn-upi-checkout" style="display: block; text-align: center; text-decoration: none;">
+                🛍️ Proceed to Checkout
+            </a>
+        </div>
+    </div>
+</div>
   <!-- Header Section -->
   <header class="header">
       <div class="container nav-container">
