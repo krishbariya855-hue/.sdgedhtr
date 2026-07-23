@@ -291,3 +291,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCartUI();
 });
+// Function for checkout.html standalone page
+window.triggerRazorpayWithAddress = function(fullName, phone, fullAddress, grandTotal) {
+    let itemsSummary = "";
+    cart.forEach(item => {
+        itemsSummary += `${item.name} (${item.weight}) x${item.quantity}; `;
+    });
+
+    const options = {
+        "key": RAZORPAY_KEY_ID,
+        "amount": grandTotal * 100, 
+        "currency": "INR",
+        "name": "MAHIVERSE GLOBLE",
+        "description": "Order: " + itemsSummary.slice(0, 80),
+        "image": "favicon.png.jpeg.png",
+        "prefill": {
+            "name": fullName,
+            "contact": phone
+        },
+        "handler": function (response) {
+            const paymentId = response.razorpay_payment_id;
+
+            // Save order to Firestore
+            if (typeof db !== "undefined") {
+                db.collection("orders").add({
+                    paymentId: paymentId,
+                    customerName: fullName,
+                    customerPhone: phone,
+                    shippingAddress: fullAddress,
+                    items: cart,
+                    totalPaid: grandTotal,
+                    orderStatus: "Processing",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+            }
+
+            alert("✅ Payment Successful!\nPayment ID: " + paymentId);
+
+            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI placed an order on your checkout page!\n\n💳 *Payment ID:* ${paymentId}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *SHIPPING ADDRESS:*\nName: ${fullName}\nPhone: ${phone}\nAddress: ${fullAddress}\n\n🛒 *ITEMS ORDERED:*\n`;
+            
+            cart.forEach((item, i) => {
+                successMsg += `${i + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}\n`;
+            });
+
+            cart = [];
+            localStorage.removeItem("mahiverse_cart");
+            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(successMsg)}`, "_blank");
+            window.location.href = "index.html";
+        },
+        "theme": { "color": "#14532d" }
+    };
+
+    const rzp = new Razorpay(options);
+    rzp.open();
+};
