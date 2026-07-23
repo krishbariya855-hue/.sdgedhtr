@@ -23,22 +23,39 @@
   <!-- Slide-Out Cart Overlay & Sidebar -->
   <div class="cart-overlay" id="cart-overlay"></div>
   <div class="cart-sidebar" id="cart-sidebar">
-      <div class="cart-header">
-          <h2>Your Selection</h2>
-          <button id="close-cart" class="close-cart-btn">✕</button>
-      </div>
-      <div id="cart-items-container" class="cart-items-body">
-          <p class="empty-msg">Your cart is currently empty.</p>
-      </div>
-      <div class="cart-footer">
-          <div class="cart-total-row">
-              <span>Estimated Total:</span>
-              <span id="cart-total-amount">₹0</span>
-          </div>
-          <div class="payment-selector-wrapper">
-              <button id="whatsapp-checkout-btn" class="checkout-btn-premium btn-upi-checkout">📱 Submit Order via WhatsApp</button>
-          </div>
-      </div>
+    <div class="cart-header">
+        <h2>Your Selection</h2>
+        <button id="close-cart" class="close-cart-btn">✕</button>
+    </div>
+
+    <!-- Items List -->
+    <div id="cart-items-container" class="cart-items-body">
+        <p class="empty-msg">Your cart is currently empty.</p>
+    </div>
+
+    <!-- INSERT DELIVERY ADDRESS FORM HERE -->
+    <div id="delivery-address-form" style="padding: 15px 25px; border-top: 1px solid #f3ede2; background: #fff;">
+        <h3 style="font-size: 15px; color: #14532d; margin-bottom: 12px; font-family: 'DM Sans', sans-serif;">📍 Delivery Details</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+            <input type="text" id="cust-name" placeholder="Full Name *" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px;" required>
+            <input type="tel" id="cust-phone" placeholder="Phone Number *" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px;" required>
+            <textarea id="cust-address" placeholder="Full Shipping Address (House No, Street, City, Pincode) *" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 13px; height: 60px; resize: none;" required></textarea>
+        </div>
+    </div>
+
+    <!-- Cart Footer -->
+    <div class="cart-footer">
+        <div class="cart-total-row">
+            <span>Estimated Total:</span>
+            <span id="cart-total-amount">₹0</span>
+        </div>
+        <div class="payment-selector-wrapper">
+            <button id="razorpay-checkout-btn" class="checkout-btn-premium btn-upi-checkout">
+                💳 Pay & Confirm Delivery
+            </button>
+        </div>
+    </div>
+</div>
   </div>
 
   <!-- Header Section -->
