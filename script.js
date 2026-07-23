@@ -15,17 +15,20 @@ const firebaseConfig = {
   measurementId: "G-GJ1YQJ325A"
 };
 
-// Initialize Firebase, Firestore & Analytics
+// Initialize Firebase, Firestore & Analytics safely
 if (typeof firebase !== "undefined") {
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
     
-    // Step 3: Initialize Analytics if supported
-    if (firebase.analytics) {
-        var analytics = firebase.analytics();
-        console.log("Firebase Analytics initialized");
+    // Safely check and initialize Analytics
+    if (typeof firebase.analytics === "function") {
+        try {
+            var analytics = firebase.analytics();
+            console.log("Firebase Analytics initialized");
+        } catch (e) {
+            console.warn("Analytics notice:", e);
+        }
     }
-}
 }
 
 const RAZORPAY_KEY_ID = "rzp_live_TGTWYtkzRnCuwX"; 
@@ -241,7 +244,7 @@ function showToast(message) {
     }, 2500);
 }
 
-// 8. EVENT LISTENERS
+// 8. EVENT LISTENERS FOR MOBILE MENU & CART
 document.addEventListener("DOMContentLoaded", () => {
     const cartIcon = document.getElementById("cart-icon-nav");
     const closeCart = document.getElementById("close-cart");
@@ -253,11 +256,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeCart) closeCart.addEventListener("click", closeCartSidebar);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartSidebar);
 
+    // Mobile Navbar Toggle
     if (menuToggle && navbar) {
-        menuToggle.addEventListener("click", () => {
+        menuToggle.addEventListener("click", (e) => {
+            e.stopPropagation();
             navbar.classList.toggle("active");
         });
     }
+
+    // Close Mobile Navbar when clicking outside
+    document.addEventListener("click", (e) => {
+        if (navbar && navbar.classList.contains("active")) {
+            if (!navbar.contains(e.target) && !menuToggle.contains(e.target)) {
+                navbar.classList.remove("active");
+            }
+        }
+    });
 
     updateCartUI();
 });
