@@ -39,15 +39,31 @@
   <div class="cart-overlay" id="cart-overlay"></div>
 
   <!-- Slide-Out Cart Sidebar -->
- <div class="cart-sidebar" id="cart-sidebar">
+<!-- Clean Slide-Out Cart Drawer -->
+<div class="cart-sidebar" id="cart-sidebar">
     <div class="cart-header">
         <h2>Your Selection</h2>
         <button id="close-cart" class="close-cart-btn">✕</button>
     </div>
-
+    
+    <!-- Items List -->
     <div id="cart-items-container" class="cart-items-body">
         <p class="empty-msg">Your cart is currently empty.</p>
     </div>
+    
+    <!-- Cart Footer with Checkout Button -->
+    <div class="cart-footer">
+        <div class="cart-total-row">
+            <span>Estimated Total:</span>
+            <span id="cart-total-amount">₹0</span>
+        </div>
+        <div class="payment-selector-wrapper">
+            <a href="checkout.html" class="checkout-btn-premium btn-upi-checkout" style="display: block; text-align: center; text-decoration: none;">
+                🛍️ Proceed to Checkout
+            </a>
+        </div>
+    </div>
+</div>
 
     <!-- INSERT DELIVERY ADDRESS FORM HERE -->
     <div id="delivery-address-form" style="padding: 15px 25px; border-top: 1px solid #f3ede2; background: #fff;">
