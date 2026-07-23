@@ -1,5 +1,5 @@
 // =========================================================================
-// MAHIVERSE GLOBLE - RAZORPAY & FIREBASE ENGINE
+// MAHIVERSE GLOBLE - FIREBASE & RAZORPAY CHECKOUT ENGINE
 // =========================================================================
 
 console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
@@ -99,7 +99,6 @@ function updateCartUI() {
     const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
     const cartCount = document.getElementById("cart-count");
     const totalAmountSpan = document.getElementById("cart-total-amount");
-    const addressForm = document.getElementById("delivery-address-form");
 
     if (!itemsContainer) return;
 
@@ -129,44 +128,20 @@ function updateCartUI() {
 
     if (cart.length === 0) {
         itemsContainer.innerHTML = '<p class="empty-msg">Your cart is currently empty.</p>';
-        if (addressForm) addressForm.style.display = "none";
-    } else {
-        if (addressForm) addressForm.style.display = "block";
     }
 }
 
-// 5. REMOVE ITEM
+// 5. REMOVE ITEM FROM CART
 window.removeFromCart = function(index) {
     cart.splice(index, 1);
     localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
     updateCartUI();
 };
 
-// 6. CHECKOUT: SAVE TO FIRESTORE + RAZORPAY + WHATSAPP
-function triggerRazorpayPayment() {
-    if (cart.length === 0) {
-        alert("Your cart is empty! Add products before paying.");
-        return;
-    }
-
-    const nameInput = document.getElementById("cust-name");
-    const phoneInput = document.getElementById("cust-phone");
-    const addressInput = document.getElementById("cust-address");
-
-    const name = nameInput ? nameInput.value.trim() : "";
-    const phone = phoneInput ? phoneInput.value.trim() : "";
-    const address = addressInput ? addressInput.value.trim() : "";
-
-    if (!name || !phone || !address) {
-        alert("Please fill in your Full Name, Phone Number, and Shipping Address before proceeding to payment.");
-        return;
-    }
-
-    let grandTotal = 0;
+// 6. STANDALONE CHECKOUT PAGE HANDLER (CHECKOUT.HTML)
+window.triggerRazorpayWithAddress = function(fullName, phone, fullAddress, grandTotal) {
     let itemsSummary = "";
-
     cart.forEach(item => {
-        grandTotal += item.price * item.quantity;
         itemsSummary += `${item.name} (${item.weight}) x${item.quantity}; `;
     });
 
@@ -178,59 +153,52 @@ function triggerRazorpayPayment() {
         "description": "Order: " + itemsSummary.slice(0, 80),
         "image": "favicon.png.jpeg.png",
         "prefill": {
-            "name": name,
+            "name": fullName,
             "contact": phone
         },
         "handler": function (response) {
             const paymentId = response.razorpay_payment_id;
 
-            // Save order record to Firestore Database
+            // Save order document directly to Cloud Firestore
             if (typeof db !== "undefined") {
                 db.collection("orders").add({
                     paymentId: paymentId,
-                    customerName: name,
+                    customerName: fullName,
                     customerPhone: phone,
-                    shippingAddress: address,
+                    shippingAddress: fullAddress,
                     items: cart,
                     totalPaid: grandTotal,
                     orderStatus: "Processing",
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 }).then(() => {
-                    console.log("Order saved to Firestore successfully!");
+                    console.log("Order saved to Firestore!");
                 }).catch((error) => {
-                    console.error("Firestore save error: ", error);
+                    console.error("Firestore error: ", error);
                 });
             }
 
             alert("✅ Payment Successful!\nPayment ID: " + paymentId);
 
-            // Construct WhatsApp Message
-            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI completed my order payment on your website!\n\n💳 *Razorpay Payment ID:* ${paymentId}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *DELIVERY ADDRESS:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n🛒 *ITEMS PAID:*\n`;
+            // Construct WhatsApp Order Message
+            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI placed an order on your website!\n\n💳 *Payment ID:* ${paymentId}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *SHIPPING ADDRESS:*\nName: ${fullName}\nPhone: ${phone}\nAddress: ${fullAddress}\n\n🛒 *ITEMS ORDERED:*\n`;
             
             cart.forEach((item, i) => {
                 successMsg += `${i + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}\n`;
             });
 
-            // Reset Cart & Inputs
+            // Clear Cart & LocalStorage
             cart = [];
             localStorage.removeItem("mahiverse_cart");
-            updateCartUI();
-            closeCartSidebar();
-
-            if (nameInput) nameInput.value = "";
-            if (phoneInput) phoneInput.value = "";
-            if (addressInput) addressInput.value = "";
-
+            
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(successMsg)}`, "_blank");
+            window.location.href = "index.html";
         },
-        "theme": {
-            "color": "#14532d"
-        }
+        "theme": { "color": "#14532d" }
     };
 
     const rzp = new Razorpay(options);
     rzp.open();
-}
+};
 
 // 7. TOAST NOTIFICATION
 function showToast(message) {
@@ -273,7 +241,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const cartOverlay = document.getElementById("cart-overlay");
     const menuToggle = document.getElementById("menu-toggle");
     const navbar = document.getElementById("navbar");
-    const razorpayBtn = document.getElementById("razorpay-checkout-btn");
 
     if (cartIcon) cartIcon.addEventListener("click", (e) => { e.preventDefault(); openCartSidebar(); });
     if (closeCart) closeCart.addEventListener("click", closeCartSidebar);
@@ -285,63 +252,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (razorpayBtn) {
-        razorpayBtn.addEventListener("click", triggerRazorpayPayment);
-    }
-
     updateCartUI();
 });
-// Function for checkout.html standalone page
-window.triggerRazorpayWithAddress = function(fullName, phone, fullAddress, grandTotal) {
-    let itemsSummary = "";
-    cart.forEach(item => {
-        itemsSummary += `${item.name} (${item.weight}) x${item.quantity}; `;
-    });
-
-    const options = {
-        "key": RAZORPAY_KEY_ID,
-        "amount": grandTotal * 100, 
-        "currency": "INR",
-        "name": "MAHIVERSE GLOBLE",
-        "description": "Order: " + itemsSummary.slice(0, 80),
-        "image": "favicon.png.jpeg.png",
-        "prefill": {
-            "name": fullName,
-            "contact": phone
-        },
-        "handler": function (response) {
-            const paymentId = response.razorpay_payment_id;
-
-            // Save order to Firestore
-            if (typeof db !== "undefined") {
-                db.collection("orders").add({
-                    paymentId: paymentId,
-                    customerName: fullName,
-                    customerPhone: phone,
-                    shippingAddress: fullAddress,
-                    items: cart,
-                    totalPaid: grandTotal,
-                    orderStatus: "Processing",
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-            }
-
-            alert("✅ Payment Successful!\nPayment ID: " + paymentId);
-
-            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI placed an order on your checkout page!\n\n💳 *Payment ID:* ${paymentId}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *SHIPPING ADDRESS:*\nName: ${fullName}\nPhone: ${phone}\nAddress: ${fullAddress}\n\n🛒 *ITEMS ORDERED:*\n`;
-            
-            cart.forEach((item, i) => {
-                successMsg += `${i + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}\n`;
-            });
-
-            cart = [];
-            localStorage.removeItem("mahiverse_cart");
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(successMsg)}`, "_blank");
-            window.location.href = "index.html";
-        },
-        "theme": { "color": "#14532d" }
-    };
-
-    const rzp = new Razorpay(options);
-    rzp.open();
-};
