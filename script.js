@@ -1,15 +1,32 @@
 // =========================================================================
-// MAHIVERSE GLOBLE - LIVE RAZORPAY & DELIVERY ADDRESS ENGINE
+// MAHIVERSE GLOBLE - RAZORPAY & FIREBASE ENGINE
 // =========================================================================
 
 console.log("MAHIVERSE GLOBLE Engine Loaded Successfully");
+
+// 1. FIREBASE CONFIGURATION
+const firebaseConfig = {
+  apiKey: "AIzaSyCn_Ab4_-99%219zE9Qf1yj05bj7vpwrI",
+  authDomain: "mahiverse-globle.firebaseapp.com",
+  projectId: "mahiverse-globle",
+  storageBucket: "mahiverse-globle.firebasestorage.app",
+  messagingSenderId: "351496017152",
+  appId: "1:351496017152:web:226bf771535d08614080d",
+  measurementId: "G-GJ1YQJ325A"
+};
+
+// Initialize Firebase & Firestore
+if (typeof firebase !== "undefined") {
+    firebase.initializeApp(firebaseConfig);
+    var db = firebase.firestore();
+}
 
 const RAZORPAY_KEY_ID = "rzp_live_TGTWYtkzRnCuwX"; 
 const WHATSAPP_NUMBER = "916354179230";
 
 let cart = JSON.parse(localStorage.getItem("mahiverse_cart")) || [];
 
-// 1. ADD TO CART FUNCTION
+// 2. ADD TO CART FUNCTION
 window.addToCartDirect = function(productId, productName, selectId) {
     let select = selectId ? document.getElementById(selectId) : null;
     if (!select) {
@@ -58,7 +75,7 @@ window.addToCartDirect = function(productId, productName, selectId) {
     openCartSidebar();
 };
 
-// 2. OPEN & CLOSE CART DRAWER
+// 3. CART DRAWER CONTROLS
 function openCartSidebar() {
     const cartSidebar = document.getElementById("cart-sidebar");
     const cartOverlay = document.getElementById("cart-overlay");
@@ -77,7 +94,7 @@ function closeCartSidebar() {
     }
 }
 
-// 3. CART RENDER ENGINE & FORM VISIBILITY
+// 4. UPDATE CART UI
 function updateCartUI() {
     const itemsContainer = document.getElementById("cart-items-container") || document.querySelector(".cart-items-body");
     const cartCount = document.getElementById("cart-count");
@@ -118,21 +135,20 @@ function updateCartUI() {
     }
 }
 
-// 4. REMOVE ITEM FROM CART
+// 5. REMOVE ITEM
 window.removeFromCart = function(index) {
     cart.splice(index, 1);
     localStorage.setItem("mahiverse_cart", JSON.stringify(cart));
     updateCartUI();
 };
 
-// 5. CHECKOUT WITH ADDRESS VALIDATION & RAZORPAY
+// 6. CHECKOUT: SAVE TO FIRESTORE + RAZORPAY + WHATSAPP
 function triggerRazorpayPayment() {
     if (cart.length === 0) {
         alert("Your cart is empty! Add products before paying.");
         return;
     }
 
-    // Read Delivery Address Input Values
     const nameInput = document.getElementById("cust-name");
     const phoneInput = document.getElementById("cust-phone");
     const addressInput = document.getElementById("cust-address");
@@ -141,7 +157,6 @@ function triggerRazorpayPayment() {
     const phone = phoneInput ? phoneInput.value.trim() : "";
     const address = addressInput ? addressInput.value.trim() : "";
 
-    // Validate inputs before launching Razorpay
     if (!name || !phone || !address) {
         alert("Please fill in your Full Name, Phone Number, and Shipping Address before proceeding to payment.");
         return;
@@ -155,14 +170,9 @@ function triggerRazorpayPayment() {
         itemsSummary += `${item.name} (${item.weight}) x${item.quantity}; `;
     });
 
-    if (grandTotal <= 0) {
-        alert("Invalid cart total.");
-        return;
-    }
-
     const options = {
         "key": RAZORPAY_KEY_ID,
-        "amount": grandTotal * 100, // Amount in paise
+        "amount": grandTotal * 100, 
         "currency": "INR",
         "name": "MAHIVERSE GLOBLE",
         "description": "Order: " + itemsSummary.slice(0, 80),
@@ -172,27 +182,45 @@ function triggerRazorpayPayment() {
             "contact": phone
         },
         "handler": function (response) {
-            alert("✅ Payment Successful!\nPayment ID: " + response.razorpay_payment_id);
+            const paymentId = response.razorpay_payment_id;
 
-            // Construct WhatsApp Order Message with Address + Payment ID
-            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI completed my order payment on your website!\n\n💳 *Razorpay Payment ID:* ${response.razorpay_payment_id}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *DELIVERY ADDRESS:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n🛒 *ITEMS PAID:*\n`;
+            // Save order record to Firestore Database
+            if (typeof db !== "undefined") {
+                db.collection("orders").add({
+                    paymentId: paymentId,
+                    customerName: name,
+                    customerPhone: phone,
+                    shippingAddress: address,
+                    items: cart,
+                    totalPaid: grandTotal,
+                    orderStatus: "Processing",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    console.log("Order saved to Firestore successfully!");
+                }).catch((error) => {
+                    console.error("Firestore save error: ", error);
+                });
+            }
+
+            alert("✅ Payment Successful!\nPayment ID: " + paymentId);
+
+            // Construct WhatsApp Message
+            let successMsg = `Hello MAHIVERSE GLOBLE! 🌿\n\nI completed my order payment on your website!\n\n💳 *Razorpay Payment ID:* ${paymentId}\n💳 *Total Paid:* ₹${grandTotal}\n\n📍 *DELIVERY ADDRESS:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n\n🛒 *ITEMS PAID:*\n`;
             
             cart.forEach((item, i) => {
                 successMsg += `${i + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${item.price * item.quantity}\n`;
             });
 
-            // Reset Cart
+            // Reset Cart & Inputs
             cart = [];
             localStorage.removeItem("mahiverse_cart");
             updateCartUI();
             closeCartSidebar();
 
-            // Clear Input Fields
             if (nameInput) nameInput.value = "";
             if (phoneInput) phoneInput.value = "";
             if (addressInput) addressInput.value = "";
 
-            // Open WhatsApp with complete details
             window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(successMsg)}`, "_blank");
         },
         "theme": {
@@ -204,7 +232,7 @@ function triggerRazorpayPayment() {
     rzp.open();
 }
 
-// 6. TOAST NOTIFICATION
+// 7. TOAST NOTIFICATION
 function showToast(message) {
     let toast = document.getElementById("cart-toast");
     if (!toast) {
@@ -238,7 +266,7 @@ function showToast(message) {
     }, 2500);
 }
 
-// 7. EVENT LISTENERS
+// 8. EVENT LISTENERS
 document.addEventListener("DOMContentLoaded", () => {
     const cartIcon = document.getElementById("cart-icon-nav");
     const closeCart = document.getElementById("close-cart");
@@ -246,7 +274,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("menu-toggle");
     const navbar = document.getElementById("navbar");
     const razorpayBtn = document.getElementById("razorpay-checkout-btn");
-    const whatsappBtn = document.getElementById("whatsapp-checkout-btn");
 
     if (cartIcon) cartIcon.addEventListener("click", (e) => { e.preventDefault(); openCartSidebar(); });
     if (closeCart) closeCart.addEventListener("click", closeCartSidebar);
@@ -260,38 +287,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (razorpayBtn) {
         razorpayBtn.addEventListener("click", triggerRazorpayPayment);
-    }
-
-    if (whatsappBtn) {
-        whatsappBtn.addEventListener("click", () => {
-            if (cart.length === 0) {
-                alert("Your cart is empty!");
-                return;
-            }
-
-            const name = document.getElementById("cust-name") ? document.getElementById("cust-name").value.trim() : "";
-            const phone = document.getElementById("cust-phone") ? document.getElementById("cust-phone").value.trim() : "";
-            const address = document.getElementById("cust-address") ? document.getElementById("cust-address").value.trim() : "";
-
-            let message = "Hello MAHIVERSE GLOBLE! 🌿\n\nI would like to place an order for the following items:\n\n";
-            let total = 0;
-
-            cart.forEach((item, i) => {
-                const amount = item.price * item.quantity;
-                total += amount;
-                message += `${i + 1}. ${item.name} (${item.weight}) x ${item.quantity} = ₹${amount}\n`;
-            });
-
-            message += `\nTotal Estimated Price: ₹${total}\n`;
-
-            if (name || phone || address) {
-                message += `\n📍 *DELIVERY DETAILS:*\nName: ${name}\nPhone: ${phone}\nAddress: ${address}\n`;
-            }
-
-            message += `\nPlease confirm availability and payment details!`;
-
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`, "_blank");
-        });
     }
 
     updateCartUI();
