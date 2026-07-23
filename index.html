@@ -5,8 +5,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <!-- Firebase Analytics SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics-compat.js"></script>
+  
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1908819484012080" crossorigin="anonymous"></script>
   
   <meta charset="UTF-8">
@@ -34,7 +34,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   
-<link rel="stylesheet" href="style.css?v=6.0">
+  <link rel="stylesheet" href="style.css?v=6.0">
 </head>
 
 <body>
@@ -54,19 +54,18 @@
       </div>
 
       <!-- Cart Footer -->
-    <!-- Cart Footer -->
-    <div class="cart-footer">
-        <div class="cart-total-row">
-            <span>Estimated Total:</span>
-            <span id="cart-total-amount">₹0</span>
-        </div>
-        <div class="payment-selector-wrapper">
-            <a href="checkout.html" class="checkout-btn-premium btn-upi-checkout" style="display: block; text-align: center; text-decoration: none;">
-                🛍️ Proceed to Checkout
-            </a>
-        </div>
-    </div>
-</div>
+      <div class="cart-footer">
+          <div class="cart-total-row">
+              <span>Estimated Total:</span>
+              <span id="cart-total-amount">₹0</span>
+          </div>
+          <div class="payment-selector-wrapper">
+              <a href="checkout.html" class="checkout-btn-premium btn-upi-checkout" style="display: block; text-align: center; text-decoration: none;">
+                  🛍️ Proceed to Checkout
+              </a>
+          </div>
+      </div>
+  </div>
 
   <!-- Header Section -->
   <header class="header">
@@ -181,32 +180,32 @@
           <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
       </div>
   </footer>
-<!-- Cookie Consent Banner -->
-<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #14532d; color: #fff; padding: 15px 20px; text-align: center; font-size: 14px; z-index: 99999; display: none; box-shadow: 0 -4px 15px rgba(0,0,0,0.15);">
-    <span>We use cookies to improve your browsing experience and analyze site traffic. By continuing, you agree to our use of cookies.</span>
-    <button id="accept-cookies-btn" style="background: #D4AF37; color: #14532d; border: none; padding: 8px 18px; margin-left: 15px; border-radius: 20px; font-weight: 700; cursor: pointer;">Allow Cookies</button>
-</div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Check if user has already made a decision
-        if (!localStorage.getItem("cookie_consent_given")) {
-            document.getElementById("cookie-banner").style.display = "block";
-        }
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #14532d; color: #fff; padding: 15px 20px; text-align: center; font-size: 14px; z-index: 99999; display: none; box-shadow: 0 -4px 15px rgba(0,0,0,0.15);">
+      <span>We use cookies to improve your browsing experience and analyze site traffic. By continuing, you agree to our use of cookies.</span>
+      <button id="accept-cookies-btn" style="background: #D4AF37; color: #14532d; border: none; padding: 8px 18px; margin-left: 15px; border-radius: 20px; font-weight: 700; cursor: pointer;">Allow Cookies</button>
+  </div>
 
-        document.getElementById("accept-cookies-btn").addEventListener("click", function() {
-            localStorage.setItem("cookie_consent_given", "true");
-            document.getElementById("cookie-banner").style.display = "none";
-            
-            // Enable Tracking
-            if (typeof gtag === 'function') {
-                gtag('consent', 'update', {
-                    'analytics_storage': 'granted'
-                });
-            }
-        });
-    });
-</script>
-  <script src="script.js?v=6.0" defer></script>
+  <script>
+      document.addEventListener("DOMContentLoaded", function() {
+          if (!localStorage.getItem("cookie_consent_given")) {
+              document.getElementById("cookie-banner").style.display = "block";
+          }
+
+          document.getElementById("accept-cookies-btn").addEventListener("click", function() {
+              localStorage.setItem("cookie_consent_given", "true");
+              document.getElementById("cookie-banner").style.display = "none";
+              
+              if (typeof gtag === 'function') {
+                  gtag('consent', 'update', {
+                      'analytics_storage': 'granted'
+                  });
+              }
+          });
+      });
+  </script>
+
+  <script src="script.js?v=7.0" defer></script>
 </body>
 </html>
