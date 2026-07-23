@@ -133,7 +133,32 @@
           <p>&copy; 2026 MAHIVERSE GLOBLE. All Rights Reserved.</p>
       </div>
   </footer>
+<!-- Cookie Consent Banner -->
+<div id="cookie-banner" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #14532d; color: #fff; padding: 15px 20px; text-align: center; font-size: 14px; z-index: 99999; display: none; box-shadow: 0 -4px 15px rgba(0,0,0,0.15);">
+    <span>We use cookies to improve your browsing experience and analyze site traffic. By continuing, you agree to our use of cookies.</span>
+    <button id="accept-cookies-btn" style="background: #D4AF37; color: #14532d; border: none; padding: 8px 18px; margin-left: 15px; border-radius: 20px; font-weight: 700; cursor: pointer;">Allow Cookies</button>
+</div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Check if user has already made a decision
+        if (!localStorage.getItem("cookie_consent_given")) {
+            document.getElementById("cookie-banner").style.display = "block";
+        }
+
+        document.getElementById("accept-cookies-btn").addEventListener("click", function() {
+            localStorage.setItem("cookie_consent_given", "true");
+            document.getElementById("cookie-banner").style.display = "none";
+            
+            // Enable Tracking
+            if (typeof gtag === 'function') {
+                gtag('consent', 'update', {
+                    'analytics_storage': 'granted'
+                });
+            }
+        });
+    });
+</script>
   <script src="script.js?v=5.0" defer></script>
 </body>
 </html>
