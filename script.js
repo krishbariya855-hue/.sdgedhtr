@@ -252,7 +252,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const menuToggle = document.getElementById("menu-toggle");
     const navbar = document.getElementById("navbar");
 
-    if (cartIcon) cartIcon.addEventListener("click", (e) => { e.preventDefault(); openCartSidebar(); });
+    // Open Cart Sidebar and Close Mobile Menu
+    if (cartIcon) {
+        cartIcon.addEventListener("click", (e) => { 
+            e.preventDefault(); 
+            if (navbar) navbar.classList.remove("active"); // Hide mobile menu dropdown
+            openCartSidebar(); 
+        });
+    }
+    
     if (closeCart) closeCart.addEventListener("click", closeCartSidebar);
     if (cartOverlay) cartOverlay.addEventListener("click", closeCartSidebar);
 
@@ -275,3 +283,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCartUI();
 });
+
+    
