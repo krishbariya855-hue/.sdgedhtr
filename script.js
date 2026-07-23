@@ -15,10 +15,17 @@ const firebaseConfig = {
   measurementId: "G-GJ1YQJ325A"
 };
 
-// Initialize Firebase & Firestore
+// Initialize Firebase, Firestore & Analytics
 if (typeof firebase !== "undefined") {
     firebase.initializeApp(firebaseConfig);
     var db = firebase.firestore();
+    
+    // Step 3: Initialize Analytics if supported
+    if (firebase.analytics) {
+        var analytics = firebase.analytics();
+        console.log("Firebase Analytics initialized");
+    }
+}
 }
 
 const RAZORPAY_KEY_ID = "rzp_live_TGTWYtkzRnCuwX"; 
